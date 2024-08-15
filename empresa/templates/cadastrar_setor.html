@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container">
+        <br>
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <label>Selecione a empresa:</label>
+                <input type="text" name="nome" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <br>
+                <label>Digite o nome do Setor:</label>
+                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
+                <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock 'body' %}
