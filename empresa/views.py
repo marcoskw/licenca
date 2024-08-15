@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 def cadastrar_empresa(request):
-    return HttpResponse('Cadastrar Empresa')
+    if request.method == "GET":
+        return render(request, 'cadastrar_empresa.html')

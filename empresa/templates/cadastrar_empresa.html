@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container">
+        <br>
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <label>Nome da Empresa:</label>
+                <input type="text" name="nome" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <br>
+                <label>Cnpj:</label>
+                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
+                <br>
+                <label>Envie a logo da empresa:</label>
+                <input type="file" name="logo" class="form-control">
+                <br>
+                <label>Telefone:</label>
+                <input type="text" name="uf" placeholder="Digite o telefone..." class="form-control">
+                <br>
+                <label>E-mail:</label>
+                <input type="email" name="email" placeholder="Digite o email..." class="form-control">
+                <br>
+                <label>Site:</label>
+                <input type="text" name="site" placeholder="Digite o seu site ..." class="form-control">
+                <br>
+            </div>
+            <div class="col-md">
+                <label>Endereço:</label>
+                <input type="text" name="endereco" placeholder="Digite o seu endereço ..." class="form-control">
+                <br>
+                <label>Número:</label>
+                <input type="text" name="numero" placeholder="Digite o seu número do endereço ..." class="form-control">
+                <br>
+                <label>Complemento:</label>
+                <input type="text" name="complemento" placeholder="Digite o complemento, se tiver ..." class="form-control">
+                <br>
+                <label>Bairro:</label>
+                <input type="text" name="bairro" placeholder="Digite o bairro ..." class="form-control">
+                <br>
+                <label>Cidade:</label>
+                <input type="text" name="cidade" placeholder="Digite a cidade ..." class="form-control">
+                <br>
+                <label>UF:</label>
+                <input type="text" name="uf" placeholder="Digite o UF ... 2 caracteres" class="form-control">
+                <br>
+                <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock 'body' %}
