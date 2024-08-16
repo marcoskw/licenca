@@ -14,21 +14,20 @@
     <div class="container">
         <br>
         <br>
-        <p class="h2">Cadastro de Marca</p>
+        <p class="h2">Cadastro de Sistema Operacional</p>
         {% if messages %}
             {% for message in messages %}
                 <section class="alert {{message.tags}}">
                     {{message}}
-
                 </section>
             {% endfor %}
         {% endif %}
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'cadastrar_marca' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <form action="{% url 'cadastrar_sistema_operacional' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <br>
-                <label>Digite o nome da Marca:</label>
-                <input type="text" name="nome_marca" placeholder="Digite o nome da setor" class="form-control">
+                <label>Digite o nome do Sistema Operacional:</label>
+                <input type="text" name="nome_sistema_operacional" placeholder="Digite o nome do Sistema Operacional" class="form-control">
                 <br>
                 <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
                 </form>

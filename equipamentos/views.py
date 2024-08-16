@@ -43,3 +43,22 @@ def cadastrar_software(request):
         
         messages.add_message(request, constants.SUCCESS, 'Software criado com sucesso')
         return redirect('/equipamentos/cadastrar_software')
+    
+def cadastrar_sistema_operacional(request):
+    if request.method == "GET":
+        return render(request,'cadastrar_sistema_operacional.html')
+    
+    elif request.method == "POST":
+        nome_sistema_operacional = request.POST.get('nome_sistema_operacional')
+
+        try:
+            sistema_operacional = SistemaOperacional(nome_sistema_operacional=nome_sistema_operacional)
+
+            sistema_operacional.save()
+
+        except:
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect('/equipamentos/cadastrar_sistema_operacional') 
+        
+        messages.add_message(request, constants.SUCCESS, 'Sistema Operacional criado com sucesso')
+        return redirect('/equipamentos/cadastrar_sistema_operacional')
