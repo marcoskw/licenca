@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container">
+        <br>
+        <br>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'cadastrar_marca' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <br>
+                <label>Digite o nome da Marca:</label>
+                <input type="text" name="nome_marca" placeholder="Digite o nome da setor" class="form-control">
+                <br>
+                <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock 'body' %}
