@@ -24,12 +24,17 @@
         {% endif %}
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
-                <label>Selecione a empresa:</label>
-                <input type="text" name="nome" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <form action="{% url 'cadastrar_setor' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <label>Selecione a Empresa:</label>
+                <br>
+                <select name="empresa" class="form-select">
+                {% for empresa in empresas %}
+                    <option value="{{ empresa.id }}">{{ empresa.nome_empresa }}</option>
+                {% endfor %}
+                </select>
                 <br>
                 <label>Digite o nome do Setor:</label>
-                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
+                <input type="text" name="nome_setor" placeholder="Digite o nome do setor" class="form-control">
                 <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
                 </form>
             </div>

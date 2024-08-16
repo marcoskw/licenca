@@ -19,5 +19,5 @@ class Empresa(models.Model):
         return self.nome_empresa
     
 class Setor(models.Model):
-    empresa = models.ForeignKey(Empresa, on_delete=models.DO_NOTHING)
+    empresa = models.ForeignKey(Empresa, null=True, on_delete=models.DO_NOTHING)
     nome_setor = models.CharField(max_length=150)

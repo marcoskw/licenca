@@ -26,7 +26,7 @@
             <div class="col-md">
                 <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <label>Nome da Empresa:</label>
-                <input type="text" name="nome" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <input type="text" name="nome_empresa" placeholder="Digite o nome da sua empresa ..." class="form-control">
                 <br>
                 <label>Cnpj:</label>
                 <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
@@ -35,7 +35,7 @@
                 <input type="file" name="logo" class="form-control">
                 <br>
                 <label>Telefone:</label>
-                <input type="text" name="uf" placeholder="Digite o telefone..." class="form-control">
+                <input type="text" name="telefone" placeholder="Digite o telefone..." class="form-control">
                 <br>
                 <label>E-mail:</label>
                 <input type="email" name="email" placeholder="Digite o email..." class="form-control">
