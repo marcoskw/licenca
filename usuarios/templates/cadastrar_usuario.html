@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container">
+        <br>
+        <br>
+        <p class="h2">Cadastro de Usuário</p>
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{message.tags}}">
+                    {{message}}
+                </section>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <label>Nome do Colaborador:</label>
+                <input type="text" name="nome_empresa" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <br>
+                <label>E-mail:</label>
+                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
+                <br>
+                <label>Selecione o Setor:</label>
+                <br>
+                <select name="setor" class="form-select">
+                    {% for setor in setores %}
+                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Selecione o Setor:</label>
+                <br>
+                <select name="status" class="form-select" disabled="True">
+                    {% for i in status %}
+                        <option value="{{ i.0 }}">{{ i.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock 'body' %}

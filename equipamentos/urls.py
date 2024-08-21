@@ -10,4 +10,7 @@ urlpatterns = [
 
     # sistema operacional
     path('cadastrar_sistema_operacional', views.cadastrar_sistema_operacional, name="cadastrar_sistema_operacional"),
+
+    # computador
+    path('cadastrar_computador/', views.cadastrar_computador, name="cadastrar_computador")
 ]

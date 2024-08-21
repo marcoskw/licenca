@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Computador, Equipamento,LicencaSoftware, Marca
 from .models import SistemaOperacional,Software,TipoEquipamento, Setor
+from empresa.models import Empresa, Setor
 from django.contrib import messages
 from django.contrib.messages import constants
 
@@ -62,3 +63,13 @@ def cadastrar_sistema_operacional(request):
         
         messages.add_message(request, constants.SUCCESS, 'Sistema Operacional criado com sucesso')
         return redirect('/equipamentos/cadastrar_sistema_operacional')
+    
+def cadastrar_computador(request):
+    empresas = Empresa.objects.all()
+    setores = Setor.objects.all()
+    
+    if request.method == "GET":
+        return render(request, 'cadastrar_computador.html', {
+            'empresas': empresas,
+            'setores':setores
+        } ) 

@@ -21,3 +21,6 @@ class Empresa(models.Model):
 class Setor(models.Model):
     empresa = models.ForeignKey(Empresa, null=True, on_delete=models.DO_NOTHING)
     nome_setor = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.nome_setor

@@ -14,24 +14,50 @@
     <div class="container">
         <br>
         <br>
-        <p class="h2">Cadastro de Empresa</p>
+        <p class="h2">Cadastro de Computador</p>
         {% if messages %}
             {% for message in messages %}
                 <section class="alert {{message.tags}}">
                     {{message}}
-
                 </section>
             {% endfor %}
         {% endif %}
         <div class="row">
-            <div class="col-md">
-                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
-                <label>Nome da Empresa:</label>
-                <input type="text" name="nome_empresa" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <form action="{% url 'cadastrar_computador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <label>Selecione o Setor:</label>
                 <br>
-                <label>Cnpj:</label>
+                <select name="setor" class="form-select">
+                    {% for setor in setores %}
+                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Nome na Rede:</label>
+                <input type="text" name="nome_empresa" class="form-control">
+                <br>
+                <label>Status:</label>
+                <br>
+                <select name="setor" class="form-select">
+                    {% for setor in setores %}
+                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Usuário:</label>
                 <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
                 <br>
+                <label>Tipo Equipamento:</label>
+                <br>
+                <select name="setor" class="form-select">
+                    {% for setor in setores %}
+                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+
+
+
+
                 <label>Envie a logo da empresa:</label>
                 <input type="file" name="logo" class="form-control">
                 <br>
@@ -44,8 +70,6 @@
                 <label>Site:</label>
                 <input type="text" name="site" placeholder="Digite o seu site ..." class="form-control">
                 <br>
-            </div>
-            <div class="col-md">
                 <label>Endereço:</label>
                 <input type="text" name="endereco" placeholder="Digite o seu endereço ..." class="form-control">
                 <br>
@@ -66,7 +90,6 @@
                 <br>
                 <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
                 </form>
-            </div>
         </div>
     </div>
 {% endblock 'body' %}

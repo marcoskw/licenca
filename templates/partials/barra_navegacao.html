@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">TI - Exatron</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -35,11 +35,10 @@
           Usuários
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Cadastro de Usuários</a>
+          <a class="dropdown-item" href="{% url "cadastrar_usuario" %}">Cadastro de Usuários</a>
           <a class="dropdown-item" href="#">Listar Usuários</a>
         </div>
       </li>      
-
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Equipamentos
@@ -50,6 +49,17 @@
           <a class="dropdown-item" href="{% url "cadastrar_marca" %}">Marca</a>
           <a class="dropdown-item" href="{% url "cadastrar_software" %}">Software</a>
           <a class="dropdown-item" href="{% url "cadastrar_sistema_operacional" %}">Sistema Operacional</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Ocorrências
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Desligar Usuário</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Transferir Equipamento</a>
+          <a class="dropdown-item" href="#">Inativar Equipamento</a>
         </div>
       </li>
       <li class="nav-item">
