@@ -10,4 +10,5 @@ class Usuario(models.Model):
     )
     nome_usuario = models.CharField(max_length=150)
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
+    email = models.EmailField(null=True, blank=True)
     status = models.CharField(max_length=3, choices=status_choices, default=('ATV'))

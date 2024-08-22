@@ -24,12 +24,12 @@
         {% endif %}
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'cadastrar_empresa' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <form action="{% url 'cadastrar_usuario' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <label>Nome do Colaborador:</label>
-                <input type="text" name="nome_empresa" placeholder="Digite o nome da sua empresa ..." class="form-control">
+                <input type="text" name="nome_usuario" placeholder="Digite o nome do colaborador ..." class="form-control">
                 <br>
                 <label>E-mail:</label>
-                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
+                <input type="text" name="email" placeholder="Digite o email ..." class="form-control">
                 <br>
                 <label>Selecione o Setor:</label>
                 <br>
@@ -39,7 +39,7 @@
                     {% endfor %}
                 </select>
                 <br>
-                <label>Selecione o Setor:</label>
+                <label>Status:</label>
                 <br>
                 <select name="status" class="form-select" disabled="True">
                     {% for i in status %}
