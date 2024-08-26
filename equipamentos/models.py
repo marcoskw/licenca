@@ -77,3 +77,7 @@ class SoftwareComputador(models.Model):
     software = models.ForeignKey(Software, on_delete=models.DO_NOTHING)
     serial = models.CharField(max_length=100)
     nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)  
+    
+    def __str__(self):
+        return self.computador
+    
