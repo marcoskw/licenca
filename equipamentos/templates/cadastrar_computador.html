@@ -6,7 +6,6 @@
 
 {% endblock 'head' %}
 
-
 {% block 'body' %}
 
     {% include "partials/barra_navegacao.html" %}
@@ -33,60 +32,114 @@
                 </select>
                 <br>
                 <label>Nome na Rede:</label>
-                <input type="text" name="nome_empresa" class="form-control">
+                <input type="text" name="nome_rede" class="form-control">
                 <br>
                 <label>Status:</label>
                 <br>
-                <select name="setor" class="form-select">
-                    {% for setor in setores %}
-                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                <select name="status" class="form-select" disabled="True">
+                    {% for i in status %}
+                        <option value="{{ i.0 }}">{{ i.1 }}</option>
                     {% endfor %}
                 </select>
                 <br>
                 <label>Usuário:</label>
-                <input type="text" name="cnpj" placeholder="Digite o seu CNPJ, somente números ..." class="form-control">
                 <br>
-                <label>Tipo Equipamento:</label>
-                <br>
-                <select name="setor" class="form-select">
-                    {% for setor in setores %}
-                        <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
+                <select name="usuario" class="form-select">
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}">{{ usuario.nome_usuario }}</option>
                     {% endfor %}
                 </select>
                 <br>
+                <label>Tipo Equipamento:</label>
+                <br>
+                <select name="tipo_equipamento" class="form-select">
+                    {% for tipo_equipamento in tipo_equipamentos %}
+                        <option value="{{ tipo_equipamento.id }}">{{ tipo_equipamento.nome_tipo_equipamento }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Marca:</label>
+                <br>
+                <select name="marca" class="form-select">
+                    {% for marca in marcas %}
+                        <option value="{{ marca.id }}">{{ marca.nome_marca }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <label>Modelo:</label>
+                <input type="text" name="modelo" placeholder="Digite o modelo..." class="form-control">
+                <br>
+                <label>Serial Number:</label>
+                <input type="text" name="serial_number" placeholder="Digite o modelo..." class="form-control">
+                <br>
+                <label>Processador:</label>
+                <input type="text" name="processador" placeholder="Digite o modelo..." class="form-control">
+                <br>
+                <label>Memoria:</label>
+                <input type="text" name="memoria" placeholder="Digite o modelo..." class="form-control">
+                <br>
+                <label>Armazenamento:</label>
+                <input type="text" name="armazenamento" placeholder="Digite o modelo..." class="form-control">
+                <br>
+                <label>Tipo Armazenamento:</label>
+                <br>
+                <select name="tipo_armazenamento" class="form-select">
+                    {% for i in tipo_armazenamentos %}
+                        <option value="{{ i.0 }}">{{ i.1 }}</option>
+                    {% endfor %}
+                </select>
+                <br>     
+                <label>Sistema Operacional:</label>
+                <br>
+                <select name="sistema_operacional" class="form-select">
+                    {% for so in sistemas_operacionais %}
+                        <option value="{{ so.id }}">{{ so.nome_sistema_operacional }}</option>
+                    {% endfor %}
+                </select>
+                <br>     
+                <label>Sistema Operacional - Arquivo VBS:</label>
+                <br>
+                <input type="text" name="so_serial_vbs" placeholder="Digite o modelo..." class="form-control">
+                <br>     
+                <label>Sistema Operacional - CMD:</label>
+                <br>
+                <input type="text" name="so_serial_cmd" placeholder="Digite o modelo..." class="form-control">
+                <br>                                                     
+                <label>Nota Fiscal Computador:</label>
+                <input type="file" name="nf_computador" class="form-control">
+                <br>                
+                <label>Nota Fiscal Sistema Operacional:</label>
+                <input type="file" name="nf_sistema_operacional" class="form-control">
+                <br>           
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Serial</th>
+                                <th scope="col">Nota Fiscal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <select name="softwares" class="form-select">
+                                        {% for software in softwares %}
+                                            <option value="{{ software.id }}">{{ software.nome_software }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </th>
+                                <td><input type="text" name="serial_software" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
+                                </td>
+                                <td><input type="file" name="nf_software" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary">Adicionar Linha</button>                        
+                </div>
 
-
-
-
-                <label>Envie a logo da empresa:</label>
-                <input type="file" name="logo" class="form-control">
-                <br>
-                <label>Telefone:</label>
-                <input type="text" name="telefone" placeholder="Digite o telefone..." class="form-control">
-                <br>
-                <label>E-mail:</label>
-                <input type="email" name="email" placeholder="Digite o email..." class="form-control">
-                <br>
-                <label>Site:</label>
-                <input type="text" name="site" placeholder="Digite o seu site ..." class="form-control">
-                <br>
-                <label>Endereço:</label>
-                <input type="text" name="endereco" placeholder="Digite o seu endereço ..." class="form-control">
-                <br>
-                <label>Número:</label>
-                <input type="text" name="numero" placeholder="Digite o seu número do endereço ..." class="form-control">
-                <br>
-                <label>Complemento:</label>
-                <input type="text" name="complemento" placeholder="Digite o complemento, se tiver ..." class="form-control">
-                <br>
-                <label>Bairro:</label>
-                <input type="text" name="bairro" placeholder="Digite o bairro ..." class="form-control">
-                <br>
-                <label>Cidade:</label>
-                <input type="text" name="cidade" placeholder="Digite a cidade ..." class="form-control">
-                <br>
-                <label>UF:</label>
-                <input type="text" name="uf" placeholder="Digite o UF ... 2 caracteres" class="form-control">
+                <label>Observações:</label>
+                <textarea class="form-control" name="observacoes" rows="3"></textarea>                
                 <br>
                 <input type="submit" class="btn btn-lg btn-indigo" value="cadastrar">
                 </form>
