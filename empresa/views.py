@@ -47,7 +47,6 @@ def cadastrar_empresa(request):
         messages.add_message(request, constants.SUCCESS, 'Empresa criada com sucesso')
         return redirect('/empresa/cadastrar_empresa')
      
-    
 def cadastrar_setor(request):
     empresas = Empresa.objects.all()
     setor = Setor()
@@ -72,3 +71,9 @@ def cadastrar_setor(request):
 
     messages.add_message(request, constants.SUCCESS, 'Setor criada com sucesso')
     return redirect('/empresa/cadastrar_setor')
+
+def listar_setores(request):
+    if request.method == "GET":
+        setores = Setor.objects.order_by('id')
+        
+    return render(request, 'listar_setores.html', {'setores': setores})
