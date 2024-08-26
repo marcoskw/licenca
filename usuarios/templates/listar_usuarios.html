@@ -16,17 +16,21 @@
             <thead >
               <tr class="cabecalho" style="background-color: transparent !important;">
                 <th class="cabecalho" scope="col">Id</th>
-                <th class="cabecalho" scope="col">Empresa</th>                
+                <th class="cabecalho" scope="col">Nome </th>                
                 <th class="cabecalho" scope="col">Setor</th>
-                <th class="cabecalho" scope="col">Ação</th>                
+                <th class="cabecalho" scope="col">E-mail</th>
+                <th class="cabecalho" scope="col">Status</th>
+                <th class="cabecalho" scope="col">Ação</th>                                                
               </tr>
             </thead>
             <tbody>
-                {% for setor in setores %}
+                {% for usuario in usuarios %}
                     <tr class="linha">
-                        <td class="linha">{{ setor.id }}</td>
-                        <td class="linha">{{ setor.empresa }}</td>
-                        <td class="linha">{{ setor.nome_setor }}</td>
+                        <td class="linha">{{ usuario.id }}</td>
+                        <td class="linha">{{ usuario.nome_usuario }}</td>
+                        <td class="linha">{{ usuario.setor }}</td>
+                        <td class="linha">{{ usuario.email }}</td>
+                        <td class="linha">{{ usuario.status }}</td>
                         <td class="linha"><button type="button" class="btn btn-warning">Editar</button></td>
                     </tr>
                 {% endfor %}

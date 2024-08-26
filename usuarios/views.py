@@ -38,3 +38,9 @@ def cadastrar_usuario(request):
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
         
         return redirect('/usuarios/cadastrar_usuario')
+    
+def listar_usuarios(request):
+    if request.method == "GET":
+        usuarios = Usuario.objects.order_by('id')
+        
+    return render(request, 'listar_usuarios.html', {'usuarios': usuarios})
