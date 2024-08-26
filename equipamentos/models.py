@@ -10,18 +10,26 @@ from usuarios.models import Usuario
 class TipoEquipamento(models.Model):
     nome_tipo_equipamento = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.nome_tipo_equipamento
+
 class Marca(models.Model):
     nome_marca = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome_marca
 
 class Software(models.Model):
     nome_software = models.CharField(max_length=100)
 
-class LicencaSoftware(Software):
-    serial = models.CharField(max_length=100)
-    nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)    
+    def __str__(self):
+        return self.nome_software
 
 class SistemaOperacional(models.Model):
     nome_sistema_operacional = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome_sistema_operacional
 
 class Equipamento(models.Model):
     status_choices = (
@@ -33,15 +41,18 @@ class Equipamento(models.Model):
 
     nome_rede = models.CharField(max_length=150)
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
-    status = models.CharField(max_length=3, choices=status_choices, default=('ATV'))
+    status = models.CharField(max_length=3, choices=status_choices, default=("ATV"))
     usuario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
     tipo_equipamento = models.ForeignKey(TipoEquipamento, on_delete=models.DO_NOTHING)
     marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
     modelo = models.CharField(max_length=150)
     serial_number = models.CharField(max_length=150)
-    data_cadastro = models.DateTimeField(default=timezone.now())
+    data_cadastro = models.DateTimeField(default=timezone.now)
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)
     observacoes = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.nome_rede
 
 class Computador(Equipamento):
     tipo_armazenamento_choices = (
@@ -60,20 +71,9 @@ class Computador(Equipamento):
     so_serial_cmd = models.CharField(max_length=150, null=True, blank=True)
     nf_computador = models.FileField(upload_to="nf_computador", null=True, blank=True)
     nf_sistema_operacional = models.FileField(upload_to="nf_sistema_operacional", null=True, blank=True)
-    software = models.ManyToManyField(LicencaSoftware, null=True, blank=True)
 
-
-
-'''
-class Impressora(Equipamento):
-    ...
-
-class Celular(Equipamento):
-    ...
-
-class Roteador(Equipamento):
-    ...
-
-class Switch(Equipamento):
-    ...
-'''
+class SoftwareComputador(models.Model):
+    computador = models.ForeignKey(Equipamento, on_delete=models.DO_NOTHING)
+    software = models.ForeignKey(Software, on_delete=models.DO_NOTHING)
+    serial = models.CharField(max_length=100)
+    nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)  

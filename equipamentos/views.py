@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import Computador, Equipamento,LicencaSoftware, Marca
-from .models import SistemaOperacional,Software,TipoEquipamento, Setor
+from .models import SistemaOperacional,Software,TipoEquipamento, Setor, Computador, Marca
 from usuarios.models import Usuario
 
 from empresa.models import Empresa, Setor
@@ -74,7 +73,6 @@ def cadastrar_computador(request):
     marcas = Marca.objects.all()
     sistemas_operacionais = SistemaOperacional.objects.all()
     softwares = Software.objects.all()
-
 
     if request.method == "GET":
         return render(request, 'cadastrar_computador.html', {
