@@ -6,17 +6,20 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url "home" %}">Home  <span class="sr-only">(current)</span></a>
       </li>
+      <!-- MENU SOBRE -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Arquivo
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Parâmetros</a>          
           <a class="dropdown-item" href="#">Sobre</a>
           <a class="dropdown-item" href="#">Sair</a>
         </div>
       </li>
+      <!-- MENU EMPRESA -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Empresa
@@ -29,7 +32,7 @@
           <a class="dropdown-item" href="{% url "listar_setores" %}">Listar Setor</a>
         </div>
       </li>
-
+      <!-- MENU USUÁRIOS -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Usuários
@@ -38,7 +41,8 @@
           <a class="dropdown-item" href="{% url "cadastrar_usuario" %}">Cadastro de Usuários</a>
           <a class="dropdown-item" href="#">Listar Usuários</a>
         </div>
-      </li>      
+      </li>  
+      <!-- MENU EQUIPAMENTOS -->          
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Equipamentos
@@ -51,6 +55,7 @@
           <a class="dropdown-item" href="{% url "cadastrar_sistema_operacional" %}">Sistema Operacional</a>
         </div>
       </li>
+      <!-- MENU OCORRÊNCIAS -->     
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Ocorrências
@@ -63,6 +68,7 @@
           <a class="dropdown-item" href="#">Inativar Equipamento</a>
         </div>
       </li>
+      <!-- MENU SAIR -->           
       <li class="nav-item">
         <a class="nav-link" href="#">Sair</a>
       </li>
