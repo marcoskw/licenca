@@ -27,6 +27,12 @@ def cadastrar_marca(request):
         messages.add_message(request, constants.SUCCESS, 'Marca criada com sucesso')
         return redirect('/equipamentos/cadastrar_marca')
 
+def listar_marcas(request):
+    if request.method == "GET":
+        marcas = Marca.objects.order_by('id')
+        
+    return render(request, 'listar_marcas.html', {'marcas': marcas})
+
 def cadastrar_software(request):
     if request.method == "GET":
         return render(request,'cadastrar_software.html')
@@ -46,6 +52,12 @@ def cadastrar_software(request):
         messages.add_message(request, constants.SUCCESS, 'Software criado com sucesso')
         return redirect('/equipamentos/cadastrar_software')
     
+def listar_softwares(request):
+    if request.method == "GET":
+        softwares = Software.objects.order_by('id')
+    
+    return render(request, 'listar_softwares.html', {'softwares':softwares})
+
 def cadastrar_sistema_operacional(request):
     if request.method == "GET":
         return render(request,'cadastrar_sistema_operacional.html')
@@ -65,6 +77,12 @@ def cadastrar_sistema_operacional(request):
         messages.add_message(request, constants.SUCCESS, 'Sistema Operacional criado com sucesso')
         return redirect('/equipamentos/cadastrar_sistema_operacional')
     
+def listar_sistemas_operacionais(request):
+    if request.method == "GET":
+        sos = SistemaOperacional.objects.order_by('id')
+
+    return render(request, 'listar_sistemas_operacionais.html', {'sos': sos})
+
 def cadastrar_computador(request):
     empresas = Empresa.objects.all()
     setores = Setor.objects.all()

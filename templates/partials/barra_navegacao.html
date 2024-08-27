@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">TI - Exatron</a>
+  <a class="navbar-brand" href="{% url "home" %}">TI - Exatron</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -53,8 +53,14 @@
           <a class="dropdown-item" href="{% url "cadastrar_computador" %}">Computador</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url "cadastrar_marca" %}">Marca</a>
+          <a class="dropdown-item" href="{% url "listar_marcas" %}">Listar Marcas</a> 
+          <div class="dropdown-divider"></div>                   
           <a class="dropdown-item" href="{% url "cadastrar_software" %}">Software</a>
+          <a class="dropdown-item" href="{% url "listar_softwares" %}">Listar Softwares</a>           
+          <div class="dropdown-divider"></div>          
           <a class="dropdown-item" href="{% url "cadastrar_sistema_operacional" %}">Sistema Operacional</a>
+          <a class="dropdown-item" href="{% url "listar_sistemas_operacionais" %}">Listar Sistema Operacionais</a>                     
+          <div class="dropdown-divider"></div>        
         </div>
       </li>
       <!-- MENU OCORRÊNCIAS -->     
