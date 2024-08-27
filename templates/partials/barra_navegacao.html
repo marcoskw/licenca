@@ -14,8 +14,10 @@
           Arquivo
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Parâmetros</a>          
-          <a class="dropdown-item" href="#">Sobre</a>
+          <a class="dropdown-item" href="{% url "sobre" %}">Sobre</a>
+          <div class="dropdown-divider"></div>          
+          <a class="dropdown-item" href="{% url "parametros" %}">Parâmetros</a>   
+          <div class="dropdown-divider"></div>                 
           <a class="dropdown-item" href="#">Sair</a>
         </div>
       </li>
@@ -26,10 +28,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'cadastrar_empresa' %}">Cadastro de Empresa</a>
-          <a class="dropdown-item" href="#">Listar Empresa</a>
+          <a class="dropdown-item" href="{% url "listar_empresas" %}">Listar Empresas</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url "cadastrar_setor" %}">Cadastro de Setor</a>
-          <a class="dropdown-item" href="{% url "listar_setores" %}">Listar Setor</a>
+          <a class="dropdown-item" href="{% url "listar_setores" %}">Listar Setores</a>
         </div>
       </li>
       <!-- MENU USUÁRIOS -->
@@ -38,8 +40,8 @@
           Usuários
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{% url "cadastrar_usuario" %}">Cadastro de Usuários</a>
-          <a class="dropdown-item" href="#">Listar Usuários</a>
+          <a class="dropdown-item" href="{% url "cadastrar_usuario" %}">Cadastro de Usuário</a>
+          <a class="dropdown-item" href="{% url "listar_usuarios" %}">Listar Usuários</a>
         </div>
       </li>  
       <!-- MENU EQUIPAMENTOS -->          

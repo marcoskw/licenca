@@ -77,3 +77,9 @@ def listar_setores(request):
         setores = Setor.objects.order_by('id')
         
     return render(request, 'listar_setores.html', {'setores': setores})
+
+def listar_empresas(request):
+    if request.method == "GET":
+        empresas = Empresa.objects.order_by('id')
+        
+    return render(request, 'listar_empresas.html', {'empresas': empresas})    

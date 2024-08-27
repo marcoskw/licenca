@@ -44,3 +44,4 @@ def listar_usuarios(request):
         usuarios = Usuario.objects.order_by('id')
         
     return render(request, 'listar_usuarios.html', {'usuarios': usuarios})
+
