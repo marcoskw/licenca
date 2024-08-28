@@ -33,7 +33,7 @@
                 <br>
                 <label>Selecione o Setor:</label>
                 <br>
-                <select name="setor" class="form-select">
+                <select name="setor" class="form-control">
                     {% for setor in setores %}
                         <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
                     {% endfor %}
@@ -41,7 +41,7 @@
                 <br>
                 <label>Status:</label>
                 <br>
-                <select name="status" class="form-select" disabled="True">
+                <select name="status" class="form-control" disabled="True">
                     {% for i in status %}
                         <option value="{{ i.0 }}">{{ i.1 }}</option>
                     {% endfor %}

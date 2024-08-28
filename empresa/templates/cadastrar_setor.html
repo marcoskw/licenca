@@ -27,7 +27,7 @@
                 <form action="{% url 'cadastrar_setor' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <label>Selecione a Empresa:</label>
                 <br>
-                <select name="empresa" class="form-select">
+                <select name="empresa" class="form-control" id="exampleSelect">
                 {% for empresa in empresas %}
                     <option value="{{ empresa.id }}">{{ empresa.nome_empresa }}</option>
                 {% endfor %}

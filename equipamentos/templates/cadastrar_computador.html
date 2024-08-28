@@ -25,7 +25,7 @@
                 <form action="{% url 'cadastrar_computador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <label>Selecione o Setor:</label>
                 <br>
-                <select name="setor" class="form-select">
+                <select name="setor" class="form-control">
                     {% for setor in setores %}
                         <option value="{{ setor.id }}">{{ setor.nome_setor }}</option>
                     {% endfor %}
@@ -36,7 +36,7 @@
                 <br>
                 <label>Status:</label>
                 <br>
-                <select name="status" class="form-select" disabled="True">
+                <select name="status" class="form-control" disabled="True">
                     {% for i in status %}
                         <option value="{{ i.0 }}">{{ i.1 }}</option>
                     {% endfor %}
@@ -44,7 +44,7 @@
                 <br>
                 <label>Usuário:</label>
                 <br>
-                <select name="usuario" class="form-select">
+                <select name="usuario" class="form-control">
                     {% for usuario in usuarios %}
                         <option value="{{ usuario.id }}">{{ usuario.nome_usuario }}</option>
                     {% endfor %}
@@ -52,7 +52,7 @@
                 <br>
                 <label>Tipo Equipamento:</label>
                 <br>
-                <select name="tipo_equipamento" class="form-select">
+                <select name="tipo_equipamento" class="form-control">
                     {% for tipo_equipamento in tipo_equipamentos %}
                         <option value="{{ tipo_equipamento.id }}">{{ tipo_equipamento.nome_tipo_equipamento }}</option>
                     {% endfor %}
@@ -60,7 +60,7 @@
                 <br>
                 <label>Marca:</label>
                 <br>
-                <select name="marca" class="form-select">
+                <select name="marca" class="form-control">
                     {% for marca in marcas %}
                         <option value="{{ marca.id }}">{{ marca.nome_marca }}</option>
                     {% endfor %}
@@ -83,7 +83,7 @@
                 <br>
                 <label>Tipo Armazenamento:</label>
                 <br>
-                <select name="tipo_armazenamento" class="form-select">
+                <select name="tipo_armazenamento" class="form-control">
                     {% for i in tipo_armazenamentos %}
                         <option value="{{ i.0 }}">{{ i.1 }}</option>
                     {% endfor %}
@@ -91,7 +91,7 @@
                 <br>     
                 <label>Sistema Operacional:</label>
                 <br>
-                <select name="sistema_operacional" class="form-select">
+                <select name="sistema_operacional" class="form-control">
                     {% for so in sistemas_operacionais %}
                         <option value="{{ so.id }}">{{ so.nome_sistema_operacional }}</option>
                     {% endfor %}
@@ -123,7 +123,7 @@
                         <tbody>
                             <tr>
                                 <th scope="row">
-                                    <select name="softwares" class="form-select">
+                                    <select name="softwares" class="form-control">
                                         {% for software in softwares %}
                                             <option value="{{ software.id }}">{{ software.nome_software }}</option>
                                         {% endfor %}
