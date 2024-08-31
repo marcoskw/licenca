@@ -77,6 +77,16 @@ def atualizar_setor_usuario(request):
         messages.add_message(request, constants.SUCCESS, 'Ocorrencia criada com sucesso')
         return redirect('atualizar_setor_usuario')   
 
+def listar_ocorrencias_usuarios(request):
+    ocorrencias = OcorrenciaUsuario.objects.all()
+
+    tipo_ocorrencia_choices = dict(OcorrenciaUsuario.tipo_ocorrencia_choices)
+    
+    if request.method == "GET":  
+        return render(request, 'listar_ocorrencias_usuarios.html', {
+            'ocorrencias': ocorrencias, 
+            'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
+
 
 # Equipamentos
 def ocorrencias_equipamentos(request):

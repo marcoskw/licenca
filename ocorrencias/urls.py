@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # Usuários
     path('ocorrencias_usuarios/', views.ocorrencias_usuarios, name="ocorrencias_usuarios"),
+    path('ocorrencias_usuarios/listar_ocorrencias_usuarios', views.listar_ocorrencias_usuarios, name='listar_ocorrencias_usuarios') ,
     path('ocorrencias_usuarios/inativar_usuario/', views.inativar_usuario, name="inativar_usuario"),
     path('ocorrencias_usuarios/atualizar_setor_usuario/', views.atualizar_setor_usuario, name='atualizar_setor_usuario'),
     
