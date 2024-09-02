@@ -13,11 +13,13 @@
     <h2 class="mb-4">Cadastro de Computador</h2>
     
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert {{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 
     <form action="{% url 'cadastrar_computador' %}" method="POST" enctype="multipart/form-data">
@@ -135,11 +137,27 @@
                 <label for="nf_sistema_operacional">Nota Fiscal Sistema Operacional:</label>
                 <input type="file" id="nf_sistema_operacional" name="nf_sistema_operacional" class="form-control">
             </div>
+        <div class="row">
+            {% for field in fields %}
+                <div class="col-md-6 mb-3">
+                    <label for="{{ field.id }}">{{ field.label }}:</label>
+                    {% if field.type == 'select' %}
+                        <select id="{{ field.id }}" name="{{ field.name }}" class="form-control">
+                            {% for option in field.options %}
+                                <option value="{{ option.id }}">{{ option.name }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        <input type="{{ field.type }}" id="{{ field.id }}" name="{{ field.name }}" 
+                            placeholder="{{ field.placeholder }}" class="form-control">
+                    {% endif %}
+                </div>
+            {% endfor %}
 
             <div class="col-12 mb-3">
                 <label for="softwares">Softwares:</label>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="softwares-table">
                         <thead>
                             <tr>
                                 <th scope="col">Descrição</th>
@@ -150,7 +168,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <select id="softwares" name="softwares" class="form-control">
+                                    <select id="software" name="software" class="form-control">
                                         {% for software in softwares %}
                                             <option value="{{ software.id }}">{{ software.nome_software }}</option>
                                         {% endfor %}
@@ -165,7 +183,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary">Adicionar Linha</button>
+                    <button type="button" class="btn btn-primary" onclick="addSoftwareRow()">Adicionar Linha</button>
                 </div>
             </div>
 
@@ -180,4 +198,27 @@
         </div>
     </form>
 </div>
+
+<script>
+function addSoftwareRow() {
+    var table = document.getElementById("softwares-table").getElementsByTagName('tbody')[0];
+    var newRow = table.insertRow();
+    
+    newRow.innerHTML = `
+        <td>
+            <select name="software" class="form-control">
+                {% for software in softwares %}
+                    <option value="{{ software.id }}">{{ software.nome_software }}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <input type="text" name="serial_software" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
+        </td>
+        <td>
+            <input type="file" name="nf_software" class="form-control">
+        </td>
+    `;
+}
+</script>
 {% endblock 'body' %}
