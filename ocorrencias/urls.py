@@ -10,5 +10,6 @@ urlpatterns = [
     
     # Equipamentos
     path('ocorrencias_equipamentos/', views.ocorrencias_equipamentos, name="ocorrencias_equipamentos"),
-
+    path('ocorrencias_equipamentos/listar_ocorrencias_equipamentos', views.listar_ocorrencias_equipamentos, name="listar_ocorrencias_equipamentos"),
+    path('ocorrencias_equipamentos/inativar_computador', views.inativar_computador, name="inativar_computador")
 ]

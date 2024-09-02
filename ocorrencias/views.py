@@ -1,5 +1,7 @@
+from datetime import datetime
 from django.shortcuts import redirect, render
-from ocorrencias.models import OcorrenciaUsuario
+from equipamentos.models import Computador
+from ocorrencias.models import OcorrenciaUsuario, OcorrenciaComputador
 from usuarios.models import Usuario, Setor
 
 from django.contrib import messages
@@ -20,11 +22,12 @@ def inativar_usuario(request):
         observacoes = request.POST.get('observacoes')
         tipo_ocorrencia = 1
         usuario = Usuario.objects.get(id=usuario_selecionado)
-
+        data = datetime.now()
 
         ocorrencia = OcorrenciaUsuario(
             tipo_ocorrencia=tipo_ocorrencia,
             usuario=usuario,
+            data=data,
             setor=None,
             observacoes=observacoes,
         )
@@ -36,10 +39,10 @@ def inativar_usuario(request):
 
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-            return redirect('/ocorrencias/inativar_usuario')   
+            return redirect('inativar_usuario')   
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrencia criada com sucesso')
-        return redirect('/ocorrencias/inativar_usuario')   
+        return redirect('inativar_usuario')   
 
 def atualizar_setor_usuario(request):
     usuarios = Usuario.objects.all()
@@ -91,3 +94,48 @@ def listar_ocorrencias_usuarios(request):
 # Equipamentos
 def ocorrencias_equipamentos(request):
     return render(request, 'ocorrencias_equipamentos.html')
+
+def inativar_computador(request):
+
+    computadores = Computador.objects.all()
+    print(computadores)
+    if request.method == "GET":
+        return render(request,'inativar_computador.html', {'computadores': computadores})
+
+    elif request.method == "POST":
+        computador_id = request.POST.get('computador')
+        observacoes = request.POST.get('observacoes')
+        tipo_ocorrencia = 1
+        computador = Computador.objects.get(id=computador_id)
+        data = datetime.now()
+
+        ocorrencia = OcorrenciaComputador(
+            tipo_ocorrencia=tipo_ocorrencia,
+            computador=computador,
+            data=data,
+            observacoes=observacoes,
+            usuario=None       
+        )
+
+        try:
+            computador.status = 'INT'
+            ocorrencia.save()
+            computador.save()
+        except Exception as e:
+            print(f"Erro: {e}")
+            print(ocorrencia, computador)
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect('inativar_computador')   
+    
+        messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
+        return redirect('inativar_computador')   
+
+def listar_ocorrencias_equipamentos(request):
+    ocorrencias = OcorrenciaComputador.objects.all()
+
+    tipo_ocorrencia_choices = dict(OcorrenciaComputador.tipo_ocorrencia_choices)
+    
+    if request.method == "GET":  
+        return render(request, 'listar_ocorrencias_equipamentos.html', {
+            'ocorrencias': ocorrencias, 
+            'tipo_ocorrencia_choices': tipo_ocorrencia_choices})

@@ -17,7 +17,8 @@
               <tr class="cabecalho" style="background-color: transparent !important;">
                 <th class="cabecalho" scope="col">Id</th>
                 <th class="cabecalho" scope="col">Data</th>                    
-                <th class="cabecalho" scope="col">Tipo Ocorrência</th>                
+                <th class="cabecalho" scope="col">Tipo Ocorrência</th>
+                <th class="cabecalho" scope="col">Computador</th>                                  
                 <th class="cabecalho" scope="col">Usuario</th>     
                 <th class="cabecalho" scope="col">Setor</th>    
                 <th class="cabecalho" scope="col">Observações</th>                                                                             
@@ -30,17 +31,12 @@
                         <td class="linha">{{ ocorrencia.data }}</td>
                         <td class="linha">
                           {% if ocorrencia.tipo_ocorrencia == '1' %}
-                            INATIVAR USUÁRIO
-                          {% elif ocorrencia.tipo_ocorrencia == '2' %}
-                            TROCAR USUÁRIO DE SETOR
+                            INATIVAR COMPUTADOR
                           {% endif %}
                         </td>
+                        <td class="linha">{{ ocorrencia.computador }}</td>
                         <td class="linha">{{ ocorrencia.usuario }}</td>
-                        {% if setor %}
-                          <td class="linha">{{ ocorrencia.setor.nome_setor }}</td>
-                        {% else %}
-                          <td class="linha">-</td>
-                        {% endif %}
+                        <td class="linha">{{ ocorrencia.setor }}</td>
                         <td class="linha">{{ ocorrencia.observacoes }}</td>
                     </tr>
                 {% endfor %}
