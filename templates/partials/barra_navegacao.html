@@ -28,10 +28,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'cadastrar_empresa' %}">Cadastro de Empresa</a>
-          <a class="dropdown-item" href="{% url "listar_empresas" %}">Listar Empresas</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url "cadastrar_setor" %}">Cadastro de Setor</a>
-          <a class="dropdown-item" href="{% url "listar_setores" %}">Listar Setores</a>
         </div>
       </li>
       <!-- MENU USUÁRIOS -->
@@ -41,7 +39,6 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url "cadastrar_usuario" %}">Cadastro de Usuário</a>
-          <a class="dropdown-item" href="{% url "listar_usuarios" %}">Listar Usuários</a>
         </div>
       </li>  
       <!-- MENU EQUIPAMENTOS -->          
@@ -72,6 +69,22 @@
           <a class="dropdown-item" href="{% url "ocorrencias_usuarios" %}">Usuários</a>      
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url "ocorrencias_equipamentos" %}">Equipamentos</a>  
+        </div>
+      </li>
+      <!-- MENU RELATÓRIOS -->     
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Relatórios
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{% url "listar_empresas" %}">Listar Empresas</a>
+          <a class="dropdown-item" href="{% url "listar_setores" %}">Listar Setores</a>
+          <div class="dropdown-divider"></div>          
+          <a class="dropdown-item" href="{% url "listar_usuarios" %}">Listar Usuários</a>    
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url "ocorrencias_equipamentos" %}">Equipamentos</a>  
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url "ocorrencias_equipamentos" %}">Ocorrências</a>  
         </div>
       </li>
       <!-- MENU SAIR -->           
