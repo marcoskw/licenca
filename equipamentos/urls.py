@@ -14,5 +14,6 @@ urlpatterns = [
     path('cadastrar_sistema_operacional/', views.cadastrar_sistema_operacional, name="cadastrar_sistema_operacional"),
     path('listar_sistemas_operacionais/', views.listar_sistemas_operacionais, name="listar_sistemas_operacionais"),
     # computador
-    path('cadastrar_computador/', views.cadastrar_computador, name="cadastrar_computador")
+    path('cadastrar_computador/', views.cadastrar_computador, name="cadastrar_computador"),
+    path('listar_computadores/', views.listar_computadores, name='listar_computadores'),
 ]

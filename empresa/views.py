@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
 
-from .models import Empresa, Setor
+from .models import Empresa, Operador, Setor
 
 # Create your views here.
 def cadastrar_empresa(request):
@@ -83,3 +83,42 @@ def listar_empresas(request):
         empresas = Empresa.objects.order_by('id')
         
     return render(request, 'listar_empresas.html', {'empresas': empresas})    
+
+def cadastrar_operador(request):
+    setores = Setor.objects.all()
+    
+    if request.method == "GET":
+        return render(request, 'cadastrar_operador.html', {
+            'setores': setores,
+            'status': Operador.status_choices
+        })
+
+    elif request.method == "POST":
+        nome_operador = request.POST.get('nome_operador')
+        setor_id = request.POST.get('setor')
+        email = request.POST.get('email')
+        status = "ATV"
+        setor = Setor.objects.get(id=setor_id)
+
+        operador = Operador(
+            nome_operador=nome_operador,
+            setor=setor,
+            email=email,
+            status=status,
+        )
+        
+        try:
+            operador.save()
+            messages.add_message(request, constants.SUCCESS, 'Operador criado com sucesso')
+        except Exception as e:
+            print(e)  
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+        
+        return redirect('cadastrar_operador')
+    
+def listar_operadores(request):
+    if request.method == "GET":
+        operadores = Operador.objects.order_by('id')
+        
+    return render(request, 'listar_operadores.html', {'operadores': operadores})
+

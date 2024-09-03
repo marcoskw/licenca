@@ -2,8 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 
@@ -11,7 +9,7 @@
 {% include "partials/barra_navegacao.html" %}
 
 <div class="container my-5">
-    <h2 class="mb-4">Cadastro de Usuário</h2>
+    <h2 class="mb-4">Cadastro de Operador</h2>
     
     {% if messages %}
         {% for message in messages %}
@@ -26,12 +24,12 @@
 
     <div class="row">
         <div class="col-md-8">
-            <form action="{% url 'cadastrar_usuario' %}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'cadastrar_operador' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
                 <div class="form-group">
-                    <label for="nome_usuario">Nome do Colaborador:</label>
-                    <input type="text" id="nome_usuario" name="nome_usuario" class="form-control" placeholder="Digite o nome do colaborador..." required>
+                    <label for="nome_operador">Nome do Operador:</label>
+                    <input type="text" id="nome_operador" name="nome_operador" class="form-control" placeholder="Digite o nome do colaborador..." required>
                 </div>
 
                 <div class="form-group">

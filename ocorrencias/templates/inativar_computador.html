@@ -2,8 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 
@@ -30,7 +28,7 @@
                 <br>
                 <select name="computador" class="form-control">
                     {% for computador in computadores %}
-                        <option value="{{ computador.id }}">{{computador.id }} - {{ computador.nome_rede }} - {{ computador.setor }}  - {{ computador.usuario }} - {{ computador.marca }}- {{ computador.modelo }} - {{ computador.serial_number }}</option>
+                        <option value="{{ computador.id }}">{{computador.id }} - {{ computador.nome_rede }} - {{ computador.setor }}  - {{ computador.operador }} - {{ computador.marca }}- {{ computador.modelo }} - {{ computador.serial_number }}</option>
                     {% endfor %}
                 </select>
                 <br>         

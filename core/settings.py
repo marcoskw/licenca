@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'parametros',
     'wiki',
-    'usuarios',
     'equipamentos',
     'empresa',
     'ocorrencias',

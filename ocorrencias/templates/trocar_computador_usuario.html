@@ -2,8 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 
@@ -14,7 +12,7 @@
     <div class="container">
         <br>
         <br>
-        <p class="h2">Ocorrência - Atualizar Usuário do Computador</p>
+        <p class="h2">Ocorrência - Atualizar Operador do Computador</p>
         {% if messages %}
             {% for message in messages %}
                 <section class="alert {{message.tags}}">
@@ -24,14 +22,14 @@
         {% endif %}
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'trocar_computador_usuario' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <form action="{% url 'trocar_computador_operador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <br>
                 <label>Selecione o Computador:</label>
                 <br>
                 <select name="computador" class="form-control">
                     {% for computador in computadores %}
                         <option value="{{ computador.id }}">
-                            {{ computador.usuario }} - {{ computador.nome_rede }} - {{ computador.modelo }} - {{ computador.serial_number }}</option>
+                            {{ computador.operador }} - {{ computador.nome_rede }} - {{ computador.modelo }} - {{ computador.serial_number }}</option>
                     {% endfor %}
                 </select>
                 <!--
@@ -44,11 +42,11 @@
                     {% endfor %}
                 </select>-->
                 <br>     
-                <label>Selecione o Novo Usuário:</label>
+                <label>Selecione o Novo Operador:</label>
                 <br>
-                <select name="usuario" class="form-control">
-                    {% for usuario in usuarios %}
-                        <option value="{{ usuario.id }}">{{ usuario.nome_usuario }}</option>
+                <select name="operador" class="form-control">
+                    {% for operador in operadores %}
+                        <option value="{{ operador.id }}">{{ operador.nome_operador }}</option>
                     {% endfor %}
                 </select>
                 <br>                       

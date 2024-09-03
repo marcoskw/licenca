@@ -2,8 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-    <link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 {% block 'body' %}
@@ -49,10 +47,10 @@
             </div>
 
             <div class="col-md-6 mb-3">
-                <label for="usuario">Usuário:</label>
-                <select id="usuario" name="usuario" class="form-control">
-                    {% for usuario in usuarios %}
-                        <option value="{{ usuario.id }}">{{ usuario.nome_usuario }}</option>
+                <label for="operador">Operador:</label>
+                <select id="operador" name="operador" class="form-control">
+                    {% for operador in operadores %}
+                        <option value="{{ operador.id }}">{{ operador.nome_operador }}</option>
                     {% endfor %}
                 </select>
             </div>

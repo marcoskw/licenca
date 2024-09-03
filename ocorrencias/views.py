@@ -1,92 +1,92 @@
 from datetime import datetime
 from django.shortcuts import redirect, render
 from equipamentos.models import Computador
-from ocorrencias.models import OcorrenciaUsuario, OcorrenciaComputador
-from usuarios.models import Usuario, Setor
+from ocorrencias.models import OcorrenciaOperador, OcorrenciaComputador
+from empresa.models import Operador, Setor
 
 from django.contrib import messages
 from django.contrib.messages import constants
 
-# Usuários
-def ocorrencias_usuarios(request): 
-    return render(request, 'ocorrencias_usuarios.html')
+# Operadores
+def ocorrencias_operadores(request): 
+    return render(request, 'ocorrencias_operadores.html')
 
-def inativar_usuario(request):
-    usuarios = Usuario.objects.all()
+def inativar_operador(request):
+    operadores = Operador.objects.all()
 
     if request.method == "GET":
-        return render(request,'inativar_usuario.html', {'usuarios': usuarios})
+        return render(request,'inativar_operador.html', {'operadores': operadores})
 
     elif request.method == "POST":
-        usuario_selecionado = request.POST.get('usuario')
+        operador_selecionado = request.POST.get('operador')
         observacoes = request.POST.get('observacoes')
         tipo_ocorrencia = 1
-        usuario = Usuario.objects.get(id=usuario_selecionado)
+        operador = Operador.objects.get(id=operador_selecionado)
         data = datetime.now()
 
-        ocorrencia = OcorrenciaUsuario(
+        ocorrencia = OcorrenciaOperador(
             tipo_ocorrencia=tipo_ocorrencia,
-            usuario=usuario,
+            operador=operador,
             data=data,
             setor=None,
             observacoes=observacoes,
         )
 
         try:
-            usuario.status = 'INT'
+            operador.status = 'INT'
             ocorrencia.save()
-            usuario.save()
+            operador.save()
 
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-            return redirect('inativar_usuario')   
+            return redirect('inativar_operador')   
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrencia criada com sucesso')
-        return redirect('inativar_usuario')   
+        return redirect('inativar_operador')   
 
-def atualizar_setor_usuario(request):
-    usuarios = Usuario.objects.all()
+def atualizar_setor_operador(request):
+    operadores = Operador.objects.all()
     setores = Setor.objects.all()
 
     if request.method == "GET":
-        return render(request,'atualizar_setor_usuario.html', {
-            'usuarios': usuarios,
+        return render(request,'atualizar_setor_operador.html', {
+            'operadores': operadores,
             'setores': setores})
 
     elif request.method == "POST":
-        usuario_selecionado = request.POST.get('usuario')
+        operador_selecionado = request.POST.get('operador')
         observacoes = request.POST.get('observacoes')
         setor_id= request.POST.get('setor_novo')
         tipo_ocorrencia = 2
-        usuario = Usuario.objects.get(id=usuario_selecionado)
+        operador = Operador.objects.get(id=operador_selecionado)
         setor = Setor.objects.get(id=setor_id)
 
-        ocorrencia = OcorrenciaUsuario(
+        ocorrencia = OcorrenciaOperador(
             tipo_ocorrencia=tipo_ocorrencia,
-            usuario=usuario,
+            operador=operador,
             setor=setor,
             observacoes=observacoes,
         )
 
         try:
-            usuario.setor = setor
+            operador.setor = setor
             ocorrencia.save()
-            usuario.save()
+            operador.save()
 
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-            return redirect('atualizar_setor_usuario')   
+            return redirect('atualizar_setor_operador')   
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrencia criada com sucesso')
-        return redirect('atualizar_setor_usuario')   
+        return redirect('atualizar_setor_operador')   
 
-def listar_ocorrencias_usuarios(request):
-    ocorrencias = OcorrenciaUsuario.objects.all()
+def listar_ocorrencias_operadores(request):
+    ocorrencias = OcorrenciaOperador.objects.all()
 
-    tipo_ocorrencia_choices = dict(OcorrenciaUsuario.tipo_ocorrencia_choices)
+    tipo_ocorrencia_choices = dict(OcorrenciaOperador.tipo_ocorrencia_choices)
     
     if request.method == "GET":  
-        return render(request, 'listar_ocorrencias_usuarios.html', {
+        return render(request, 'listar_ocorrencias_operadores.html', {
             'ocorrencias': ocorrencias, 
             'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
 
@@ -113,7 +113,7 @@ def inativar_computador(request):
             computador=computador,
             data=data,
             observacoes=observacoes,
-            usuario=None       
+            operador=None       
         )
 
         try:
@@ -129,24 +129,24 @@ def inativar_computador(request):
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
         return redirect('inativar_computador')   
 
-def trocar_computador_usuario(request):
+def trocar_computador_operador(request):
     computadores = Computador.objects.all()
-    usuarios = Usuario.objects.all()
+    operadores = Operador.objects.all()
 
     if request.method == "GET":
-        return render(request,'trocar_computador_usuario.html', {
+        return render(request,'trocar_computador_operadores.html', {
             'computadores': computadores,
-            'usuarios': usuarios})
+            'operadores': operadores})
     
     elif request.method == "POST":
 
         computador_id = request.POST.get('computador')
-        usuario_id = request.POST.get('usuario')
+        operador_id = request.POST.get('operador')
         observacoes = request.POST.get('observacoes')    
 
         tipo_ocorrencia = 2
         computador = Computador.objects.get(id=computador_id)         
-        usuario = Usuario.objects.get(id=usuario_id)
+        operador = Operador.objects.get(id=operador_id)
         data = datetime.now()
 
         ocorrencia = OcorrenciaComputador(
@@ -154,11 +154,11 @@ def trocar_computador_usuario(request):
             computador=computador,
             data=data,
             observacoes=observacoes,
-            usuario=usuario,
+            operador=operador,
         )
 
         try:
-            computador.usuario = usuario
+            computador.operador = operador
             ocorrencia.save()
             computador.save()
 
@@ -166,10 +166,10 @@ def trocar_computador_usuario(request):
             print(f"Erro: {e}")
             print(ocorrencia, computador)
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-            return redirect('trocar_computador_usuario')   
+            return redirect('trocar_computador_operador')   
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
-        return redirect('trocar_computador_usuario')   
+        return redirect('trocar_computador_operador')   
 
 def listar_ocorrencias_equipamentos(request):
     ocorrencias = OcorrenciaComputador.objects.all()

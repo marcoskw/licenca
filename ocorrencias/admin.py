@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from ocorrencias.models import OcorrenciaUsuario
+from ocorrencias.models import OcorrenciaOperador
 
 # Register your models here.
-admin.site.register(OcorrenciaUsuario)
+admin.site.register(OcorrenciaOperador)

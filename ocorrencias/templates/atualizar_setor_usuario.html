@@ -2,8 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 
@@ -14,7 +12,7 @@
     <div class="container">
         <br>
         <br>
-        <p class="h2">Ocorrência - Atualizar Setor de Usuário</p>
+        <p class="h2">Ocorrência - Atualizar Setor de Operador</p>
         {% if messages %}
             {% for message in messages %}
                 <section class="alert {{message.tags}}">
@@ -24,13 +22,13 @@
         {% endif %}
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'atualizar_setor_usuario' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
+                <form action="{% url 'atualizar_setor_operador' %}" method="POST" enctype='multipart/form-data'>{% csrf_token %}
                 <br>
-                <label>Selecione o usuário:</label>
+                <label>Selecione o Operador:</label>
                 <br>
-                <select name="usuario" class="form-control">
-                    {% for usuario in usuarios %}
-                        <option value="{{ usuario.id }}">{{ usuario.nome_usuario }}</option>
+                <select name="operador" class="form-control">
+                    {% for operador in operadores %}
+                        <option value="{{ operador.id }}">{{ operador.nome_operador }}</option>
                     {% endfor %}
                 </select>
                 <!--
@@ -43,7 +41,7 @@
                     {% endfor %}
                 </select>-->
                 <br>     
-                <label>Novo Setor do usuário:</label>
+                <label>Novo Setor do Operador:</label>
                 <br>
                 <select name="setor_novo" class="form-control">
                     {% for setor_n in setores %}

@@ -19,7 +19,7 @@
                 <th scope="col">Id</th>
                 <th scope="col">Data</th>
                 <th scope="col">Tipo Ocorrência</th>
-                <th scope="col">Usuário</th>
+                <th scope="col">Operador</th>
                 <th scope="col">Setor</th>
                 <th scope="col">Observações</th>
             </tr>
@@ -31,12 +31,12 @@
                     <td>{{ ocorrencia.data }}</td>
                     <td>
                         {% if ocorrencia.tipo_ocorrencia == '1' %}
-                            INATIVAR USUÁRIO
+                            INATIVAR OPERADOR
                         {% elif ocorrencia.tipo_ocorrencia == '2' %}
-                            TROCAR USUÁRIO DE SETOR
+                            TROCAR OPERADOR DE SETOR
                         {% endif %}
                     </td>
-                    <td>{{ ocorrencia.usuario }}</td>
+                    <td>{{ ocorrencia.operador }}</td>
                     <td>
                         {% if setor %}
                             {{ ocorrencia.setor.nome_setor }}

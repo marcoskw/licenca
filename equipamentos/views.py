@@ -1,13 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import SistemaOperacional,Software,TipoEquipamento, Setor, Computador, Marca
-from usuarios.models import Usuario
 
-from empresa.models import Empresa, Setor
+from empresa.models import Empresa, Operador, Setor
 from django.contrib import messages
 from django.contrib.messages import constants
 
-# Create your views here.
+# MARCAS
 def cadastrar_marca(request):
     if request.method == "GET":
         return render(request,'cadastrar_marca.html')
@@ -33,6 +32,7 @@ def listar_marcas(request):
         
     return render(request, 'listar_marcas.html', {'marcas': marcas})
 
+# SOFTWARES
 def cadastrar_software(request):
     if request.method == "GET":
         return render(request,'cadastrar_software.html')
@@ -58,6 +58,8 @@ def listar_softwares(request):
     
     return render(request, 'listar_softwares.html', {'softwares':softwares})
 
+
+# SISTEMAS OPERACIONAIS
 def cadastrar_sistema_operacional(request):
     if request.method == "GET":
         return render(request,'cadastrar_sistema_operacional.html')
@@ -83,10 +85,11 @@ def listar_sistemas_operacionais(request):
 
     return render(request, 'listar_sistemas_operacionais.html', {'sos': sos})
 
+# COMPUTADORES
 def cadastrar_computador(request):
     empresas = Empresa.objects.all()
     setores = Setor.objects.all()
-    usuarios = Usuario.objects.all()
+    operadores = Operador.objects.all()
     tipo_equipamentos = TipoEquipamento.objects.all()
     marcas = Marca.objects.all()
     sistemas_operacionais = SistemaOperacional.objects.all()
@@ -96,10 +99,10 @@ def cadastrar_computador(request):
         return render(request, 'cadastrar_computador.html', {
             'empresas': empresas,
             'setores':setores,
-            'usuarios': usuarios,
+            'operadores': operadores,
             'tipo_equipamentos': tipo_equipamentos,
             'marcas': marcas,
-            'status': Usuario.status_choices,
+            'status': Operador.status_choices,
             'tipo_armazenamentos': Computador.tipo_armazenamento_choices,
             'sistemas_operacionais': sistemas_operacionais,
             'softwares': softwares,
@@ -109,7 +112,7 @@ def cadastrar_computador(request):
         setor_id = request.POST.get('setor')
         nome_rede = request.POST.get('nome_rede')
         status = 'ATV'
-        usuario_id = request.POST.get('usuario')
+        operador_id = request.POST.get('operador')
         tipo_equipamento_id = request.POST.get('tipo_equipamento')
         marca_id = request.POST.get('marca')
         modelo = request.POST.get('modelo')
@@ -126,7 +129,7 @@ def cadastrar_computador(request):
         observacoes = request.POST.get('observacoes')
 
         setor = Setor.objects.get(id=setor_id)
-        usuario = Usuario.objects.get(id=usuario_id)
+        operador = Operador.objects.get(id=operador_id)
         tipo_equipamento = TipoEquipamento.objects.get(id=tipo_equipamento_id)
         marca = Marca.objects.get(id=marca_id)
         sistema_operacional = SistemaOperacional.objects.get(id=sistema_operacional_id)
@@ -136,7 +139,7 @@ def cadastrar_computador(request):
                 setor=setor,
                 nome_rede=nome_rede,
                 status=status,
-                usuario=usuario,
+                operador=operador,
                 tipo_equipamento=tipo_equipamento,
                 marca=marca,
                 modelo=modelo,
@@ -161,3 +164,8 @@ def cadastrar_computador(request):
         
         messages.add_message(request, constants.SUCCESS, 'Sistema Operacional criado com sucesso')
         return redirect('/equipamentos/cadastrar_computador') 
+
+def listar_computadores(request):
+    if request.method == "GET":
+        computadores = Computador.objects.order_by('nome_rede')
+    return render(request, 'listar_computadores.html', {'computadores':computadores})

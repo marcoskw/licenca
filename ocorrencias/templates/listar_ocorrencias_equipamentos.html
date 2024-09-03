@@ -2,9 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
-<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 {% block 'body' %}
@@ -19,7 +16,7 @@
                 <th class="cabecalho" scope="col">Data</th>                    
                 <th class="cabecalho" scope="col">Tipo Ocorrência</th>
                 <th class="cabecalho" scope="col">Computador</th>                                  
-                <th class="cabecalho" scope="col">Usuario</th>     
+                <th class="cabecalho" scope="col">Operador</th>     
                 <th class="cabecalho" scope="col">Setor</th>    
                 <th class="cabecalho" scope="col">Observações</th>                                                                             
               </tr>
@@ -35,7 +32,7 @@
                           {% endif %}
                         </td>
                         <td class="linha">{{ ocorrencia.computador }}</td>
-                        <td class="linha">{{ ocorrencia.usuario }}</td>
+                        <td class="linha">{{ ocorrencia.operador }}</td>
                         <td class="linha">{{ ocorrencia.setor }}</td>
                         <td class="linha">{{ ocorrencia.observacoes }}</td>
                     </tr>

@@ -35,13 +35,13 @@
           <a class="dropdown-item" href="{% url 'cadastrar_setor' %}">Cadastro de Setor</a>
         </div>
       </li>
-      <!-- MENU USUÁRIOS -->
+      <!-- MENU Operadores -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Usuários
+          Operador
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-          <a class="dropdown-item" href="{% url 'cadastrar_usuario' %}">Cadastro de Usuário</a>
+          <a class="dropdown-item" href="{% url 'cadastrar_operador' %}">Cadastro de Operador</a>
         </div>
       </li>  
       <!-- MENU EQUIPAMENTOS -->
@@ -66,7 +66,7 @@
           Ocorrências
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
-          <a class="dropdown-item" href="{% url 'ocorrencias_usuarios' %}">Usuários</a>      
+          <a class="dropdown-item" href="{% url 'ocorrencias_operadores' %}">Operadores</a>      
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'ocorrencias_equipamentos' %}">Equipamentos</a>  
         </div>
@@ -80,9 +80,9 @@
           <a class="dropdown-item" href="{% url 'listar_empresas' %}">Listar Empresas</a>
           <a class="dropdown-item" href="{% url 'listar_setores' %}">Listar Setores</a>
           <div class="dropdown-divider"></div>          
-          <a class="dropdown-item" href="{% url 'listar_usuarios' %}">Listar Usuários</a>    
+          <a class="dropdown-item" href="{% url 'listar_operadores' %}">Listar Operador</a>    
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'ocorrencias_equipamentos' %}">Equipamentos</a>  
+          <a class="dropdown-item" href="{% url 'listar_computadores' %}">Listar Computadores</a>  
           <a class="dropdown-item" href="{% url 'listar_marcas' %}">Listar Marcas</a> 
           <a class="dropdown-item" href="{% url 'listar_softwares' %}">Listar Softwares</a>           
           <a class="dropdown-item" href="{% url 'listar_sistemas_operacionais' %}">Listar Sistema Operacionais</a>                     

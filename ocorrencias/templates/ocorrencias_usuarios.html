@@ -2,9 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
-<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 {% block 'body' %}
@@ -12,19 +9,19 @@
     <br>
     <br>
     <div class="container dark-color container_empresas">
-        <h1 class="h1">Ocorrência de Usuários</h1>
+        <h1 class="h1">Ocorrência de Operadores</h1>
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url "inativar_usuario" %}">Inativar Usuário</a>
+                <a href="{% url "inativar_operador" %}">Inativar Operador</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url "atualizar_setor_usuario" %}">Atualizar Setor de Usuário</a>    
+                <a href="{% url "atualizar_setor_operador" %}">Atualizar Setor de Operador</a>    
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="#"></a>    
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url "listar_ocorrencias_usuarios" %}">Listar Ocorrências de Usuários</a>    
+                <a href="{% url "listar_ocorrencias_operadores" %}">Listar Ocorrências de Operadores</a>    
             </li>
         </ul>
     </div>

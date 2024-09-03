@@ -8,7 +8,7 @@
 {% include "partials/barra_navegacao.html" %}
 
 <div class="container my-5">
-    <h2 class="mb-4">Lista de Marcas</h2>
+    <h2 class="mb-4">Lista de Computadores</h2>
 
     {% if messages %}
         <div class="alert-container mb-4">
@@ -25,15 +25,23 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">ID</th>
+                    <th scope="col">Nome Rede</th>
+                    <th scope="col">Operador</th>
                     <th scope="col">Marca</th>
-                    <th scope="col">Ação</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Serial Number</th>      
+                    <th scope="col">Ação</th>                                                       
                 </tr>
             </thead>
             <tbody>
-                {% for marca in marcas %}
+                {% for computador in computadores %}
                     <tr>
-                        <td>{{ marca.id }}</td>
-                        <td>{{ marca.nome_marca }}</td>
+                        <td>{{ computador.id }}</td>
+                        <td>{{ computador.nome_rede }}</td>
+                        <td>{{ computador.operador }}</td>
+                        <td>{{ computador.marca }}</td>
+                        <td>{{ computador.modelo }}</td>
+                        <td>{{ computador.serial_number }}</td>                                                                                                
                         <td>
                             <a href="#" class="btn btn-warning btn-sm" role="button" aria-label="Editar marca {{ marca.nome_marca }}">
                                 Editar

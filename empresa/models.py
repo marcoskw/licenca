@@ -24,3 +24,18 @@ class Setor(models.Model):
 
     def __str__(self):
         return self.nome_setor
+
+class Operador(models.Model):
+    status_choices = (
+        ('ATV', 'Ativo'),
+        ('INT', 'Inativo'),
+        ('AFT', 'Afastado'),
+    )
+    nome_operador = models.CharField(max_length=150)
+    setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
+    email = models.EmailField(null=True, blank=True)
+    status = models.CharField(max_length=3, choices=status_choices, default=('ATV'))
+
+    def __str__(self):
+        return self.nome_operador
+    

@@ -2,8 +2,7 @@ from django.utils import timezone
 
 from django.db import models
 
-from empresa.models import Setor
-from usuarios.models import Usuario
+from empresa.models import Setor, Operador
 
 
 # Create your models here.
@@ -42,7 +41,7 @@ class Equipamento(models.Model):
     nome_rede = models.CharField(max_length=150)
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
     status = models.CharField(max_length=3, choices=status_choices, default=("ATV"))
-    usuario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
+    operador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING)
     tipo_equipamento = models.ForeignKey(TipoEquipamento, on_delete=models.DO_NOTHING)
     marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
     modelo = models.CharField(max_length=150)

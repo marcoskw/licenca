@@ -2,9 +2,6 @@
 {% load static %}
 {% block 'head' %}
 
-<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
-<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
-
 {% endblock 'head' %}
 
 {% block 'body' %}
@@ -18,7 +15,7 @@
                 <a href="{% url "inativar_computador" %}">Inativar Computador</a>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="{% url "trocar_computador_usuario" %}">Trocar Usuário de um Computador</a>    
+            <a href="{% url "trocar_computador_operador" %}">Trocar Operador de um Computador</a>    
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               <a href="#">Recolher computador para setor da TI</a>    
