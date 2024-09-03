@@ -20,7 +20,7 @@ class OcorrenciaUsuario(models.Model):
 class OcorrenciaComputador(models.Model):
     tipo_ocorrencia_choices = (
         ('1', 'INATIVAR COMPUTADOR'),               
-        ('2', 'TROCAR COMPUTADOR DE USUARIO'),
+        ('2', 'TROCAR USUÁRIO DE COMPUTADOR'),
         ('3', 'RECOLHER COMPUTADOR PARA T.I.'),  
         ('4', 'ATUALIZAR SISTEMA OPERACIONAL'),
         ('5', 'ATUALIZAR SOFTWARE'),                     

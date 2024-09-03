@@ -98,7 +98,6 @@ def ocorrencias_equipamentos(request):
 def inativar_computador(request):
 
     computadores = Computador.objects.all()
-    print(computadores)
     if request.method == "GET":
         return render(request,'inativar_computador.html', {'computadores': computadores})
 
@@ -129,6 +128,48 @@ def inativar_computador(request):
     
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
         return redirect('inativar_computador')   
+
+def trocar_computador_usuario(request):
+    computadores = Computador.objects.all()
+    usuarios = Usuario.objects.all()
+
+    if request.method == "GET":
+        return render(request,'trocar_computador_usuario.html', {
+            'computadores': computadores,
+            'usuarios': usuarios})
+    
+    elif request.method == "POST":
+
+        computador_id = request.POST.get('computador')
+        usuario_id = request.POST.get('usuario')
+        observacoes = request.POST.get('observacoes')    
+
+        tipo_ocorrencia = 2
+        computador = Computador.objects.get(id=computador_id)         
+        usuario = Usuario.objects.get(id=usuario_id)
+        data = datetime.now()
+
+        ocorrencia = OcorrenciaComputador(
+            tipo_ocorrencia=tipo_ocorrencia,
+            computador=computador,
+            data=data,
+            observacoes=observacoes,
+            usuario=usuario,
+        )
+
+        try:
+            computador.usuario = usuario
+            ocorrencia.save()
+            computador.save()
+
+        except Exception as e:
+            print(f"Erro: {e}")
+            print(ocorrencia, computador)
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect('trocar_computador_usuario')   
+        
+        messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
+        return redirect('trocar_computador_usuario')   
 
 def listar_ocorrencias_equipamentos(request):
     ocorrencias = OcorrenciaComputador.objects.all()
