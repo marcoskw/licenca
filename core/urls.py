@@ -24,4 +24,5 @@ urlpatterns = [
     path('wiki/', include('wiki.urls')),    
     path('ocorrencias/', include('ocorrencias.urls')),
     path('', include('parametros.urls')),
+    path('', include('usuarios.urls')),
 ]

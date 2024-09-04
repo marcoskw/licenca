@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'wiki',
     'equipamentos',
     'empresa',
+    'usuarios',
     'ocorrencias',
 ]
 
