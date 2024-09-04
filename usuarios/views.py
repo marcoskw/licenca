@@ -32,6 +32,9 @@ def logout(request):
         return HttpResponseNotAllowed(['POST'])
     
 def cadastrar_usuario(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     if request.method == "GET":
         return render(request, 'cadastrar_usuario.html')
     

@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import SistemaOperacional,Software,TipoEquipamento, Setor, Computador, Marca
 
@@ -6,8 +5,12 @@ from empresa.models import Empresa, Operador, Setor
 from django.contrib import messages
 from django.contrib.messages import constants
 
+
 # MARCAS
 def cadastrar_marca(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         return render(request,'cadastrar_marca.html')
     
@@ -27,13 +30,20 @@ def cadastrar_marca(request):
         return redirect('/equipamentos/cadastrar_marca')
 
 def listar_marcas(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         marcas = Marca.objects.order_by('id')
         
     return render(request, 'listar_marcas.html', {'marcas': marcas})
 
+
 # SOFTWARES
 def cadastrar_software(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         return render(request,'cadastrar_software.html')
     
@@ -53,6 +63,9 @@ def cadastrar_software(request):
         return redirect('/equipamentos/cadastrar_software')
     
 def listar_softwares(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         softwares = Software.objects.order_by('id')
     
@@ -61,6 +74,9 @@ def listar_softwares(request):
 
 # SISTEMAS OPERACIONAIS
 def cadastrar_sistema_operacional(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         return render(request,'cadastrar_sistema_operacional.html')
     
@@ -80,13 +96,20 @@ def cadastrar_sistema_operacional(request):
         return redirect('/equipamentos/cadastrar_sistema_operacional')
     
 def listar_sistemas_operacionais(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         sos = SistemaOperacional.objects.order_by('id')
 
     return render(request, 'listar_sistemas_operacionais.html', {'sos': sos})
 
+
 # COMPUTADORES
 def cadastrar_computador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     empresas = Empresa.objects.all()
     setores = Setor.objects.all()
     operadores = Operador.objects.all()
@@ -166,6 +189,9 @@ def cadastrar_computador(request):
         return redirect('/equipamentos/cadastrar_computador') 
 
 def listar_computadores(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         computadores = Computador.objects.order_by('nome_rede')
     return render(request, 'listar_computadores.html', {'computadores':computadores})

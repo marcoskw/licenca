@@ -9,9 +9,15 @@ from django.contrib.messages import constants
 
 # Operadores
 def ocorrencias_operadores(request): 
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
     return render(request, 'ocorrencias_operadores.html')
 
 def inativar_operador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     operadores = Operador.objects.all()
 
     if request.method == "GET":
@@ -45,6 +51,9 @@ def inativar_operador(request):
         return redirect('inativar_operador')   
 
 def atualizar_setor_operador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     operadores = Operador.objects.all()
     setores = Setor.objects.all()
 
@@ -81,6 +90,9 @@ def atualizar_setor_operador(request):
         return redirect('atualizar_setor_operador')   
 
 def listar_ocorrencias_operadores(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
     ocorrencias = OcorrenciaOperador.objects.all()
 
     tipo_ocorrencia_choices = dict(OcorrenciaOperador.tipo_ocorrencia_choices)
@@ -93,10 +105,15 @@ def listar_ocorrencias_operadores(request):
 
 # Equipamentos
 def ocorrencias_equipamentos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     return render(request, 'ocorrencias_equipamentos.html')
 
 def inativar_computador(request):
-
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     computadores = Computador.objects.all()
     if request.method == "GET":
         return render(request,'inativar_computador.html', {'computadores': computadores})
@@ -130,6 +147,9 @@ def inativar_computador(request):
         return redirect('inativar_computador')   
 
 def trocar_computador_operador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     computadores = Computador.objects.all()
     operadores = Operador.objects.all()
 
@@ -172,6 +192,9 @@ def trocar_computador_operador(request):
         return redirect('trocar_computador_operador')   
 
 def listar_ocorrencias_equipamentos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     ocorrencias = OcorrenciaComputador.objects.all()
 
     tipo_ocorrencia_choices = dict(OcorrenciaComputador.tipo_ocorrencia_choices)

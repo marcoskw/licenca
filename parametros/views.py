@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime
 
 # Create your views here.
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     current_time = datetime.now()
     if request.user.is_authenticated:
         first_name = request.user.first_name
@@ -16,7 +19,13 @@ def home(request):
     return render(request, 'home.html', context)
 
 def sobre(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     return render(request, 'sobre.html')
 
 def parametros(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
     return render(request, 'parametros.html')

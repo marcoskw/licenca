@@ -7,6 +7,9 @@ from .models import Empresa, Operador, Setor
 
 # Create your views here.
 def cadastrar_empresa(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
     if request.method == "GET":
             return render(request, 'cadastrar_empresa.html')
             
@@ -48,6 +51,9 @@ def cadastrar_empresa(request):
         return redirect('/empresa/cadastrar_empresa')
      
 def cadastrar_setor(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     empresas = Empresa.objects.all()
     setor = Setor()
 
@@ -73,18 +79,27 @@ def cadastrar_setor(request):
     return redirect('/empresa/cadastrar_setor')
 
 def listar_setores(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         setores = Setor.objects.order_by('id')
         
     return render(request, 'listar_setores.html', {'setores': setores})
 
 def listar_empresas(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         empresas = Empresa.objects.order_by('id')
         
     return render(request, 'listar_empresas.html', {'empresas': empresas})    
 
 def cadastrar_operador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     setores = Setor.objects.all()
     
     if request.method == "GET":
@@ -117,8 +132,10 @@ def cadastrar_operador(request):
         return redirect('cadastrar_operador')
     
 def listar_operadores(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
     if request.method == "GET":
         operadores = Operador.objects.order_by('id')
         
     return render(request, 'listar_operadores.html', {'operadores': operadores})
-
