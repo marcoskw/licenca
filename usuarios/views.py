@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
-
-from django.http import HttpResponse
-from django.core.exceptions import ValidationError
+from django.http import HttpResponseNotAllowed
 from django.contrib.auth.models import User
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.contrib.messages import constants
-from django.contrib import auth
-
+from django.contrib.auth import logout as auth_logout
 
 # Create your views here.
 def login(request):
@@ -26,8 +23,14 @@ def login(request):
         else:
             messages.add_message(request, constants.ERROR, 'Usuário ou senha inválido!')
             return redirect('/login')
-        
 
+def logout(request):
+    if request.method == 'POST':
+        auth_logout(request)
+        return redirect('login')
+    else:
+        return HttpResponseNotAllowed(['POST'])
+    
 def cadastrar_usuario(request):
     if request.method == "GET":
         return render(request, 'cadastrar_usuario.html')
