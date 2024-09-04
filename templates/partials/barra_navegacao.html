@@ -15,6 +15,8 @@
           Arquivo
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+          <a class="dropdown-item" href="{% url 'cadastrar_usuario' %}">Cadastrar Usuário</a>
+          <div class="dropdown-divider"></div>          
           <a class="dropdown-item" href="{% url 'sobre' %}">Sobre</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'parametros' %}">Parâmetros</a>
@@ -66,6 +68,10 @@
           <a class="dropdown-item" href="{% url 'ocorrencias_equipamentos' %}">Equipamentos</a>
         </div>
       </li>
+      <!-- MENU WIKI -->
+      <li class="nav-item">
+        <a class="nav-link" href="#">Wiki</a>
+      </li>         
       <!-- MENU RELATÓRIOS -->
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink6" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -83,19 +89,11 @@
           <a class="dropdown-item" href="{% url 'listar_sistemas_operacionais' %}">Listar Sistemas Operacionais</a>
         </div>
       </li>
-      <!-- MENU WIKI -->
-      <li class="nav-item">
-        <a class="nav-link" href="#">Wiki</a>
-      </li>
-      <!-- MENU AJUDA -->
-      <li class="nav-item">
-        <a class="nav-link" href="#">Ajuda</a>
-      </li>
     </ul>
     <!-- FORMULÁRIO DE LOGOUT -->
     <form class="form-inline ml-auto" action="{% url 'logout' %}" method="post">
       {% csrf_token %}
-      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Sair</button>
     </form>
   </div>
 </nav>

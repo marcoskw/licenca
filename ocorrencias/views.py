@@ -154,7 +154,7 @@ def trocar_computador_operador(request):
     operadores = Operador.objects.all()
 
     if request.method == "GET":
-        return render(request,'trocar_computador_operadores.html', {
+        return render(request,'trocar_computador_operador.html', {
             'computadores': computadores,
             'operadores': operadores})
     
