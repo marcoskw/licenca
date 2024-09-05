@@ -123,7 +123,10 @@
 
             <div class="col-md-6 mb-3">
                 <label for="so_serial_cmd">Sistema Operacional - CMD:</label>
-                <input type="text" id="so_serial_cmd" name="so_serial_cmd" placeholder="Digite o serial..." class="form-control">
+                <div class="input-group">
+                    <input type="text" id="so_serial_cmd" name="so_serial_cmd" placeholder="Digite o serial..." class="form-control">
+                    <button class="btn btn-secondary" type="button" onclick="copyCommand()">Copiar Comando</button>
+                </div>
             </div>
 
             <div class="col-md-6 mb-3">
@@ -217,6 +220,34 @@ function addSoftwareRow() {
             <input type="file" name="nf_software" class="form-control">
         </td>
     `;
+}
+
+function copyCommand() {
+    // O comando que queremos copiar
+    const command = 'wmic path softwarelicensingservice get OA3xOriginalProductKey';
+
+    // Cria um elemento textarea temporário para copiar o comando
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = command;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    tempTextArea.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+    try {
+        // Copia o comando para a área de transferência
+        navigator.clipboard.writeText(tempTextArea.value)
+            .then(() => {
+                alert('Comando copiado para a área de transferência!');
+            })
+            .catch(err => {
+                console.error('Erro ao copiar comando: ', err);
+            });
+    } catch (err) {
+        console.error('Erro ao copiar comando: ', err);
+    } finally {
+        // Remove o elemento textarea temporário
+        document.body.removeChild(tempTextArea);
+    }
 }
 </script>
 {% endblock 'body' %}
