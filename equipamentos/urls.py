@@ -16,4 +16,5 @@ urlpatterns = [
     # computador
     path('cadastrar_computador/', views.cadastrar_computador, name="cadastrar_computador"),
     path('listar_computadores/', views.listar_computadores, name='listar_computadores'),
+    path('detalhes/<int:id>/', views.detalhe_computador, name='detalhe_computador'),
 ]

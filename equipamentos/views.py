@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import SistemaOperacional,Software,TipoEquipamento, Setor, Computador, Marca
+from django.shortcuts import get_object_or_404, render, redirect
+from .models import SistemaOperacional,Software, SoftwareComputador,TipoEquipamento, Setor, Computador, Marca
 
 from empresa.models import Empresa, Operador, Setor
 from django.contrib import messages
@@ -151,11 +151,17 @@ def cadastrar_computador(request):
         nf_sistema_operacional = request.FILES.get('nf_sistema_operacional')
         observacoes = request.POST.get('observacoes')
 
+        software_id = request.POST.get('software')
+        serial_software = request.POST.get('serial_software')
+        nf_software = request.FILES.get('nf_software')
+
         setor = Setor.objects.get(id=setor_id)
         operador = Operador.objects.get(id=operador_id)
         tipo_equipamento = TipoEquipamento.objects.get(id=tipo_equipamento_id)
         marca = Marca.objects.get(id=marca_id)
         sistema_operacional = SistemaOperacional.objects.get(id=sistema_operacional_id)
+        software = Software.objects.get(id=software_id)
+
 
         try:   
             computador = Computador(
@@ -179,13 +185,20 @@ def cadastrar_computador(request):
                 observacoes=observacoes,
                 )
             
+            software_computador = SoftwareComputador(
+                computador = computador,
+                software = software,
+                serial=serial_software,
+                nf_software=nf_software,
+            )
             computador.save()
+            software_computador.save()
 
         except:
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
             return redirect('/equipamentos/cadastrar_computador') 
         
-        messages.add_message(request, constants.SUCCESS, 'Sistema Operacional criado com sucesso')
+        messages.add_message(request, constants.SUCCESS, 'Computador criado com sucesso')
         return redirect('/equipamentos/cadastrar_computador') 
 
 def listar_computadores(request):
@@ -195,3 +208,12 @@ def listar_computadores(request):
     if request.method == "GET":
         computadores = Computador.objects.order_by('nome_rede')
     return render(request, 'listar_computadores.html', {'computadores':computadores})
+
+def detalhe_computador(request, id):
+    computador = get_object_or_404(Computador, id=id)
+    softwares_computador = SoftwareComputador.objects.filter(computador=computador)
+
+
+    return render(request, 'detalhe_computador.html', {
+        'computador': computador, 
+        'softwares_computador': softwares_computador})

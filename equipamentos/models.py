@@ -78,5 +78,5 @@ class SoftwareComputador(models.Model):
     nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)  
     
     def __str__(self):
-        return self.computador
+        return self.serial
     

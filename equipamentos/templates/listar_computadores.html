@@ -43,8 +43,8 @@
                         <td>{{ computador.modelo }}</td>
                         <td>{{ computador.serial_number }}</td>                                                                                                
                         <td>
-                            <a href="#" class="btn btn-warning btn-sm" role="button" aria-label="Editar marca {{ marca.nome_marca }}">
-                                Editar
+                            <a href="{% url "detalhe_computador" computador.id %}" class="btn btn-warning btn-sm" role="button">
+                                Visualizar
                             </a>
                         </td>
                     </tr>
