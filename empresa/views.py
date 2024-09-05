@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
 
@@ -50,6 +50,21 @@ def cadastrar_empresa(request):
         messages.add_message(request, constants.SUCCESS, 'Empresa criada com sucesso')
         return redirect('/empresa/cadastrar_empresa')
      
+def listar_empresas(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
+    if request.method == "GET":
+        empresas = Empresa.objects.order_by('id')
+        
+    return render(request, 'listar_empresas.html', {'empresas': empresas})    
+
+def detalhes_empresa(request, id):
+    empresa = get_object_or_404(Empresa, id=id)
+    return render(request, 'detalhes_empresa.html', {'empresa': empresa})
+
+
+
 def cadastrar_setor(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -87,14 +102,6 @@ def listar_setores(request):
         
     return render(request, 'listar_setores.html', {'setores': setores})
 
-def listar_empresas(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-        
-    if request.method == "GET":
-        empresas = Empresa.objects.order_by('id')
-        
-    return render(request, 'listar_empresas.html', {'empresas': empresas})    
 
 def cadastrar_operador(request):
     if not request.user.is_authenticated:

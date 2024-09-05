@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+    <title>Detalhes do Computador</title>
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+    <div class="container my-5">
+        <h2 class="mb-4">Detalhes da Empresa</h2>
+        <div class="row">
+            <!-- Logo da Empresa -->
+            <div class="col-md-4 text-center">
+                {% if empresa.logo %}
+                    <img src="{{ empresa.logo.url }}" alt="Logo da Empresa" class="img-fluid" style="max-height: 200px;">
+                {% else %}
+                    <img src="{% static 'img/default_logo.png' %}" alt="Logo Padrão" class="img-fluid" style="max-height: 200px;">
+                {% endif %}
+            </div>
+
+            <!-- Dados da Empresa -->
+            <div class="col-md-8">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Nome da Empresa:</th>
+                            <td>{{ empresa.nome_empresa }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">CNPJ:</th>
+                            <td>{{ empresa.cnpj }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Endereço:</th>
+                            <td>{{ empresa.endereco }}, {{ empresa.numero }}{% if empresa.complemento %}, {{ empresa.complemento }}{% endif %}, {{ empresa.bairro }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Cidade/UF:</th>
+                            <td>{{ empresa.cidade }} - {{ empresa.uf }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Telefone:</th>
+                            <td>{{ empresa.telefone }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">E-mail:</th>
+                            <td>{{ empresa.email }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Site:</th>
+                            <td><a href="{{ empresa.site }}" target="_blank">{{ empresa.site }}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock 'body' %}

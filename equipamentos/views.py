@@ -209,11 +209,11 @@ def listar_computadores(request):
         computadores = Computador.objects.order_by('nome_rede')
     return render(request, 'listar_computadores.html', {'computadores':computadores})
 
-def detalhe_computador(request, id):
+def detalhes_computador(request, id):
     computador = get_object_or_404(Computador, id=id)
     softwares_computador = SoftwareComputador.objects.filter(computador=computador)
 
 
-    return render(request, 'detalhe_computador.html', {
+    return render(request, 'detalhes_computador.html', {
         'computador': computador, 
         'softwares_computador': softwares_computador})

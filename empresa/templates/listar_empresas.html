@@ -1,15 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block 'head' %}
-<title>Listar Empresa</title>
+
 {% endblock 'head' %}
 
 {% block 'body' %}
 {% include "partials/barra_navegacao.html" %}
-
 <div class="container my-5">
     <h2 class="mb-4">Lista de Empresas</h2>
-
     {% if messages %}
         {% for message in messages %}
             <div class="alert {{ message.tags }}">
@@ -35,7 +33,7 @@
                         <td>{{ empresa.nome_empresa }}</td>
                         <td>{{ empresa.cnpj }}</td>
                         <td>
-                            <a href="#" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url "detalhes_empresa" empresa.id %}" class="btn btn-warning btn-sm">Visualizar</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -26,7 +26,6 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Marca</th>
-                    <th scope="col">Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,11 +33,6 @@
                     <tr>
                         <td>{{ marca.id }}</td>
                         <td>{{ marca.nome_marca }}</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm" role="button" aria-label="Editar marca {{ marca.nome_marca }}">
-                                Editar
-                            </a>
-                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
