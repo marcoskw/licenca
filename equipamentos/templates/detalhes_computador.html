@@ -12,6 +12,16 @@
 
     <div class="row">
         <div class="col-md-6 mb-3">
+            <h5>Data Cadastro:</h5>
+            <p>{{ computador.data_cadastro }}</p>
+        </div>  
+
+        <div class="col-md-6 mb-3">
+            <h5>Última Verificação:</h5>
+            <p>{{ computador.data_ultima_atualizacao }}</p>
+        </div>
+
+        <div class="col-md-6 mb-3">
             <h5>Setor:</h5>
             <p>{{ computador.setor.nome_setor }}</p>
         </div>
@@ -88,12 +98,12 @@
 
         <div class="col-md-6 mb-3">
             <h5>Nota Fiscal Computador:</h5>
-            <a href="{{ computador.nf_computador.url }}">Baixar Nota Fiscal Computador</a>
+            <a target"_blank" href="{{ computador.nf_computador.url }}">Baixar Nota Fiscal Computador</a>
         </div>
 
         <div class="col-md-6 mb-3">
             <h5>Nota Fiscal Sistema Operacional:</h5>
-            <a href="{{ computador.nf_sistema_operacional.url }}">Baixar Nota Fiscal Sistema Operacional</a>
+            <a target="_blank" href="{{ computador.nf_sistema_operacional.url }}">Baixar Nota Fiscal Sistema Operacional</a>
         </div>
 
         <div class="col-12 mb-3">
@@ -113,7 +123,7 @@
                             <td>{{ software_computador.serial }}</td>
                             <td>
                                 {% if software_computador.nf_software %}
-                                    <a href="{{ software_computador.nf_software.url }}">Baixar Nota Fiscal</a>
+                                    <a target="_blank" href="{{ software_computador.nf_software.url }}">Baixar Nota Fiscal</a>
                                 {% else %}
                                     Não disponível
                                 {% endif %}

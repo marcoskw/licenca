@@ -31,3 +31,4 @@ class OcorrenciaComputador(models.Model):
     operador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING, blank=True, null=True,)
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING, null=True, blank=True)
     observacoes = models.TextField(blank=True)    
+    
