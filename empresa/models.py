@@ -38,4 +38,20 @@ class Operador(models.Model):
 
     def __str__(self):
         return self.nome_operador
-    
+
+class Contato(models.Model):
+    status_choices = (
+        ('ATV', 'Ativo'),
+        ('INT', 'Inativo'),
+    )
+
+    nome_contato = models.CharField(max_length=150)
+    empresa = models.ForeignKey(Empresa, on_delete=models.DO_NOTHING)
+    setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
+    email = models.EmailField(null=True, blank=True)
+    telefone = models.EmailField(null=True, blank=True)    
+    status = models.CharField(max_length=3, choices=status_choices, default=('ATV'))
+    observacoes = models.TextField(blank=True)    
+
+    def __str__(self):
+        return self.nome_contato

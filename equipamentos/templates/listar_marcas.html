@@ -8,8 +8,10 @@
 {% include "partials/barra_navegacao.html" %}
 
 <div class="container my-5">
-    <h2 class="mb-4">Lista de Marcas</h2>
-
+    <div class="d-flex align-items-center">
+        <h2 class="mr-3">Marcas</h2>
+        <a href="{% url 'cadastrar_marca' %}" class="btn btn-outline-success">Cadastrar</a>
+    </div>
     {% if messages %}
         <div class="alert-container mb-4">
             {% for message in messages %}

@@ -2,10 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.db.models import Q
+from .models import Contato, Empresa, Operador, Setor
 
-from .models import Empresa, Operador, Setor
-
-# Create your views here.
+# Empresa
 def cadastrar_empresa(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -64,7 +64,7 @@ def detalhes_empresa(request, id):
     return render(request, 'detalhes_empresa.html', {'empresa': empresa})
 
 
-
+# Setor
 def cadastrar_setor(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -103,6 +103,7 @@ def listar_setores(request):
     return render(request, 'listar_setores.html', {'setores': setores})
 
 
+# Operador
 def cadastrar_operador(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -146,3 +147,70 @@ def listar_operadores(request):
         operadores = Operador.objects.order_by('id')
         
     return render(request, 'listar_operadores.html', {'operadores': operadores})
+
+# Contato
+def cadastrar_contato(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
+    empresas = Empresa.objects.all()
+    setores = Setor.objects.all()
+
+
+    if request.method == "GET":
+        return render(request, 'cadastrar_contato.html', {
+            'empresas': empresas,
+            'setores': setores,
+            'status': Contato.status_choices
+        })
+    elif request.method == "POST":
+        nome_contato = request.POST.get('nome_contato')
+        empresa_id = request.POST.get('empresa')
+        setor_id = request.POST.get('setor')
+        email = request.POST.get('email')
+        telefone = request.POST.get('telefone')
+        status = "ATV"
+        observacoes = request.POST.get('observacoes')
+
+        empresa = Empresa.objects.get(id=empresa_id)
+        setor = Setor.objects.get(id=setor_id)
+
+        contato = Contato(
+            nome_contato=nome_contato,
+            empresa=empresa,
+            setor=setor,
+            email=email,
+            telefone=telefone,
+            status=status,
+            observacoes=observacoes,
+        )
+
+        try:
+            contato.save()
+            messages.add_message(request, constants.SUCCESS, 'Contato criado com Sucesso')
+        except Exception as e:
+            print(e)
+            messages.add_message(request, constants.ERROR, 'Erro interno no sistema')
+    return redirect('cadastrar_contato')
+
+def listar_contatos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+        
+    if request.method == "GET":
+        contatos = Contato.objects.order_by('id')
+        
+    return render(request, 'listar_contatos.html', {'contatos': contatos})
+
+def buscar_contatos(request):
+    termo = request.GET.get('q')
+    contatos = Contato.objects.all()
+
+    if termo:
+        contatos = contatos.filter(
+            Q(nome_contato__icontains=termo) | 
+            Q(empresa__nome_empresa__icontains=termo) | 
+            Q(setor__nome_setor__icontains=termo)
+        )
+
+    return render(request, 'listar_contatos.html', {'contatos': contatos})
