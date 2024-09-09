@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.db.models import Q
 from .models import Contato, Empresa, Operador, Setor
+from django.http import JsonResponse
 
 # Empresa
 def cadastrar_empresa(request):
@@ -102,6 +103,14 @@ def listar_setores(request):
         
     return render(request, 'listar_setores.html', {'setores': setores})
 
+def filtrar_setores(request):
+    empresa_id = request.GET.get('empresa_id') 
+    if empresa_id:
+        setores = Setor.objects.filter(empresa_id=empresa_id)  
+        setores_list = list(setores.values('id', 'nome_setor')) 
+        return JsonResponse(setores_list, safe=False) 
+    
+    return JsonResponse({'error': 'Nenhuma empresa selecionada'}, status=400)
 
 # Operador
 def cadastrar_operador(request):
@@ -148,20 +157,20 @@ def listar_operadores(request):
         
     return render(request, 'listar_operadores.html', {'operadores': operadores})
 
+
 # Contato
 def cadastrar_contato(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     
     empresas = Empresa.objects.all()
-    setores = Setor.objects.all()
-
+    setores = Setor.objects.none()
 
     if request.method == "GET":
         return render(request, 'cadastrar_contato.html', {
             'empresas': empresas,
             'setores': setores,
-            'status': Contato.status_choices
+            'status': Contato.status_choices,
         })
     elif request.method == "POST":
         nome_contato = request.POST.get('nome_contato')
@@ -214,3 +223,4 @@ def buscar_contatos(request):
         )
 
     return render(request, 'listar_contatos.html', {'contatos': contatos})
+
