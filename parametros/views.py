@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
 
+from parametros.models import ParametrosEmpresa
+
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
@@ -27,5 +29,7 @@ def sobre(request):
 def parametros(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-            
-    return render(request, 'parametros.html')
+    
+    empresa = ParametrosEmpresa.objects.get(id=1)
+
+    return render(request, 'parametros.html', {'empresa': empresa})

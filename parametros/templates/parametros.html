@@ -5,10 +5,50 @@
 {% endblock 'head' %}
 
 {% block 'body' %}
-    {% include "partials/barra_navegacao.html" %}
-    <br>
-    <br>
-    <div class="container dark-color container_empresas">
-        <h1 class="h1">Parâmetros</h1>
+{% include "partials/barra_navegacao.html" %}
+    
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Parâmetros</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Empresa Padrão</h5>
+                    <div class="form-group">
+                        <label for="empresa">Selecione a Empresa:</label>
+                        <select name="empresa" id="empresa" class="form-control" disabled>
+                            <option value="{{ empresa }}">{{ empresa }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-{% endblock 'body' %}
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Últimas Notícias</h5>
+                    <p class="card-text">Aqui você pode adicionar informações sobre as últimas notícias ou atualizações do sistema. Mantenha os usuários informados sobre as novidades.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Próximos Computadores para Checagem</h5>
+                    <p class="card-text">Seção destinada para fazer a verificação de computadores. Adicione informações relevantes sobre as próximas checagens.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Outras Informações</h5>
+            <p class="card-text">Você pode adicionar outras informações ou funcionalidades úteis aqui. Este espaço é reservado para dados adicionais que podem ser de interesse dos usuários.</p>
+        </div>
+    </div>
+</div>{% endblock 'body' %}
