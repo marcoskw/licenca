@@ -21,7 +21,7 @@ def cadastrar_empresa(request):
         logo = request.FILES.get('logo')
         telefone = request.POST.get('telefone')
         email = request.POST.get('email')
-        site = request.POST.get('endereco')
+        site = request.POST.get('site')
         endereco = request.POST.get('endereco')
         numero = request.POST.get('numero')
         complemento = request.POST.get('complemento')
@@ -42,7 +42,7 @@ def cadastrar_empresa(request):
                 complemento=complemento,
                 bairro=bairro,
                 cidade=cidade,
-                uf=uf
+                uf=uf,
             )
             empresa.save()
         except:
@@ -120,14 +120,9 @@ def cadastrar_operador(request):
         return redirect('/login')
     
     empresa = ParametrosEmpresa.objects.get(id=1)
-
     empresa_id =empresa.id
-    
-    setores = [] 
-    setores = Setor.objects.filter(empresa_id=empresa_id)
 
-    print(setores)
-
+    setores = Setor.objects.filter(empresa_id=empresa_id).order_by('nome_setor')
 
     if request.method == "GET":
         return render(request, 'cadastrar_operador.html', {
@@ -136,13 +131,18 @@ def cadastrar_operador(request):
             'status': Operador.status_choices
         })
     elif request.method == "POST":
+
+        empresa_id = request.POST.get('empresa')
         nome_operador = request.POST.get('nome_operador')
         setor_id = request.POST.get('setor')
         email = request.POST.get('email')
         status = "ATV"
+
         setor = Setor.objects.get(id=setor_id)
+        empresa = Empresa.objects.get(id=empresa_id)
 
         operador = Operador(
+            empresa=empresa,
             nome_operador=nome_operador,
             setor=setor,
             email=email,
