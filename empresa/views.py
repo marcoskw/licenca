@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.db.models import Q
 from .models import Contato, Empresa, Operador, Setor
+from parametros.models import ParametrosEmpresa
 from django.http import JsonResponse
 
 # Empresa
@@ -112,19 +113,28 @@ def filtrar_setores(request):
     
     return JsonResponse({'error': 'Nenhuma empresa selecionada'}, status=400)
 
+
 # Operador
 def cadastrar_operador(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-        
-    setores = Setor.objects.all()
     
+    empresa = ParametrosEmpresa.objects.get(id=1)
+
+    empresa_id =empresa.id
+    
+    setores = [] 
+    setores = Setor.objects.filter(empresa_id=empresa_id)
+
+    print(setores)
+
+
     if request.method == "GET":
         return render(request, 'cadastrar_operador.html', {
+            'empresa': empresa,
             'setores': setores,
             'status': Operador.status_choices
         })
-
     elif request.method == "POST":
         nome_operador = request.POST.get('nome_operador')
         setor_id = request.POST.get('setor')

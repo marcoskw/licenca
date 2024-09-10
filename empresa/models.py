@@ -32,6 +32,7 @@ class Operador(models.Model):
         ('AFT', 'Afastado'),
     )
     nome_operador = models.CharField(max_length=150)
+    empresa = models.ForeignKey(Empresa, on_delete=models.DO_NOTHING)    
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
     email = models.EmailField(null=True, blank=True)
     status = models.CharField(max_length=3, choices=status_choices, default=('ATV'))
