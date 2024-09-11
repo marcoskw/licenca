@@ -119,19 +119,19 @@ def cadastrar_operador(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     
-    empresa = ParametrosEmpresa.objects.get(id=1)
-    empresa_id =empresa.id
+    empresa_parametro = ParametrosEmpresa.objects.get(id=1)
+    empresa_parametro_id =empresa_parametro.id
 
-    setores = Setor.objects.filter(empresa_id=empresa_id).order_by('nome_setor')
+    setores = Setor.objects.filter(empresa_id=empresa_parametro_id).order_by('nome_setor')
 
     if request.method == "GET":
         return render(request, 'cadastrar_operador.html', {
-            'empresa': empresa,
+            'empresa': empresa_parametro,
             'setores': setores,
-            'status': Operador.status_choices
+            'status': Operador.status_choices,
         })
+    
     elif request.method == "POST":
-
         empresa_id = request.POST.get('empresa')
         nome_operador = request.POST.get('nome_operador')
         setor_id = request.POST.get('setor')
@@ -155,9 +155,8 @@ def cadastrar_operador(request):
         except Exception as e:
             print(e)  
             messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-        
-        return redirect('cadastrar_operador')
-    
+    return redirect('cadastrar_operador')                 
+
 def listar_operadores(request):
     if not request.user.is_authenticated:
         return redirect('/login')
