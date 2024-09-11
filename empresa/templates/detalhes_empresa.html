@@ -6,55 +6,58 @@
 
 {% block 'body' %}
 {% include "partials/barra_navegacao.html" %}
+<div class="container my-4">
+    <h1 class="text-center mb-4">Detalhes da Empresa</h1>
 
-    <div class="container my-5">
-        <h2 class="mb-4">Detalhes da Empresa</h2>
-        <div class="row">
-            <!-- Logo da Empresa -->
-            <div class="col-md-4 text-center">
-                {% if empresa.logo %}
-                    <img src="{{ empresa.logo.url }}" alt="Logo da Empresa" class="img-fluid" style="max-height: 200px;">
-                {% else %}
-                    <img src="{% static 'img/default_logo.png' %}" alt="Logo Padrão" class="img-fluid" style="max-height: 200px;">
-                {% endif %}
+    <!-- Logo da Empresa -->
+    <div class="text-center mb-4 logo">
+        {% if empresa.logo %}
+            <img src="{{ empresa.logo.url }}" alt="Logo da Empresa">
+        {% else %}
+            <p class="text-muted">Logo não disponível</p>
+        {% endif %}
+    </div>
+
+    <!-- Informações da Empresa -->
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Informações Gerais</h5>
+                    <p><span class="field">Nome da Empresa:</span> <span>{{ empresa.nome_empresa }}</span></p>
+                    <p><span class="field">CNPJ:</span> <span>{{ empresa.cnpj }}</span></p>
+                    <p><span class="field">Telefone:</span> <span>{{ empresa.telefone }}</span></p>
+                    <p><span class="field">Email:</span> <span>{{ empresa.email }}</span></p>
+                    <p><span class="field">Site:</span> <span><a href="{{ empresa.site }}" target="_blank">{{ empresa.site }}</a></span></p>
+                </div>
             </div>
+        </div>
 
-            <!-- Dados da Empresa -->
-            <div class="col-md-8">
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th scope="row">Nome da Empresa:</th>
-                            <td>{{ empresa.nome_empresa }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">CNPJ:</th>
-                            <td>{{ empresa.cnpj }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Endereço:</th>
-                            <td>{{ empresa.endereco }}, {{ empresa.numero }}{% if empresa.complemento %}, {{ empresa.complemento }}{% endif %}, {{ empresa.bairro }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Cidade/UF:</th>
-                            <td>{{ empresa.cidade }} - {{ empresa.uf }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Telefone:</th>
-                            <td>{{ empresa.telefone }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">E-mail:</th>
-                            <td>{{ empresa.email }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Site:</th>
-                            <td><a href="{{ empresa.site }}" target="_blank">{{ empresa.site }}</a></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Endereço</h5>
+                    <p><span class="field">Endereço:</span> <span>{{ empresa.endereco }}</span></p>
+                    <p><span class="field">Número:</span> <span>{{ empresa.numero }}</span></p>
+                    <p><span class="field">Complemento:</span> <span>{{ empresa.complemento }}</span></p>
+                    <p><span class="field">Bairro:</span> <span>{{ empresa.bairro }}</span></p>
+                    <p><span class="field">Cidade:</span> <span>{{ empresa.cidade }}</span></p>
+                    <p><span class="field">UF:</span> <span>{{ empresa.uf }}</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Observações</h5>
+                    <p><span class="field">Observações:</span> <span>{{ empresa.observacoes }}</span></p>
+                </div>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-5sA4CpB2u+L1AoGZQJlTSVOaG6OhXw2DgjgQZ2cI0wnt6g8kFf6FsZ4XmM8Ecs8" crossorigin="anonymous"></script>
 {% endblock 'body' %}
