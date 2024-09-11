@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Empresa(models.Model):
     nome_empresa = models.CharField(max_length=150)
@@ -14,6 +15,7 @@ class Empresa(models.Model):
     telefone = models.CharField(max_length=11)
     email = models.EmailField(max_length=254)
     site = models.URLField()
+    observacoes = models.TextField(blank=True)
 
     def __str__(self):
         return self.nome_empresa

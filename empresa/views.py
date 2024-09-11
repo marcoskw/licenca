@@ -28,6 +28,7 @@ def cadastrar_empresa(request):
         bairro = request.POST.get('bairro')
         cidade = request.POST.get('cidade')
         uf = request.POST.get('uf')
+        observacoes = request.POST.get('observacoes')
 
         try:
             empresa = Empresa(
@@ -43,6 +44,7 @@ def cadastrar_empresa(request):
                 bairro=bairro,
                 cidade=cidade,
                 uf=uf,
+                observacoes=observacoes,
             )
             empresa.save()
         except:
