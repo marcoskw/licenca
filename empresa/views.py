@@ -73,7 +73,7 @@ def cadastrar_setor(request):
     if not request.user.is_authenticated:
         return redirect('/login')
         
-    empresas = Empresa.objects.all()
+    empresas = Empresa.objects.all().order_by('nome_empresa')
     setor = Setor()
 
     if request.method == "GET":
@@ -110,7 +110,7 @@ def filtrar_setores(request):
     empresa_id = request.GET.get('empresa_id') 
     if empresa_id:
         setores = Setor.objects.filter(empresa_id=empresa_id)  
-        setores_list = list(setores.values('id', 'nome_setor')) 
+        setores_list = list(setores.values('id', 'nome_setor').order_by('nome_setor'))
         return JsonResponse(setores_list, safe=False) 
     
     return JsonResponse({'error': 'Nenhuma empresa selecionada'}, status=400)
@@ -174,8 +174,8 @@ def cadastrar_contato(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     
-    empresas = Empresa.objects.all()
-    setores = Setor.objects.none()
+    empresas = Empresa.objects.all().order_by('nome_empresa')
+    setores = Setor.objects.none().order_by('nome_setor')
 
     if request.method == "GET":
         return render(request, 'cadastrar_contato.html', {
