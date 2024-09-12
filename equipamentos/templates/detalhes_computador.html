@@ -97,14 +97,35 @@
         </div>
 
         <div class="col-md-6 mb-3">
-            <h5>Nota Fiscal Computador:</h5>
-            <a target"_blank" href="{{ computador.nf_computador.url }}">Baixar Nota Fiscal Computador</a>
         </div>
 
-        <div class="col-md-6 mb-3">
-            <h5>Nota Fiscal Sistema Operacional:</h5>
-            <a target="_blank" href="{{ computador.nf_sistema_operacional.url }}">Baixar Nota Fiscal Sistema Operacional</a>
-        </div>
+        {% if computador.numero_nota_fiscal_computador %}
+            <div class="col-md-6 mb-3">
+                <h5>Número da Nota Fiscal do Computador:</h5>
+                <p>{{ computador.numero_nota_fiscal_computador }}</p>
+            </div>
+        {% endif %}
+
+        {% if computador.nf_computador %}
+            <div class="col-md-6 mb-3">
+                <h5>Nota Fiscal Computador:</h5>
+                <a target"_blank" href="{{ computador.nf_computador.url }}">Baixar Nota Fiscal Computador</a>
+            </div>
+        {% endif %}
+
+        {% if computador.numero_nota_fiscal_sistem_operacional %}
+            <div class="col-md-6 mb-3">
+                <h5>Número da Nota Fiscal do Sistema Operacional:</h5>
+                <p>{{ computador.numero_nota_fiscal_sistem_operacional }}</p>
+            </div>
+        {% endif %}
+
+        {% if computador.nf_sistema_operacional %}
+            <div class="col-md-6 mb-3">
+                <h5>Nota Fiscal Sistema Operacional:</h5>
+                <a target="_blank" href="{{ computador.nf_sistema_operacional.url }}">Baixar Nota Fiscal Sistema Operacional</a>
+            </div>
+        {% endif %}
 
         <div class="col-12 mb-3">
             <h4>Softwares Instalados</h4>
@@ -121,6 +142,7 @@
                         <tr>
                             <td>{{ software_computador.software.nome_software }}</td>
                             <td>{{ software_computador.serial }}</td>
+                            <td>{{ software_computador.numero_nota_software }}</td>
                             <td>
                                 {% if software_computador.nf_software %}
                                     <a target="_blank" href="{{ software_computador.nf_software.url }}">Baixar Nota Fiscal</a>

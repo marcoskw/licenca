@@ -145,14 +145,17 @@ def cadastrar_computador(request):
         armazenamento = request.POST.get('armazenamento')
         tipo_armazenamento = request.POST.get('tipo_armazenamento') 
         sistema_operacional_id = request.POST.get('sistema_operacional')
+        numero_nota_fiscal_computador = request.POST.get('numero_nota_fiscal_computador')
         so_serial_vbs = request.POST.get('so_serial_vbs')
         so_serial_cmd = request.POST.get('so_serial_cmd')
+        numero_nota_fiscal_sistem_operacional = request.POST.get('numero_nota_fiscal_sistem_operacional')
         nf_computador = request.FILES.get('nf_computador')
         nf_sistema_operacional = request.FILES.get('nf_sistema_operacional')
         observacoes = request.POST.get('observacoes')
 
         software_id = request.POST.get('software')
         serial_software = request.POST.get('serial_software')
+        numero_nota_software = request.POST.get('numero_nota_software')
         nf_software = request.FILES.get('nf_software')
 
         setor = Setor.objects.get(id=setor_id)
@@ -180,7 +183,9 @@ def cadastrar_computador(request):
                 sistema_operacional=sistema_operacional,
                 so_serial_vbs=so_serial_vbs,
                 so_serial_cmd=so_serial_cmd,
+                numero_nota_fiscal_computador=numero_nota_fiscal_computador,
                 nf_computador=nf_computador,
+                numero_nota_fiscal_sistem_operacional=numero_nota_fiscal_sistem_operacional,
                 nf_sistema_operacional=nf_sistema_operacional,
                 observacoes=observacoes,
                 )
@@ -189,8 +194,10 @@ def cadastrar_computador(request):
                 computador = computador,
                 software = software,
                 serial=serial_software,
+                numero_nota_software=numero_nota_software,
                 nf_software=nf_software,
             )
+            
             computador.save()
             software_computador.save()
 
@@ -212,7 +219,6 @@ def listar_computadores(request):
 def detalhes_computador(request, id):
     computador = get_object_or_404(Computador, id=id)
     softwares_computador = SoftwareComputador.objects.filter(computador=computador)
-
 
     return render(request, 'detalhes_computador.html', {
         'computador': computador, 

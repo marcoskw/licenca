@@ -130,14 +130,29 @@
             </div>
 
             <div class="col-md-6 mb-3">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numero_nota_fiscal_computador">Número Nota Fiscal Computador:</label>
+                <input type="text" id="numero_nota_fiscal_computador" name="numero_nota_fiscal_computador" placeholder="Digite o número da Nota..." class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
                 <label for="nf_computador">Nota Fiscal Computador:</label>
                 <input type="file" id="nf_computador" name="nf_computador" class="form-control">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label for="numero_nota_fiscal_sistema_operacional">Número Nota Fiscal Sistema Operacional:</label>
+                <input type="text" id="numero_nota_fiscal_sistema_operacional" name="numero_nota_fiscal_sistema_operacional" placeholder="Digite o número da Nota..." class="form-control">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="nf_sistema_operacional">Nota Fiscal Sistema Operacional:</label>
                 <input type="file" id="nf_sistema_operacional" name="nf_sistema_operacional" class="form-control">
             </div>
+        </div>
+
         <div class="row">
             {% for field in fields %}
                 <div class="col-md-6 mb-3">
@@ -163,6 +178,7 @@
                             <tr>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Serial</th>
+                                <th scope="col">Número Nota Fiscal</th>
                                 <th scope="col">Nota Fiscal</th>
                             </tr>
                         </thead>
@@ -178,6 +194,9 @@
                                 <td>
                                     <input type="text" name="serial_software" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
                                 </td>
+                                <td>
+                                    <input type="text" name="numero_nota_software" placeholder="Digite o número da Nota Fiscal do Software" class="form-control">
+                                </td>                                
                                 <td>
                                     <input type="file" name="nf_software" class="form-control">
                                 </td>
@@ -202,8 +221,8 @@
 
 <script>
 function addSoftwareRow() {
-    var table = document.getElementById("softwares-table").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow();
+    const table = document.getElementById("softwares-table").getElementsByTagName('tbody')[0];
+    const newRow = table.insertRow();
     
     newRow.innerHTML = `
         <td>
@@ -215,6 +234,9 @@ function addSoftwareRow() {
         </td>
         <td>
             <input type="text" name="serial_software" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
+        </td>
+        <td>
+            <input type="text" name="numero_nota_software" placeholder="Digite o número da Nota Fiscal do Software" class="form-control">
         </td>
         <td>
             <input type="file" name="nf_software" class="form-control">
