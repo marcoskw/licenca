@@ -111,8 +111,8 @@ def cadastrar_computador(request):
         return redirect('/login')
         
     empresas = Empresa.objects.all()
-    setores = Setor.objects.all()
-    operadores = Operador.objects.all()
+    setores = Setor.objects.all().order_by('nome_setor')
+    operadores = Operador.objects.all().order_by('nome_operador')
     tipo_equipamentos = TipoEquipamento.objects.all()
     marcas = Marca.objects.all()
     sistemas_operacionais = SistemaOperacional.objects.all()

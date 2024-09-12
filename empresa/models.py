@@ -52,7 +52,7 @@ class Contato(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.DO_NOTHING)
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING)
     email = models.EmailField(null=True, blank=True)
-    telefone = models.EmailField(null=True, blank=True)    
+    telefone = models.CharField(null=True, blank=True, max_length=100)    
     status = models.CharField(max_length=3, choices=status_choices, default=('ATV'))
     observacoes = models.TextField(blank=True)    
 
