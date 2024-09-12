@@ -111,7 +111,7 @@ def cadastrar_computador(request):
         return redirect('/login')
         
     empresas = Empresa.objects.all()
-    setores = Setor.objects.all().order_by('nome_setor')
+    setores = Setor.objects.filter(empresa_id=1).order_by('nome_setor')
     operadores = Operador.objects.all().order_by('nome_operador')
     tipo_equipamentos = TipoEquipamento.objects.all()
     marcas = Marca.objects.all()
@@ -197,7 +197,7 @@ def cadastrar_computador(request):
                 numero_nota_software=numero_nota_software,
                 nf_software=nf_software,
             )
-            
+
             computador.save()
             software_computador.save()
 
