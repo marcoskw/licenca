@@ -76,10 +76,7 @@ class Computador(Equipamento):
 class SoftwareComputador(models.Model):
     computador = models.ForeignKey(Equipamento, on_delete=models.DO_NOTHING)
     software = models.ForeignKey(Software, on_delete=models.DO_NOTHING)
-    serial = models.CharField(max_length=100)
+    serial = models.CharField(max_length=100, null=True, blank=True)
     numero_nota_software = models.CharField(max_length=150, null=True, blank=True)
     nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)  
-    
-    def __str__(self):
-        return self.serial
     

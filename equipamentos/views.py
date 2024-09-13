@@ -148,7 +148,7 @@ def cadastrar_computador(request):
         numero_nota_fiscal_computador = request.POST.get('numero_nota_fiscal_computador')
         so_serial_vbs = request.POST.get('so_serial_vbs')
         so_serial_cmd = request.POST.get('so_serial_cmd')
-        numero_nota_fiscal_sistem_operacional = request.POST.get('numero_nota_fiscal_sistem_operacional')
+        numero_nota_fiscal_sistema_operacional = request.POST.get('numero_nota_fiscal_sistema_operacional')
         nf_computador = request.FILES.get('nf_computador')
         nf_sistema_operacional = request.FILES.get('nf_sistema_operacional')
         observacoes = request.POST.get('observacoes')
@@ -185,7 +185,7 @@ def cadastrar_computador(request):
                 so_serial_cmd=so_serial_cmd,
                 numero_nota_fiscal_computador=numero_nota_fiscal_computador,
                 nf_computador=nf_computador,
-                numero_nota_fiscal_sistem_operacional=numero_nota_fiscal_sistem_operacional,
+                numero_nota_fiscal_sistema_operacional=numero_nota_fiscal_sistema_operacional,
                 nf_sistema_operacional=nf_sistema_operacional,
                 observacoes=observacoes,
                 )
@@ -213,7 +213,7 @@ def listar_computadores(request):
         return redirect('/login')
         
     if request.method == "GET":
-        computadores = Computador.objects.order_by('nome_rede')
+        computadores = Computador.objects.all()
     return render(request, 'listar_computadores.html', {'computadores':computadores})
 
 def detalhes_computador(request, id):
