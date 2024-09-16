@@ -70,7 +70,7 @@ class Computador(Equipamento):
     so_serial_cmd = models.CharField(max_length=150, null=True, blank=True)
     numero_nota_fiscal_computador = models.CharField(max_length=150, null=True, blank=True)
     nf_computador = models.FileField(upload_to="nf_computador", null=True, blank=True)
-    numero_nota_fiscal_sistem_operacional = models.CharField(max_length=150, null=True, blank=True)
+    numero_nota_fiscal_sistema_operacional = models.CharField(max_length=150, null=True, blank=True)
     nf_sistema_operacional = models.FileField(upload_to="nf_sistema_operacional", null=True, blank=True)
 
 class SoftwareComputador(models.Model):
