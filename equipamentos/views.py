@@ -217,6 +217,9 @@ def listar_computadores(request):
     return render(request, 'listar_computadores.html', {'computadores':computadores})
 
 def detalhes_computador(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')   
+    
     computador = get_object_or_404(Computador, id=id)
     softwares_computador = SoftwareComputador.objects.filter(computador=computador)
 

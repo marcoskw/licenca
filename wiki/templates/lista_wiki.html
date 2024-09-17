@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+<{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+
+<div class="container my-5">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <h2>Wiki</h2>
+        <a href="#" class="btn btn-outline-success">Cadastrar novo</a>
+    </div>
+
+    {% if messages %}
+        <div class="alert-container mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Data</th>
+                    <th>Categoria</th>
+                    <th>Tags</th>
+                    <th scope="col">Ação</th>                      
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post.titulo_post }}</td>
+                    <td>{{ post.autor_post.username }}</td>
+                    <td>{{ post.data_post|date:"d/m/Y H:i" }}</td>
+                    <td>{{ post.categoria_post.name|default:"Sem Categoria" }}</td>
+                    <td>{{ post.tags }}</td>
+                    <td>
+                        <a href="{% url "post_detalhe" post.id %}" class="btn btn-warning btn-sm" role="button">
+                            Visualizar
+                        </a>
+                    </td>                   
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">Nenhum post encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock 'body' %}

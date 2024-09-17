@@ -27,4 +27,6 @@ urlpatterns = [
     path('ocorrencias/', include('ocorrencias.urls')),
     path('', include('parametros.urls')),
     path('', include('usuarios.urls')),
+    path('summernote/', include('django_summernote.urls')),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
