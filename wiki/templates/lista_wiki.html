@@ -9,7 +9,7 @@
 <div class="container my-5">
     <div class="d-flex align-items-center justify-content-between mb-4">
         <h2>Wiki</h2>
-        <a href="#" class="btn btn-outline-success">Cadastrar novo</a>
+        <a href="{% url 'admin:wiki_post_add' %}" class="btn btn-outline-success">Cadastrar novo</a>
     </div>
 
     {% if messages %}
