@@ -110,6 +110,10 @@ def cadastrar_computador(request):
     if not request.user.is_authenticated:
         return redirect('/login')
         
+    computadores = Computador.objects.all()
+    computadores_count = computadores.count()
+    proximo_computador = computadores_count+1
+
     empresas = Empresa.objects.all()
     setores = Setor.objects.filter(empresa_id=1).order_by('nome_setor')
     operadores = Operador.objects.all().order_by('nome_operador')
@@ -129,6 +133,7 @@ def cadastrar_computador(request):
             'tipo_armazenamentos': Computador.tipo_armazenamento_choices,
             'sistemas_operacionais': sistemas_operacionais,
             'softwares': softwares,
+            'proximo_computador': proximo_computador,
         })
     
     elif request.method == "POST":

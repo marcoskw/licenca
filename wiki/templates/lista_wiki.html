@@ -3,10 +3,10 @@
 {% block 'head' %}
 
 {% endblock 'head' %}
-<{% block 'body' %}
+{% block 'body' %}
 {% include "partials/barra_navegacao.html" %}
-
-<div class="container my-5">
+<br>
+<div class="container-fluid px-0">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center">
             <h2 class="mr-3">Wiki</h2>
@@ -27,6 +27,8 @@
             {% endfor %}
         </div>
     {% endif %}
+</div>
+
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -35,32 +37,31 @@
                     <th>Título</th>
                     <th>Autor</th>
                     <th>Data</th>
-                    <th>Categoria</th>
-                    <th>Tags</th>
-                    <th scope="col">Ação</th>                      
+                    <th>Ação</th>
                 </tr>
             </thead>
             <tbody>
-                {% for post in posts %}
+                {% if posts %}
+                    {% for post in posts %}
+                    <tr>
+                        <td><a href="{% url 'post_detalhe' post.id %}">{{ post.titulo_post }}</a></td>
+                        <td>{{ post.autor_post.username }}</td>
+                        <td>{{ post.data_post|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'post_detalhe' post.id %}" class="btn btn-warning btn-sm" role="button">
+                                Visualizar
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
                 <tr>
-                    <td>{{ post.titulo_post }}</td>
-                    <td>{{ post.autor_post.username }}</td>
-                    <td>{{ post.data_post|date:"d/m/Y H:i" }}</td>
-                    <td>{{ post.categoria_post.name|default:"Sem Categoria" }}</td>
-                    <td>{{ post.tags }}</td>
-                    <td>
-                        <a href="{% url "post_detalhe" post.id %}" class="btn btn-warning btn-sm" role="button">
-                            Visualizar
-                        </a>
-                    </td>                   
+                    <td colspan="4" class="text-center">Nenhum post encontrado.</td>
                 </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center">Nenhum post encontrado.</td>
-                </tr>
-                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>
 </div>
+
 {% endblock 'body' %}
