@@ -63,4 +63,4 @@ def cadastrar_usuario(request):
             email=email,
         )
 
-        return redirect('cadastrar_usuario/')
+        return redirect('cadastrar_usuario') 
