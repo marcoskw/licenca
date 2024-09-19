@@ -244,7 +244,6 @@ def buscar_computador(request):
             Q(nome_rede__icontains=termo) | 
             Q(serial_number__icontains=termo) |
             Q(modelo__icontains=termo) |                                                  
-            Q(setor__nome_setor__icontains=termo) | 
             Q(operador__nome_operador__icontains=termo) |
             Q(marca__nome_marca__icontains=termo) |
             Q(setor__nome_setor__icontains=termo)

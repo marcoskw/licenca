@@ -12,7 +12,7 @@ class Empresa(models.Model):
     bairro = models.CharField(max_length=75)
     cidade = models.CharField(max_length=75)
     uf = models.CharField(max_length=2)
-    telefone = models.CharField(max_length=11)
+    telefone = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
     site = models.URLField()
     observacoes = models.TextField(blank=True)
