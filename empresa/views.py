@@ -234,4 +234,3 @@ def buscar_contatos(request):
         )
 
     return render(request, 'listar_contatos.html', {'contatos': contatos})
-

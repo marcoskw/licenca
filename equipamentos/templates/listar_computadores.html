@@ -6,11 +6,19 @@
 
 {% block 'body' %}{% include "partials/barra_navegacao.html" %}
 
-<div class="container-fluid my-5">  <!-- Alterado para container-fluid -->
-    <div class="d-flex align-items-center">
-        <h2 class="mr-3">Computadores/Notebooks</h2>
-        <a href="{% url 'cadastrar_computador' %}" class="btn btn-outline-success">Cadastrar</a>
+<div class="container-fluid my-5">  
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <h2 class="mr-3">Computadores/Notebooks</h2>
+            <a href="{% url 'cadastrar_computador' %}" class="btn btn-outline-success">Cadastrar</a>
+        </div>
+        <form class="form-inline" method="GET" action="{% url 'buscar_computador' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
     </div>
+
     {% if messages %}
         <div class="alert-container mb-4">
             {% for message in messages %}
@@ -22,7 +30,7 @@
     {% endif %}
 
     <div class="table-responsive">
-        <table class="table table-bordered table-hover full-width-table">  <!-- Classe personalizada -->
+        <table class="table table-bordered table-hover full-width-table"> 
             <thead class="thead-light">
                 <tr>
                     <th scope="col">ID</th>

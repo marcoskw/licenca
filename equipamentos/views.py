@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import SistemaOperacional,Software, SoftwareComputador,TipoEquipamento, Setor, Computador, Marca
-
+from django.db.models import Q
 from empresa.models import Empresa, Operador, Setor
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -231,3 +231,24 @@ def detalhes_computador(request, id):
     return render(request, 'detalhes_computador.html', {
         'computador': computador, 
         'softwares_computador': softwares_computador})
+
+def buscar_computador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')  
+    
+    termo = request.GET.get('q')
+    computadores = Computador.objects.all()
+
+    if termo:
+        computadores = computadores.filter(
+            Q(nome_rede__icontains=termo) | 
+            Q(serial_number__icontains=termo) |
+            Q(modelo__icontains=termo) |                                                  
+            Q(setor__nome_setor__icontains=termo) | 
+            Q(operador__nome_operador__icontains=termo) |
+            Q(marca__nome_marca__icontains=termo) |
+            Q(setor__nome_setor__icontains=termo)
+        )
+
+    return render(request, 'listar_computadores.html', {'computadores': computadores})
+
