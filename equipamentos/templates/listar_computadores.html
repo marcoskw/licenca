@@ -4,10 +4,9 @@
 
 {% endblock 'head' %}
 
-{% block 'body' %}
-{% include "partials/barra_navegacao.html" %}
+{% block 'body' %}{% include "partials/barra_navegacao.html" %}
 
-<div class="container my-5">
+<div class="container-fluid my-5">  <!-- Alterado para container-fluid -->
     <div class="d-flex align-items-center">
         <h2 class="mr-3">Computadores/Notebooks</h2>
         <a href="{% url 'cadastrar_computador' %}" class="btn btn-outline-success">Cadastrar</a>
@@ -23,7 +22,7 @@
     {% endif %}
 
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover full-width-table">  <!-- Classe personalizada -->
             <thead class="thead-light">
                 <tr>
                     <th scope="col">ID</th>
@@ -45,7 +44,7 @@
                         <td>{{ computador.setor }}</td>
                         <td>{{ computador.marca }}</td>
                         <td>{{ computador.modelo }}</td>
-                        <td>{{ computador.serial_number }}</td>                                                                                                
+                        <td>{{ computador.serial_number }}</td>                                                                                                 
                         <td>
                             <a href="{% url "detalhes_computador" computador.id %}" class="btn btn-warning btn-sm" role="button">
                                 Visualizar
