@@ -47,7 +47,7 @@
                 {% for computador in computadores %}
                     <tr>
                         <td>{{ computador.id }}</td>
-                        <td>{{ computador.nome_rede }}</td>
+                        <td><a href="{% url "detalhes_computador" computador.id %}">{{ computador.nome_rede }}</a></td>
                         <td>{{ computador.operador }}</td>
                         <td>{{ computador.setor }}</td>
                         <td>{{ computador.marca }}</td>
