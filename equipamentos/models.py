@@ -1,4 +1,5 @@
 from django.utils import timezone
+from datetime import timedelta
 
 from django.db import models
 
@@ -48,10 +49,15 @@ class Equipamento(models.Model):
     serial_number = models.CharField(max_length=150)
     data_cadastro = models.DateTimeField(default=timezone.now)
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)
+    proxima_verificacao = models.DateTimeField(default=timezone.now)
     observacoes = models.TextField(blank=True)
 
     def __str__(self):
         return self.nome_rede
+    
+    def save(self, *args, **kwargs):
+        self.proxima_verificacao = self.data_ultima_atualizacao + timedelta(days=180)
+        super().save(*args, **kwargs)
 
 class Computador(Equipamento):
     tipo_armazenamento_choices = (

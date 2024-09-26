@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from datetime import datetime
-
+from datetime import timedelta
+from equipamentos.models import Computador
 from parametros.models import ParametrosEmpresa
 
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-            
+    
+    computadores_verificacao = Computador.objects.filter(status="ATV").order_by('-data_ultima_atualizacao')[:5]
+    
     current_time = datetime.now()
     if request.user.is_authenticated:
         first_name = request.user.first_name
@@ -17,6 +20,7 @@ def home(request):
             'current_time': current_time,
             'first_name': first_name,
             'last_name': last_name,
+            'computadores_verificacao':computadores_verificacao,
         }
     return render(request, 'home.html', context)
 
