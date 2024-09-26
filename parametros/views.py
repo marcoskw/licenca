@@ -9,7 +9,7 @@ def home(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     
-    computadores_verificacao = Computador.objects.filter(status="ATV").order_by('-data_ultima_atualizacao')[:5]
+    computadores_verificacao = Computador.objects.filter(status="ATV").order_by('proxima_verificacao')[:5]
     
     current_time = datetime.now()
     if request.user.is_authenticated:
