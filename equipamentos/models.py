@@ -56,9 +56,10 @@ class Equipamento(models.Model):
         return self.nome_rede
     
     def save(self, *args, **kwargs):
+        self.data_ultima_atualizacao = timezone.now()
         self.proxima_verificacao = self.data_ultima_atualizacao + timedelta(days=180)
+        print(self.proxima_verificacao)
         super().save(*args, **kwargs)
-
 class Computador(Equipamento):
     tipo_armazenamento_choices = (
         ('HD', 'HD'),
