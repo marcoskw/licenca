@@ -65,7 +65,10 @@
                                         {% endif %}
                                         <br>
                                     </div>
-                                    <button class="btn btn-info btn-sm">Fazer Verificação</button>
+                                    <form action="{% url "inspecao_computador" computador.id %}" method="GET">
+                                        <button class="btn btn-info btn-sm">Fazer Verificação</button>
+                                    </form>
+
                                 </li>
                             {% endfor %}
                         </ul>

@@ -18,4 +18,6 @@ urlpatterns = [
     path('listar_computadores/', views.listar_computadores, name='listar_computadores'),
     path('buscar_computador', views.buscar_computador, name="buscar_computador" ),
     path('detalhes/<int:id>/', views.detalhes_computador, name='detalhes_computador'),
+    path('inspecao_computador/<int:id>/', views.inspecao_computador, name='inspecao_computador'),
+
 ]
