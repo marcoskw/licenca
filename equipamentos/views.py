@@ -264,7 +264,7 @@ def inspecao_computador(request,id):
     marcas = Marca.objects.all()
     sistemas_operacionais = SistemaOperacional.objects.all()
     softwares = Software.objects.all()
-
+    software_computador = SoftwareComputador.objects.get(computador_id=id)
 
     if request.method == "GET":
         context = {
@@ -283,7 +283,7 @@ def inspecao_computador(request,id):
             'nome_rede': computador.nome_rede,
             'status': computador.status,      
             'operador': computador.operador,
-            'tipo_equipamento': computador.tipo_equipamento,
+            'tipo_equipamento': computador.tipo_equipamento.id,
             'marca': computador.marca,
             'modelo': computador.modelo,
             'serial_number': computador.serial_number,
@@ -298,10 +298,13 @@ def inspecao_computador(request,id):
             'so_serial_cmd': computador.so_serial_cmd,
             'numero_nota_fiscal_computador': computador.numero_nota_fiscal_computador,
             'nf_computador': computador.nf_computador.url,
+            'nf_software': software_computador.nf_software.url,
             'numero_nota_fiscal_sistema_operacional': computador.numero_nota_fiscal_sistema_operacional,
             'nf_so': computador.nf_sistema_operacional.url,
             'nf_sistema_operacional': computador.nf_sistema_operacional,
-            'observacoes': computador.observacoes,            
+            'observacoes': computador.observacoes,     
+            'software_computador': software_computador,
+
         }
 
         return render(request, 'inspecao_computador.html', context)

@@ -87,3 +87,5 @@ class SoftwareComputador(models.Model):
     numero_nota_software = models.CharField(max_length=150, null=True, blank=True)
     nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)  
     
+    def __str__(self):
+        return self.serial

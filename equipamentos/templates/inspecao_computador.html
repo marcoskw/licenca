@@ -43,7 +43,7 @@
                 <label for="status">Status:</label>
                 <select id="status" name="status" class="form-control" disabled="true">
                     {% for i in status %}
-                        <option value="ATV" selected}>ATIVO</option>                        
+                        <option value="ATV" selected>ATIVO</option>                        
                     {% endfor %}
                 </select>
             </div>
@@ -58,10 +58,10 @@
             </div>
 
             <div class="col-md-6 mb-3">
-                <label for="tipo_equipamento">Tipo Equipamento:</label>
+                <label for="tipo_equipamento">Tipo Equipamento:</label>{{te}}
                 <select id="tipo_equipamento" name="tipo_equipamento" class="form-control">
-                    {% for tipo_equipamento in tipo_equipamentos %}
-                        <option value="{{ tipo_equipamento.id }}" {% if tipo_equipamento.id == computador.tipo_equipamento.id %}selected{% endif %}>{{ tipo_equipamento.nome_tipo_equipamento }}</option>
+                    {% for te in tipo_equipamentos %}
+                        <option value="{{ te.id }}" {% if te.id == tipo_equipamento %}selected{% endif %}>{{ te.nome_tipo_equipamento }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -189,18 +189,18 @@
                                 <td>
                                     <select id="software" name="software" class="form-control">
                                         {% for software in softwares %}
-                                            <option value="{{ software.id }}">{{ software.nome_software }}</option>
+                                            <option value="{{ software.id }}" {% if software.id == software_computador.id %}selected{% endif %}>{{ software.nome_software }}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="serial_software" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
+                                    <input type="text" name="serial_software" value="{{ software_computador.serial }}" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
                                 </td>
                                 <td>
-                                    <input type="text" name="numero_nota_software" placeholder="Digite o número da Nota Fiscal do Software" class="form-control">
+                                    <input type="text" name="numero_nota_software" value="{{ software_computador.numero_nota_software }}" placeholder="Digite o número da Nota Fiscal do Software" class="form-control">
                                 </td>                                
                                 <td>
-                                    <input type="file" name="nf_software" class="form-control">
+                                    <a class="form-control" target"_blank" href="{{ nf_software }}"> Nota Fiscal Software</a>        
                                 </td>
                             </tr>
                         </tbody>
