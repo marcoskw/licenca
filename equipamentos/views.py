@@ -264,53 +264,23 @@ def inspecao_computador(request,id):
     marcas = Marca.objects.all()
     sistemas_operacionais = SistemaOperacional.objects.all()
     softwares = Software.objects.all()
-    software_computador = SoftwareComputador.objects.get(computador_id=id)
+    software_computador = SoftwareComputador.objects.filter(computador_id=id)
 
     if request.method == "GET":
         context = {
-            'computador_id': computador.id,
-            'computador_status': computador.status,
-            'operador_id': computador.operador.id,
-            'setor_id': computador.setor.id,
-            'marca_id': computador.marca.id,
+            'computador': computador,
             'setores': setores,
             'operadores': operadores,
             'tipo_equipamentos': tipo_equipamentos,
             'marcas': marcas,
             'sistemas_operacionais': sistemas_operacionais,
             'softwares': softwares,
-            'setor': computador.setor,
-            'nome_rede': computador.nome_rede,
-            'status': computador.status,      
-            'operador': computador.operador,
-            'tipo_equipamento': computador.tipo_equipamento.id,
-            'marca': computador.marca,
-            'modelo': computador.modelo,
-            'serial_number': computador.serial_number,
-            'processador': computador.processador,
-            'memoria': computador.memoria,
-            'armazenamento': computador.armazenamento,
-            'tipo_armazenamento': computador.tipo_armazenamento,
             'tipo_armazenamentos': computador.tipo_armazenamento_choices,
-            'sistema_operacional_id': computador.sistema_operacional.id,
-            'sistemas_operacionais': sistemas_operacionais,
-            'so_serial_vbs': computador.so_serial_vbs,
-            'so_serial_cmd': computador.so_serial_cmd,
-            'numero_nota_fiscal_computador': computador.numero_nota_fiscal_computador,
-            'nf_computador': computador.nf_computador.url,
-            'nf_software': software_computador.nf_software.url,
-            'numero_nota_fiscal_sistema_operacional': computador.numero_nota_fiscal_sistema_operacional,
-            'nf_so': computador.nf_sistema_operacional.url,
-            'nf_sistema_operacional': computador.nf_sistema_operacional,
-            'observacoes': computador.observacoes,     
-            'software_computador': software_computador,
-
         }
-
+        
         return render(request, 'inspecao_computador.html', context)
 
 
-    
     elif request.method == "POST":
         # Processar os dados do formulário
         setor_id = request.POST.get('setor')
@@ -329,10 +299,9 @@ def inspecao_computador(request,id):
         so_serial_vbs = request.POST.get('so_serial_vbs')
         so_serial_cmd = request.POST.get('so_serial_cmd')
         numero_nota_fiscal_sistema_operacional = request.POST.get('numero_nota_fiscal_sistema_operacional')
-        nf_computador = request.FILES.get('nf_computador', computador.nf_computador)  # Use o existente se não houver novo
+        nf_computador = request.FILES.get('nf_computador', computador.nf_computador)
         nf_sistema_operacional = request.FILES.get('nf_sistema_operacional', computador.nf_sistema_operacional)
         observacoes = request.POST.get('observacoes')
-
         software_id = request.POST.get('software')
         serial_software = request.POST.get('serial_software')
         numero_nota_software = request.POST.get('numero_nota_software')
@@ -368,7 +337,7 @@ def inspecao_computador(request,id):
             computador.observacoes = observacoes
             computador.save()
 
-            software_computador, created = SoftwareComputador.objects.get_or_create(
+            software_computador = SoftwareComputador.objects.get_or_create(
                 computador=computador,
                 software=software,
                 defaults={
@@ -377,11 +346,6 @@ def inspecao_computador(request,id):
                     'nf_software': nf_software,
                 }
             )
-            if not created:
-                software_computador.serial = serial_software
-                software_computador.numero_nota_software = numero_nota_software
-                software_computador.nf_software = nf_software
-                software_computador.save()
 
         except Exception as e:
             messages.add_message(request, constants.ERROR, 'Erro ao atualizar o computador: {}'.format(str(e)))
