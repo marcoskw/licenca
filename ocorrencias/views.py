@@ -1,6 +1,6 @@
 from datetime import datetime
 from django.shortcuts import redirect, render
-from equipamentos.models import Computador
+from equipamentos.models import Computador, Software, SoftwareComputador
 from ocorrencias.models import OcorrenciaOperador, OcorrenciaComputador
 from empresa.models import Operador, Setor
 
@@ -203,3 +203,64 @@ def listar_ocorrencias_equipamentos(request):
         return render(request, 'listar_ocorrencias_equipamentos.html', {
             'ocorrencias': ocorrencias, 
             'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
+
+def adicionar_software_em_um_computador(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    computadores = Computador.objects.all()
+    softwares = Software.objects.all()
+
+    if request.method == "GET":
+        context = {
+            'computadores': computadores,
+            'softwares': softwares,
+        }
+
+        return render(request,'adicionar_software_em_um_computador.html', context)
+    
+
+
+
+
+    elif request.method == "POST":
+        computador_id = request.POST.get('computador')
+        software_id = request.POST.get('software_id')
+        serial = request.POST.get('serial')
+        numero_nota_fiscal_software = request.POST.get('numero_nota_fiscal_software')
+        nf_software = request.FILES.get('nf_software')
+        observacoes = request.POST.get('observacoes')    
+
+
+
+        tipo_ocorrencia = 3
+        computador = Computador.objects.get(id=computador_id)         
+        software = Software.objects.get(id=software_id)
+        data = datetime.now()
+
+        software_computador = SoftwareComputador(
+            computador = computador,
+            software = software,
+            serial = serial,
+            numero_nota_software = numero_nota_fiscal_software,
+            nf_software = nf_software
+        )
+
+
+        ocorrencia = OcorrenciaComputador(
+            tipo_ocorrencia=tipo_ocorrencia,
+            computador=computador,
+            data=data,
+            observacoes=f'Adicionado ao computador {computador_id}, o software {software.nome_software}. Serial: {serial}, Nota: {numero_nota_fiscal_software}. Usuário colocou como observação: {observacoes}',
+        )
+
+        try:
+            software_computador.save()
+            ocorrencia.save()
+
+        except Exception as e:
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect('listar_ocorrencias_equipamentos')   
+        
+        messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
+        return redirect('listar_ocorrencias_equipamentos')   
