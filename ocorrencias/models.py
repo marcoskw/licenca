@@ -21,14 +21,13 @@ class OcorrenciaComputador(models.Model):
     tipo_ocorrencia_choices = (
         ('1', 'INATIVAR COMPUTADOR'),               
         ('2', 'TROCAR OPERADOR DE COMPUTADOR'),
-        ('3', 'RECOLHER COMPUTADOR PARA T.I.'),  
-        ('4', 'ATUALIZAR SISTEMA OPERACIONAL'),
-        ('5', 'ATUALIZAR SOFTWARE'),                     
+        ('3', 'ADICIONAR NOVO SOFTWARE EM UM COMPUTADOR'),  
+        ('4', 'ATUALIZAR NOME DO COMPUTADOR'),                 
     )
     data = models.DateTimeField(default=timezone.now)
     tipo_ocorrencia = models.CharField(max_length=1, choices=tipo_ocorrencia_choices)
     computador = models.ForeignKey(Computador, on_delete=models.DO_NOTHING, blank=True)
-    operador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING, blank=True, null=True,)
+    operador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING, blank=True, null=True)
     setor = models.ForeignKey(Setor, on_delete=models.DO_NOTHING, null=True, blank=True)
     observacoes = models.TextField(blank=True)    
     

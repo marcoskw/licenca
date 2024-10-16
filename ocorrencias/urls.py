@@ -13,5 +13,6 @@ urlpatterns = [
     path('ocorrencias_equipamentos/listar_ocorrencias_equipamentos/', views.listar_ocorrencias_equipamentos, name="listar_ocorrencias_equipamentos"),
     path('ocorrencias_equipamentos/inativar_computador/', views.inativar_computador, name="inativar_computador"),
     path('ocorrencias_equipamentos/trocar_computador_operador/', views.trocar_computador_operador, name='trocar_computador_operador'),
-    path('ocorrencias_equipamentos/adicionar_software_em_um_computador', views.adicionar_software_em_um_computador, name="adicionar_software_em_um_computador")
+    path('ocorrencias_equipamentos/adicionar_software_em_um_computador', views.adicionar_software_em_um_computador, name="adicionar_software_em_um_computador"),
+    path('ocorrencias_equipamentos/atualizar_nome_maquina', views.atualizar_nome_maquina, name="atualizar_nome_maquina")
 ]

@@ -219,10 +219,6 @@ def adicionar_software_em_um_computador(request):
 
         return render(request,'adicionar_software_em_um_computador.html', context)
     
-
-
-
-
     elif request.method == "POST":
         computador_id = request.POST.get('computador')
         software_id = request.POST.get('software_id')
@@ -230,9 +226,6 @@ def adicionar_software_em_um_computador(request):
         numero_nota_fiscal_software = request.POST.get('numero_nota_fiscal_software')
         nf_software = request.FILES.get('nf_software')
         observacoes = request.POST.get('observacoes')    
-
-
-
         tipo_ocorrencia = 3
         computador = Computador.objects.get(id=computador_id)         
         software = Software.objects.get(id=software_id)
@@ -264,3 +257,44 @@ def adicionar_software_em_um_computador(request):
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
         return redirect('listar_ocorrencias_equipamentos')   
+    
+def atualizar_nome_maquina(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    computadores = Computador.objects.all()
+
+    if request.method == "GET":
+        context = {
+            'computadores': computadores,
+        }
+        return render(request,'atualizar_nome_maquina.html', context)
+    
+    elif request.method == "POST":
+        tipo_ocorrencia = 4
+        computador_id = request.POST.get('computador')
+        novo_nome_rede = request.POST.get('novo_nome_rede')
+        observacoes = request.POST.get('observacoes')
+        computador = Computador.objects.get(id=computador_id)
+        antigo_nome_rede = computador.nome_rede
+        data = datetime.now()
+
+        computador.nome_rede=novo_nome_rede
+
+        ocorrencia = OcorrenciaComputador(
+            tipo_ocorrencia=tipo_ocorrencia,
+            computador=computador,
+            data=data,
+            observacoes=f'Alterado o computador com id:{computador_id}, nome da rede de {antigo_nome_rede} para {novo_nome_rede}. Usuário colocou como observação: {observacoes}',
+        )
+
+        try:
+            computador.save()
+            ocorrencia.save()
+
+        except Exception as e:
+            messages.add_message(request, constants.ERROR, f'Erro interno do sistema: {e}')
+            return redirect('atualizar_nome_maquina')   
+        
+        messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
+        return redirect('atualizar_nome_maquina')   
