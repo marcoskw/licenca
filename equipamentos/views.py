@@ -6,6 +6,7 @@ from django.db.models import Q
 from empresa.models import Empresa, Operador, Setor
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.db.models import Count
 
 
 # MARCAS
@@ -36,9 +37,12 @@ def listar_marcas(request):
         return redirect('/login')
         
     if request.method == "GET":
-        marcas = Marca.objects.order_by('id')
-        
-    return render(request, 'listar_marcas.html', {'marcas': marcas})
+        marcas = Marca.objects.annotate(quantidade=Count('marca')).order_by('id')
+
+        context = {
+            'marcas': marcas,
+        }
+    return render(request, 'listar_marcas.html', context)
 
 
 # SOFTWARES
@@ -69,7 +73,8 @@ def listar_softwares(request):
         return redirect('/login')
         
     if request.method == "GET":
-        softwares = Software.objects.order_by('id')
+        softwares = Software.objects.annotate(quantidade=Count('software')).order_by('id')
+
     
     return render(request, 'listar_softwares.html', {'softwares':softwares})
 
@@ -102,8 +107,7 @@ def listar_sistemas_operacionais(request):
         return redirect('/login')
         
     if request.method == "GET":
-        sos = SistemaOperacional.objects.order_by('id')
-
+        sos = SistemaOperacional.objects.annotate(quantidade=Count('sistema_operacional')).order_by('id')
     return render(request, 'listar_sistemas_operacionais.html', {'sos': sos})
 
 

@@ -44,7 +44,7 @@ class Equipamento(models.Model):
     status = models.CharField(max_length=3, choices=status_choices, default=("ATV"))
     operador = models.ForeignKey(Operador, on_delete=models.DO_NOTHING)
     tipo_equipamento = models.ForeignKey(TipoEquipamento, on_delete=models.DO_NOTHING)
-    marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING)
+    marca = models.ForeignKey(Marca, on_delete=models.DO_NOTHING, related_name='marca')
     modelo = models.CharField(max_length=150)
     serial_number = models.CharField(max_length=150)
     data_cadastro = models.DateTimeField(default=timezone.now)
@@ -72,7 +72,7 @@ class Computador(Equipamento):
     memoria = models.CharField(max_length=150, null=True, blank=True)
     armazenamento = models.CharField(max_length=150, null=True, blank=True)
     tipo_armazenamento = models.CharField(max_length=50, choices=tipo_armazenamento_choices, default=("SSD"), null=True, blank=True)
-    sistema_operacional= models.ForeignKey(SistemaOperacional, on_delete=models.DO_NOTHING, null=True, blank=True)
+    sistema_operacional= models.ForeignKey(SistemaOperacional, related_name='sistema_operacional', on_delete=models.DO_NOTHING, null=True, blank=True)
     so_serial_vbs = models.CharField(max_length=150, null=True, blank=True)
     so_serial_cmd = models.CharField(max_length=150, null=True, blank=True)
     numero_nota_fiscal_computador = models.CharField(max_length=150, null=True, blank=True)
@@ -82,7 +82,7 @@ class Computador(Equipamento):
 
 class SoftwareComputador(models.Model):
     computador = models.ForeignKey(Equipamento, on_delete=models.DO_NOTHING)
-    software = models.ForeignKey(Software, on_delete=models.DO_NOTHING)
+    software = models.ForeignKey(Software, related_name='software', on_delete=models.DO_NOTHING)
     serial = models.CharField(max_length=100, null=True, blank=True)
     numero_nota_software = models.CharField(max_length=150, null=True, blank=True)
     nf_software = models.FileField(upload_to="nf_software", null=True, blank=True)  

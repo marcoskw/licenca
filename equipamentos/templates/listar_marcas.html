@@ -28,15 +28,17 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Marca</th>
+                    <th scope="col">Quantidade</th>
                 </tr>
             </thead>
             <tbody>
                 {% for marca in marcas %}
-                    <tr>
-                        <td>{{ marca.id }}</td>
-                        <td>{{ marca.nome_marca }}</td>
-                    </tr>
-                {% endfor %}
+                <tr>
+                    <td>{{ marca.id }}</td>
+                    <td>{{ marca.nome_marca }}</td>
+                    <td>{{ marca.quantidade }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
