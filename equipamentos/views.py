@@ -247,6 +247,7 @@ def buscar_computador(request):
 
     if termo:
         computadores = computadores.filter(
+            Q(id__icontains=termo) |             
             Q(nome_rede__icontains=termo) | 
             Q(serial_number__icontains=termo) |
             Q(modelo__icontains=termo) |                                                  

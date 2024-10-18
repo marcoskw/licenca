@@ -29,13 +29,14 @@ def inativar_operador(request):
         tipo_ocorrencia = 1
         operador = Operador.objects.get(id=operador_selecionado)
         data = datetime.now()
+        usuario = request.user
 
         ocorrencia = OcorrenciaOperador(
+            data=data,
+            usuario=usuario,
             tipo_ocorrencia=tipo_ocorrencia,
             operador=operador,
-            data=data,
-            setor=None,
-            observacoes=observacoes,
+            observacoes=f'O Operador {operador.nome_operador} - ID:{operador.id} foi inativado. \n {usuario} colocou como observação: {observacoes}. Data: {data}',
         )
 
         try:
