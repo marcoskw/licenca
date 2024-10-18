@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from equipamentos.models import Computador, Software, SoftwareComputador
 from ocorrencias.models import OcorrenciaOperador, OcorrenciaComputador
 from empresa.models import Operador, Setor
-
+from parametros.models import ParametrosEmpresa
 from django.contrib import messages
 from django.contrib.messages import constants
 
@@ -54,9 +54,12 @@ def inativar_operador(request):
 def atualizar_setor_operador(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-            
+    
+    empresa_parametro = ParametrosEmpresa.objects.get(id=1)
+    empresa_parametro_id =empresa_parametro.id
+    
     operadores = Operador.objects.all()
-    setores = Setor.objects.all()
+    setores = Setor.objects.filter(empresa_id=empresa_parametro_id).order_by('nome_setor')
 
     if request.method == "GET":
         return render(request,'atualizar_setor_operador.html', {
@@ -70,12 +73,15 @@ def atualizar_setor_operador(request):
         tipo_ocorrencia = 2
         operador = Operador.objects.get(id=operador_selecionado)
         setor = Setor.objects.get(id=setor_id)
+        data = datetime.now()
+        usuario = request.user
 
         ocorrencia = OcorrenciaOperador(
+            data=data,
+            usuario=usuario,
             tipo_ocorrencia=tipo_ocorrencia,
             operador=operador,
-            setor=setor,
-            observacoes=observacoes,
+            observacoes=f'O Operador {operador.nome_operador} - ID:{operador.id} foi alterado o setor de {operador.setor} para {setor}. {usuario} colocou como observação: {observacoes}. Data: {data}',
         )
 
         try:
@@ -108,7 +114,7 @@ def listar_ocorrencias_operadores(request):
 def ocorrencias_equipamentos(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-            
+    
     return render(request, 'ocorrencias_equipamentos.html')
 
 def inativar_computador(request):

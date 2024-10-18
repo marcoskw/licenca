@@ -28,7 +28,7 @@
                 <br>
                 <select name="operador" class="form-control">
                     {% for operador in operadores %}
-                        <option value="{{ operador.id }}">{{ operador.nome_operador }}</option>
+                        <option value="{{ operador.id }}">{{ operador.nome_operador }} - {{ operador.setor }}</option>
                     {% endfor %}
                 </select>
                 <!--
