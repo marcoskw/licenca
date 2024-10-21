@@ -15,9 +15,7 @@
                 <th class="cabecalho" scope="col">Id</th>
                 <th class="cabecalho" scope="col">Data</th>                    
                 <th class="cabecalho" scope="col">Tipo Ocorrência</th>
-                <th class="cabecalho" scope="col">Computador</th>                                  
-                <th class="cabecalho" scope="col">Operador</th>     
-                <th class="cabecalho" scope="col">Setor</th>    
+                <th class="cabecalho" scope="col">Computador</th>                                    
                 <th class="cabecalho" scope="col">Observações</th>                                                                             
               </tr>
             </thead>
@@ -29,11 +27,17 @@
                         <td class="linha">
                           {% if ocorrencia.tipo_ocorrencia == '1' %}
                             INATIVAR COMPUTADOR
+                          {% elif ocorrencia.tipo_ocorrencia == '2' %}
+                            TROCAR OPERADOR DE COMPUTADOR
+                          {% elif ocorrencia.tipo_ocorrencia == '3' %}
+                            ADICIONAR NOVO SOFTWARE AO COMPUTADOR
+                          {% elif ocorrencia.tipo_ocorrencia == '4' %}
+                            ATUALIZAR NOME NO COMPUTADOR
+                          {% elif ocorrencia.tipo_ocorrencia == '5' %}
+                            ATUALIZAR HARDWARE                                                                                        
                           {% endif %}
                         </td>
                         <td class="linha">{{ ocorrencia.computador }}</td>
-                        <td class="linha">{{ ocorrencia.operador }}</td>
-                        <td class="linha">{{ ocorrencia.setor }}</td>
                         <td class="linha">{{ ocorrencia.observacoes }}</td>
                     </tr>
                 {% endfor %}

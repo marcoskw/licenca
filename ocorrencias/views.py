@@ -14,6 +14,19 @@ def ocorrencias_operadores(request):
     
     return render(request, 'ocorrencias_operadores.html')
 
+def listar_ocorrencias_operadores(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
+    ocorrencias = OcorrenciaOperador.objects.all()
+
+    tipo_ocorrencia_choices = dict(OcorrenciaOperador.tipo_ocorrencia_choices)
+    
+    if request.method == "GET":  
+        return render(request, 'listar_ocorrencias_operadores.html', {
+            'ocorrencias': ocorrencias, 
+            'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
+
 def inativar_operador(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -96,19 +109,6 @@ def atualizar_setor_operador(request):
         messages.add_message(request, constants.SUCCESS, 'Ocorrencia criada com sucesso')
         return redirect('atualizar_setor_operador')   
 
-def listar_ocorrencias_operadores(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-    
-    ocorrencias = OcorrenciaOperador.objects.all()
-
-    tipo_ocorrencia_choices = dict(OcorrenciaOperador.tipo_ocorrencia_choices)
-    
-    if request.method == "GET":  
-        return render(request, 'listar_ocorrencias_operadores.html', {
-            'ocorrencias': ocorrencias, 
-            'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
-
 
 # Equipamentos
 def ocorrencias_equipamentos(request):
@@ -116,6 +116,19 @@ def ocorrencias_equipamentos(request):
         return redirect('/login')
     
     return render(request, 'ocorrencias_equipamentos.html')
+
+def listar_ocorrencias_equipamentos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+            
+    ocorrencias = OcorrenciaComputador.objects.all()
+
+    tipo_ocorrencia_choices = dict(OcorrenciaComputador.tipo_ocorrencia_choices)
+    
+    if request.method == "GET":  
+        return render(request, 'listar_ocorrencias_equipamentos.html', {
+            'ocorrencias': ocorrencias, 
+            'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
 
 def inativar_computador(request):
     if not request.user.is_authenticated:
@@ -131,19 +144,21 @@ def inativar_computador(request):
         tipo_ocorrencia = 1
         computador = Computador.objects.get(id=computador_id)
         data = datetime.now()
+        usuario = request.user
 
         ocorrencia = OcorrenciaComputador(
+            data=data,
+            usuario=usuario,
             tipo_ocorrencia=tipo_ocorrencia,
             computador=computador,
-            data=data,
-            observacoes=observacoes,
-            operador=None       
+            observacoes=f'O Computador {computador.nome_rede} - ID:{computador.id} foi inativado. \n {usuario} colocou como observação: {observacoes}. Data: {data}',
         )
 
         try:
             computador.status = 'INT'
             ocorrencia.save()
             computador.save()
+
         except Exception as e:
             print(f"Erro: {e}")
             print(ocorrencia, computador)
@@ -175,13 +190,15 @@ def trocar_computador_operador(request):
         computador = Computador.objects.get(id=computador_id)         
         operador = Operador.objects.get(id=operador_id)
         data = datetime.now()
+        data = datetime.now()
+        usuario = request.user
 
         ocorrencia = OcorrenciaComputador(
+            data=data,
+            usuario=usuario,
             tipo_ocorrencia=tipo_ocorrencia,
             computador=computador,
-            data=data,
-            observacoes=observacoes,
-            operador=operador,
+            observacoes=f'O Computador {computador.nome_rede} - ID:{computador.id} foi alterado de operador. Antigo: {computador.operador}, Novo: {operador}. {usuario} colocou como observação: {observacoes}. Data: {data}',
         )
 
         try:
@@ -197,19 +214,6 @@ def trocar_computador_operador(request):
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
         return redirect('trocar_computador_operador')   
-
-def listar_ocorrencias_equipamentos(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
-            
-    ocorrencias = OcorrenciaComputador.objects.all()
-
-    tipo_ocorrencia_choices = dict(OcorrenciaComputador.tipo_ocorrencia_choices)
-    
-    if request.method == "GET":  
-        return render(request, 'listar_ocorrencias_equipamentos.html', {
-            'ocorrencias': ocorrencias, 
-            'tipo_ocorrencia_choices': tipo_ocorrencia_choices})
 
 def adicionar_software_em_um_computador(request):
     if not request.user.is_authenticated:
@@ -282,20 +286,23 @@ def atualizar_nome_maquina(request):
         computador_id = request.POST.get('computador')
         novo_nome_rede = request.POST.get('novo_nome_rede')
         observacoes = request.POST.get('observacoes')
+        
+        usuario = request.user
         computador = Computador.objects.get(id=computador_id)
-        antigo_nome_rede = computador.nome_rede
         data = datetime.now()
 
-        computador.nome_rede=novo_nome_rede
+
 
         ocorrencia = OcorrenciaComputador(
+            data=data,
+            usuario=usuario,
             tipo_ocorrencia=tipo_ocorrencia,
             computador=computador,
-            data=data,
-            observacoes=f'Alterado o computador com id:{computador_id}, nome da rede de {antigo_nome_rede} para {novo_nome_rede}. Usuário colocou como observação: {observacoes}',
+            observacoes=f'Alterado o computador com id:{computador_id}, nome da rede de {computador.nome_rede} para {novo_nome_rede}. Usuário colocou como observação: {observacoes}. Data: {data}',
         )
 
         try:
+            computador.nome_rede=novo_nome_rede            
             computador.save()
             ocorrencia.save()
 
