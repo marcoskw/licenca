@@ -115,7 +115,6 @@ def filtrar_setores(request):
     
     return JsonResponse({'error': 'Nenhuma empresa selecionada'}, status=400)
 
-
 # Operador
 def cadastrar_operador(request):
     if not request.user.is_authenticated:
@@ -168,6 +167,18 @@ def listar_operadores(request):
         
     return render(request, 'listar_operadores.html', {'operadores': operadores})
 
+def buscar_operadores(request):
+    termo = request.GET.get('q')
+    operadores = Operador.objects.filter(status='ATV')
+
+    if termo:
+        operadores = operadores.filter(
+            Q(nome_operador__icontains=termo) |
+            Q(empresa__nome_empresa__icontains=termo) |
+            Q(setor__nome_setor__icontains=termo)
+        )
+
+    return render(request, 'listar_operadores.html', {'operadores': operadores})
 
 # Contato
 def cadastrar_contato(request):
