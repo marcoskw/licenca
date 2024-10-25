@@ -11,6 +11,7 @@ urlpatterns = [
     path('cadastrar_setor/', views.cadastrar_setor, name='cadastrar_setor'),
     path('listar_setores/', views.listar_setores, name='listar_setores'),
     path('filtrar_setores/', views.filtrar_setores, name='filtrar_setores'),    
+    path('buscar_setores/', views.buscar_setores, name='buscar_setores'),
 
     # Operador
     path('cadastrar_operador/', views.cadastrar_operador, name='cadastrar_operador'),
