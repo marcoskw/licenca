@@ -265,21 +265,6 @@ def buscar_computador(request):
 
     return render(request, 'listar_computadores.html', {'computadores': computadores})
 
-def txt_para_dict(conteudo_txt):
-    dicionario = {}
-    linhas = conteudo_txt.splitlines()
-
-    # Ignorar as duas primeiras linhas de cabeçalho
-    for linha in linhas[2:]:  # Começa a partir da terceira linha
-        if '\t' in linha:  # Verifica se a linha contém uma tabulação
-            partes = linha.split('\t')
-            if len(partes) == 2:  # Espera que haja exatamente duas partes
-                chave = partes[0].strip()
-                valor = partes[1].strip()
-                dicionario[chave] = valor
-
-    return dicionario
-
 def inspecao_computador(request, id):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -331,16 +316,100 @@ def inspecao_computador(request, id):
             messages.add_message(request, constants.ERROR, f'Erro ao criar inspeção: {str(e)}')
             return redirect(f'/equipamentos/inspecao_computador/{id}')
         
-    messages.add_message(request, constants.SUCCESS, 'Inspeção criada com sucesso')
-    return redirect(f'/equipamentos/conferencia_arquivo/{id}')
+    messages.add_message(request, constants.SUCCESS, 'Inspeção iniciada')
+    return redirect(f'/equipamentos/editar_computador/{id}')
 
-def conferencia_arquivo(request, id):
+def editar_computador(request, id):
     if not request.user.is_authenticated:
         return redirect('/login')
 
-    inspecoes = InspecaoComputador.objects.all()
+    computador = get_object_or_404(Computador, id=id)
+    software_computador = SoftwareComputador.objects.filter(computador=computador)
+    inspecoes = InspecaoComputador.objects.filter(computador=computador)
+    tipo_equipamentos = TipoEquipamento.objects.all()
+    marcas = Marca.objects.all()
+    sistemas_operacionais = SistemaOperacional.objects.all()
+    softwares = Software.objects.all()
+    setor = Setor.objects.all()
+    operador = Operador.objects.all()
+    tipo_armazenamentos = Computador.tipo_armazenamento_choices
 
-    return render(request, 'conferencia_arquivo.html', {'inspecoes': inspecoes})
+    if request.method == "GET":
+        context = {
+            'computador': computador,
+            'software_computador': software_computador,
+            'inspecoes': inspecoes,
+            'tipo_equipamentos': tipo_equipamentos,
+            'marcas': marcas,
+            'sistemas_operacionais': sistemas_operacionais,
+            'softwares': softwares,
+            'status': Operador.status_choices,
+            'tipo_armazenamentos': tipo_armazenamentos,
+            'setores': setor,
+            'operadores': operador,
+        }
+        return render(request, 'editar_computador.html', context)
+
+
+    if request.method == "POST":
+        setor_id = request.POST.get('setor')
+        nome_rede = request.POST.get('nome_rede')
+        status = 'ATV'  # Você pode ajustar isso conforme a lógica do seu sistema
+        operador_id = request.POST.get('operador')
+        tipo_equipamento_id = request.POST.get('tipo_equipamento')
+        marca_id = request.POST.get('marca')
+        modelo = request.POST.get('modelo')
+        serial_number = request.POST.get('serial_number')
+        processador = request.POST.get('processador')
+        memoria = request.POST.get('memoria')
+        armazenamento = request.POST.get('armazenamento')
+        tipo_armazenamento = request.POST.get('tipo_armazenamento')
+        sistema_operacional_id = request.POST.get('sistema_operacional')
+        numero_nota_fiscal_computador = request.POST.get('numero_nota_fiscal_computador')
+        so_serial_vbs = request.POST.get('so_serial_vbs')
+        so_serial_cmd = request.POST.get('so_serial_cmd')
+        numero_nota_fiscal_sistema_operacional = request.POST.get('numero_nota_fiscal_sistema_operacional')
+        nf_computador = request.FILES.get('nf_computador')
+        nf_sistema_operacional = request.FILES.get('nf_sistema_operacional')
+        observacoes = request.POST.get('observacoes')
+
+        # Atualizar os campos do computador
+        computador.setor = Setor.objects.get(id=setor_id)
+        computador.nome_rede = nome_rede
+        computador.status = status
+        computador.operador = Operador.objects.get(id=operador_id)
+        computador.tipo_equipamento = TipoEquipamento.objects.get(id=tipo_equipamento_id)
+        computador.marca = Marca.objects.get(id=marca_id)
+        computador.modelo = modelo
+        computador.serial_number = serial_number
+        computador.processador = processador
+        computador.memoria = memoria
+        computador.armazenamento = armazenamento
+        computador.tipo_armazenamento = tipo_armazenamento
+        computador.sistema_operacional = SistemaOperacional.objects.get(id=sistema_operacional_id)
+        computador.so_serial_vbs = so_serial_vbs
+        computador.so_serial_cmd = so_serial_cmd
+        computador.numero_nota_fiscal_computador = numero_nota_fiscal_computador
+        
+        # Verifique se os arquivos foram enviados antes de atualizar
+        if nf_computador:
+            computador.nf_computador = nf_computador
+        if nf_sistema_operacional:
+            computador.nf_sistema_operacional = nf_sistema_operacional
+            
+        computador.numero_nota_fiscal_sistema_operacional = numero_nota_fiscal_sistema_operacional
+        computador.observacoes = observacoes
+
+        try:
+            computador.save()
+            messages.add_message(request, constants.SUCCESS, 'Computador atualizado com sucesso.')
+            return redirect('/equipamentos/listar_computadores/')  # Redirecione para a lista de computadores ou outra página
+        except Exception as e:
+            messages.add_message(request, constants.ERROR, 'Erro ao atualizar o computador: {}'.format(str(e)))
+            return redirect(f'/equipamentos/editar_computador/{id}')
+
+    # Se não for um POST, renderize o formulário de edição
+    return render(request, 'seu_template.html', {'computador': computador})
 
 def download_file(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, filename)

@@ -67,6 +67,7 @@ def detalhes_empresa(request, id):
     empresa = get_object_or_404(Empresa, id=id)
     return render(request, 'detalhes_empresa.html', {'empresa': empresa})
 
+# Criar buscar empresa
 
 # Setor
 def cadastrar_setor(request):
