@@ -1,12 +1,19 @@
+import json
+import os
+import chardet
+from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
-
+from utils.txt_to_json import txt_to_json
 from core import settings
-from .models import SistemaOperacional,Software, SoftwareComputador,TipoEquipamento, Setor, Computador, Marca
+from .models import InspecaoComputador, SistemaOperacional,Software, SoftwareComputador,TipoEquipamento, Setor, Computador, Marca
 from django.db.models import Q
 from empresa.models import Empresa, Operador, Setor
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.db.models import Count
+from utils.txt_to_json import txt_to_json
+from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 # MARCAS
@@ -258,103 +265,91 @@ def buscar_computador(request):
 
     return render(request, 'listar_computadores.html', {'computadores': computadores})
 
-def inspecao_computador(request,id):
+def txt_para_dict(conteudo_txt):
+    dicionario = {}
+    linhas = conteudo_txt.splitlines()
+
+    # Ignorar as duas primeiras linhas de cabeçalho
+    for linha in linhas[2:]:  # Começa a partir da terceira linha
+        if '\t' in linha:  # Verifica se a linha contém uma tabulação
+            partes = linha.split('\t')
+            if len(partes) == 2:  # Espera que haja exatamente duas partes
+                chave = partes[0].strip()
+                valor = partes[1].strip()
+                dicionario[chave] = valor
+
+    return dicionario
+
+def inspecao_computador(request, id):
     if not request.user.is_authenticated:
         return redirect('/login')
-
-    computador = get_object_or_404(Computador, id=id)
-    setores = Setor.objects.filter(empresa_id=1).order_by('nome_setor')
-    operadores = Operador.objects.all().order_by('nome_operador')
-    tipo_equipamentos = TipoEquipamento.objects.all()
-    marcas = Marca.objects.all()
-    sistemas_operacionais = SistemaOperacional.objects.all()
-    softwares = Software.objects.all()
-    software_computador = SoftwareComputador.objects.filter(computador_id=id)
-
+    
+    user = request.user
+    data_inspecao = timezone.now().date()
+    
+    try:
+        computador = Computador.objects.get(id=id)
+    except Computador.DoesNotExist:
+        messages.add_message(request, constants.ERROR, f'Computador com ID {id} não encontrado.')
+        return redirect('/equipamentos/listar_computadores/')
+    
     if request.method == "GET":
         context = {
             'computador': computador,
-            'setores': setores,
-            'operadores': operadores,
-            'tipo_equipamentos': tipo_equipamentos,
-            'marcas': marcas,
-            'sistemas_operacionais': sistemas_operacionais,
-            'softwares': softwares,
-            'tipo_armazenamentos': computador.tipo_armazenamento_choices,
+            'user': user,
+            'data_inspecao': data_inspecao,
         }
-        
         return render(request, 'inspecao_computador.html', context)
 
-
     elif request.method == "POST":
-        # Processar os dados do formulário
-        setor_id = request.POST.get('setor')
-        nome_rede = request.POST.get('nome_rede')
-        operador_id = request.POST.get('operador')
-        tipo_equipamento_id = request.POST.get('tipo_equipamento')
-        marca_id = request.POST.get('marca')
-        modelo = request.POST.get('modelo')
-        serial_number = request.POST.get('serial_number')
-        processador = request.POST.get('processador')
-        memoria = request.POST.get('memoria')
-        armazenamento = request.POST.get('armazenamento')
-        tipo_armazenamento = request.POST.get('tipo_armazenamento') 
-        sistema_operacional_id = request.POST.get('sistema_operacional')
-        numero_nota_fiscal_computador = request.POST.get('numero_nota_fiscal_computador')
-        so_serial_vbs = request.POST.get('so_serial_vbs')
-        so_serial_cmd = request.POST.get('so_serial_cmd')
-        numero_nota_fiscal_sistema_operacional = request.POST.get('numero_nota_fiscal_sistema_operacional')
-        nf_computador = request.FILES.get('nf_computador', computador.nf_computador)
-        nf_sistema_operacional = request.FILES.get('nf_sistema_operacional', computador.nf_sistema_operacional)
+        check_antivirus = request.POST.get('check_antivirus') == 'on'
+        check_so = request.POST.get('check_so') == 'on'
+        check_softwares = request.POST.get('check_softwares') == 'on'
+        uso_armazenamento = request.POST.get('uso_armazenamento') == 'on'
         observacoes = request.POST.get('observacoes')
-        software_id = request.POST.get('software')
-        serial_software = request.POST.get('serial_software')
-        numero_nota_software = request.POST.get('numero_nota_software')
-        nf_software = request.FILES.get('nf_software')
+        arquivo_computador = request.FILES.get('arquivo_computador')
+        dados_json = None
 
-        # Buscar objetos relacionados
-        setor = Setor.objects.get(id=setor_id)
-        operador = Operador.objects.get(id=operador_id)
-        tipo_equipamento = TipoEquipamento.objects.get(id=tipo_equipamento_id)
-        marca = Marca.objects.get(id=marca_id)
-        sistema_operacional = SistemaOperacional.objects.get(id=sistema_operacional_id)
-        software = Software.objects.get(id=software_id)
+        if arquivo_computador:
+            txt_to_json(arquivo_computador)
 
         try:
-            computador.setor = setor
-            computador.nome_rede = nome_rede
-            computador.operador = operador
-            computador.tipo_equipamento = tipo_equipamento
-            computador.marca = marca
-            computador.modelo = modelo
-            computador.serial_number = serial_number
-            computador.processador = processador
-            computador.memoria = memoria
-            computador.armazenamento = armazenamento
-            computador.tipo_armazenamento = tipo_armazenamento
-            computador.sistema_operacional = sistema_operacional
-            computador.so_serial_vbs = so_serial_vbs
-            computador.so_serial_cmd = so_serial_cmd
-            computador.numero_nota_fiscal_computador = numero_nota_fiscal_computador
-            computador.nf_computador = nf_computador
-            computador.numero_nota_fiscal_sistema_operacional = numero_nota_fiscal_sistema_operacional
-            computador.nf_sistema_operacional = nf_sistema_operacional
-            computador.observacoes = observacoes
-            computador.save()
-
-            software_computador = SoftwareComputador.objects.get_or_create(
+            inspecao = InspecaoComputador(
                 computador=computador,
-                software=software,
-                defaults={
-                    'serial': serial_software,
-                    'numero_nota_software': numero_nota_software,
-                    'nf_software': nf_software,
-                }
+                usuario=user,
+                arquivo_computador=arquivo_computador,  # Armazena o arquivo original
+                check_antivirus=check_antivirus,
+                check_so=check_so,
+                check_softwares=check_softwares,
+                uso_armazenamento=uso_armazenamento,
+                observacoes=observacoes,
+                dados_json=dados_json,  # Aqui armazenamos o JSON
             )
+            inspecao.save()
 
         except Exception as e:
-            messages.add_message(request, constants.ERROR, 'Erro ao atualizar o computador: {}'.format(str(e)))
-            return redirect('/equipamentos/editar_computador/{}'.format(id)) 
+            messages.add_message(request, constants.ERROR, f'Erro ao criar inspeção: {str(e)}')
+            return redirect(f'/equipamentos/inspecao_computador/{id}')
         
-        messages.add_message(request, constants.SUCCESS, 'Computador atualizado com sucesso!')
-        return redirect('/equipamentos/listar_computadores')  # Redireciona para a lista de computadores
+    messages.add_message(request, constants.SUCCESS, 'Inspeção criada com sucesso')
+    return redirect(f'/equipamentos/conferencia_arquivo/{id}')
+
+def conferencia_arquivo(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    inspecoes = InspecaoComputador.objects.all()
+
+    return render(request, 'conferencia_arquivo.html', {'inspecoes': inspecoes})
+
+def download_file(request, filename):
+    file_path = os.path.join(settings.MEDIA_ROOT, filename)
+    
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as f:
+            response = HttpResponse(f.read(), content_type='application/octet-stream')
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+            return response
+    else:
+        raise Http404("Arquivo não encontrado")
+    

@@ -2,7 +2,6 @@ from django.utils import timezone
 from datetime import timedelta
 
 from django.db import models
-
 from empresa.models import Setor, Operador
 
 
@@ -60,6 +59,7 @@ class Equipamento(models.Model):
         self.proxima_verificacao = self.data_ultima_atualizacao + timedelta(days=180)
         print(self.proxima_verificacao)
         super().save(*args, **kwargs)
+        
 class Computador(Equipamento):
     tipo_armazenamento_choices = (
         ('HD', 'HD'),
@@ -89,3 +89,22 @@ class SoftwareComputador(models.Model):
     
     def __str__(self):
         return self.serial
+
+class InspecaoComputador(models.Model):
+    data_inspecao = models.DateTimeField(default=timezone.now)
+    computador = models.ForeignKey(Computador, on_delete=models.DO_NOTHING)    
+    usuario = models.CharField(max_length=150)
+    arquivo_computador = models.FileField(upload_to="arquivo_computador", null=True, blank=True)
+    check_antivirus = models.BooleanField(default=False)
+    check_so = models.BooleanField(default=False)    
+    check_softwares = models.BooleanField(default=False)
+    uso_armazenamento = models.BooleanField(default=False)
+    dados_json = models.JSONField(null=True, blank=True) 
+    observacoes = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.computador.nome_rede
+
+    def save(self, *args, **kwargs):
+        Computador.data_proxima_inspecao = self.data_inspecao + timedelta(days=180)
+        super().save(*args, **kwargs)

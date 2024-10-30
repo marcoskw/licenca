@@ -8,10 +8,6 @@
 {% include "partials/barra_navegacao.html" %}
 
 <div class="container my-5">
-    <h2 class="mb-4">Inspeção de Computador
-    </h2>
-    <h3 class="mb-2 h4">Etiqueta: {{ computador.id }}</h3>
-    
     {% if messages %}
         <div class="alert-container">
             {% for message in messages %}
@@ -20,245 +16,57 @@
                 </div>
             {% endfor %}
         </div>
-    {% endif %}
+    {% endif %}    
+    <h2 class="mb-4">Inspeção de Computador - <a href="{% url 'download_file' 'ferramentas/bat/coletar_informacoes.bat' %}" download>Baixar Coletor de Informações</a>
+    </h2>
 
-    <form action="{% url 'inspecao_computador' computador.id  %}" method="POST" enctype="multipart/form-data">
+    <form method="post" action="{% url "inspecao_computador" computador.id %}" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="setor">Selecione o Setor:</label>
-                <select id="setor" name="setor" class="form-control">
-                    {% for setor in setores %}
-                        <option value="{{ setor.id }}" {% if setor.id == setor_id %}selected{% endif %}>{{ setor.nome_setor }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="nome_rede">Nome na Rede:</label>
-                <input type="text" id="nome_rede" name="nome_rede" value="{{ computador.nome_rede }}" class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="status">Status:</label>
-                <select id="status" name="status" class="form-control" disabled="true">
-                    {% for i in computador.status %}
-                        <option value="ATV" selected>ATIVO</option>                        
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="operador">Operador:</label>
-                <select id="operador" name="operador" class="form-control">
-                    {% for oper in operadores %}
-                        <option value="{{ oper.id }}" {% if oper.id == operador_id %}selected{% endif %}>{{ oper.nome_operador }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="tipo_equipamento">Tipo Equipamento:</label>{{te}}
-                <select id="tipo_equipamento" name="tipo_equipamento" class="form-control">
-                    {% for te in tipo_equipamentos %}
-                        <option value="{{ te.id }}" {% if te.id == computador.tipo_equipamento.id %}selected{% endif %}>{{ te.nome_tipo_equipamento }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="marca">Marca:</label>
-                <select id="marca" name="marca" class="form-control">
-                    {% for marca in marcas %}
-                        <option value="{{ marca.id }}" {% if marca.id == computador.marca.id %}selected{% endif %}>{{ marca.nome_marca }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="modelo">Modelo:</label>
-                <input type="text" id="modelo" value="{{ computador.modelo }}" name="modelo" placeholder="Digite o modelo..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="serial_number">Serial Number:</label>
-                <input type="text" id="serial_number" value="{{ computador.serial_number }}" name="serial_number" placeholder="Digite o serial number..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="processador">Processador:</label>
-                <input type="text" id="processador" value="{{ computador.processador }}" name="processador" placeholder="Digite o processador..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="memoria">Memória:</label>
-                <input type="text" id="memoria" value="{{ computador.memoria }}" name="memoria" placeholder="Digite a memória..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="armazenamento">Armazenamento:</label>
-                <input type="text" id="armazenamento" value="{{ computador.armazenamento }}" name="armazenamento" placeholder="Digite o armazenamento..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="tipo_armazenamento">Tipo Armazenamento:</label>
-                <select id="tipo_armazenamento" name="tipo_armazenamento" class="form-control">
-                    {% for i in tipo_armazenamentos %}
-                            <option value="{{ i.0 }}" {% if i.0 == computador.tipo_armazenamento %}selected{% endif %}>{{ i.1 }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="sistema_operacional">Sistema Operacional:</label>
-                <select id="sistema_operacional" name="sistema_operacional" class="form-control">
-                    {% for so in sistemas_operacionais %}
-                        <option value="{{ so.id }}" {% if so.id == computador.sistema_operacional.id %}selected{% endif %}>{{ so.nome_sistema_operacional }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="so_serial_vbs">Sistema Operacional - Arquivo VBS:</label>
-                <input type="text" id="so_serial_vbs" value="{{ computador.so_serial_vbs }}" name="so_serial_vbs" placeholder="Digite o serial..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="so_serial_cmd">Sistema Operacional - CMD:</label>
-                <div class="input-group">
-                    <input type="text" id="so_serial_cmd" value="{{ computador.so_serial_cmd }}" name="so_serial_cmd" placeholder="Digite o serial..." class="form-control">
-                    <button class="btn btn-secondary" type="button" onclick="copyCommand()">Copiar Comando</button>
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="numero_nota_fiscal_computador">Número Nota Fiscal Computador:</label>
-                <input type="text" id="numero_nota_fiscal_computador" value="{{ computador.numero_nota_fiscal_computador }}" name="numero_nota_fiscal_computador" placeholder="Digite o número da Nota..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="nf_computador">Link Nota Fiscal Computador:</label>
-                <a target="_blank" class="form-control" target"_blank" href="{{ computador.nf_computador.url }}">Abrir Nota Fiscal Computador</a>        
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="numero_nota_fiscal_sistema_operacional">Número Nota Fiscal Sistema Operacional:</label>
-                <input type="text" id="numero_nota_fiscal_sistema_operacional" value="{{ computador.numero_nota_fiscal_sistema_operacional }}" name="numero_nota_fiscal_sistema_operacional" placeholder="Digite o número da Nota..." class="form-control">
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label for="nf_sistema_operacional">Nota Fiscal Sistema Operacional:</label>
-                <a target="_blank" class="form-control" target"_blank" href="{{ computador.nf_sistema_operacional.url }}">Abrir Nota Fiscal Sistema Operacional</a>        
-            </div>
+    
+        <div class="form-group">
+            <label for="data_inspecao">Data da Inspeção: {{ data_inspecao }} | Usuário: {{ user }}</label>
         </div>
 
-        <div class="row">
-            {% for field in fields %}
-                <div class="col-md-6 mb-3">
-                    <label for="{{ field.id }}">{{ field.label }}:</label>
-                    {% if field.type == 'select' %}
-                        <select id="{{ field.id }}" name="{{ field.name }}" class="form-control">
-                            {% for option in field.options %}
-                                <option value="{{ option.id }}">{{ option.name }}</option>
-                            {% endfor %}
-                        </select>
-                    {% else %}
-                        <input type="{{ field.type }}" id="{{ field.id }}" name="{{ field.name }}" 
-                            placeholder="{{ field.placeholder }}" class="form-control">
-                    {% endif %}
-                </div>
-            {% endfor %}
-
-            <div class="col-12 mb-3">
-                <label for="softwares">Softwares:</label>
-                <div class="table-responsive">
-                    <table class="table" id="softwares-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Serial</th>
-                                <th scope="col">Número Nota Fiscal</th>
-                                <th scope="col">Nota Fiscal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <select id="software" name="software" class="form-control">
-                                        {% for software in softwares %}
-                                            <option value="{{ software.id }}" {% if software.id == software_computador.id %}selected{% endif %}>{{ software.nome_software }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" name="serial_software" value="{{ software_computador.serial }}" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" class="form-control">
-                                </td>
-                                <td>
-                                    <input type="text" name="numero_nota_software" value="{{ software_computador.numero_nota_software }}" placeholder="Digite o número da Nota Fiscal do Software" class="form-control">
-                                </td>                                
-                                <td>
-                                    <a class="form-control" target"_blank" href="{{ nf_software }}"> Nota Fiscal Software</a>        
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="col-12 mb-3">
-                <label for="observacoes">Observações:</label>
-                <textarea id="observacoes" class="form-control" name="observacoes" rows="3"></textarea>
-            </div>
-
-            <h2 class="mb-1 mt-2">Detalhes da Inspeção</h2>
-
-            <div class="col-12 mb-3">         
-                <hr class="hr"/>
-            </div>
-            
-            <div class="col-12 mb-3">
-                <label for="observacoes">Descrição da Inspeção e alterações:</label>
-                <textarea id="observacoes" class="form-control" name="observacoes" rows="3"></textarea>
-            </div>
-
-
-            <div class="col-12">
-                <input type="submit" class="btn btn-lg btn-indigo" value="Cadastrar">
-            </div>
+        <div class="form-group">
+            <label for="computador">Computador</label>
+            <select class="form-control" id="computador" name="computador" required>
+                    <option value="{{ computador.id }}">{{ computador.nome_rede }} - {{ computador.operador }}</option>
+            </select>
         </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check_antivirus" name="check_antivirus">
+            <label class="form-check-label" for="check_antivirus">Antivírus Instalado</label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check_so" name="check_so">
+            <label class="form-check-label" for="check_so">Sistema Operacional Atualizado</label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="check_softwares" name="check_softwares">
+            <label class="form-check-label" for="check_softwares">Softwares Necessários Instalados</label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="uso_armazenamento" name="uso_armazenamento">
+            <label class="form-check-label" for="uso_armazenamento">Armazenamento em Uso Compativel (30% ou mais livre)</label>
+        </div>
+
+        <div class="form-group">
+            <label for="arquivo_computador">Arquivo do Computador</label>
+            <input type="file" class="form-control-file" id="arquivo_computador" name="arquivo_computador">
+        </div>
+
+        <div class="form-group">
+            <label for="observacoes">Observações</label>
+            <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar Inspeção</button>
     </form>
 </div>
 
-<script>
-function copyCommand() {
-    // O comando que queremos copiar
-    const command = 'wmic path softwarelicensingservice get OA3xOriginalProductKey';
-
-    // Cria um elemento textarea temporário para copiar o comando
-    const tempTextArea = document.createElement('textarea');
-    tempTextArea.value = command;
-    document.body.appendChild(tempTextArea);
-    tempTextArea.select();
-    tempTextArea.setSelectionRange(0, 99999); // Para dispositivos móveis
-
-    try {
-        // Copia o comando para a área de transferência
-        navigator.clipboard.writeText(tempTextArea.value)
-            .then(() => {
-                alert('Comando copiado para a área de transferência!');
-            })
-            .catch(err => {
-                console.error('Erro ao copiar comando: ', err);
-            });
-    } catch (err) {
-        console.error('Erro ao copiar comando: ', err);
-    } finally {
-        // Remove o elemento textarea temporário
-        document.body.removeChild(tempTextArea);
-    }
-}
-</script>
+    
 {% endblock 'body' %}
