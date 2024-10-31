@@ -67,7 +67,17 @@ def detalhes_empresa(request, id):
     empresa = get_object_or_404(Empresa, id=id)
     return render(request, 'detalhes_empresa.html', {'empresa': empresa})
 
-# Criar buscar empresa
+def buscar_empresas(request):
+    termo = request.GET.get('q')
+    empresas = Empresa.objects.all()
+
+    if termo:
+        empresas = empresas.filter(
+            Q(nome_empresa__icontains=termo) |
+            Q(cnpj__icontains=termo)
+        )
+
+    return render(request, 'listar_empresas.html', {'empresas': empresas})
 
 # Setor
 def cadastrar_setor(request):

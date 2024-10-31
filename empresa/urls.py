@@ -6,6 +6,7 @@ urlpatterns = [
     path('cadastrar_empresa/', views.cadastrar_empresa, name='cadastrar_empresa'),
     path('listar_empresas/', views.listar_empresas, name='listar_empresas'),
     path('detalhes/<int:id>/', views.detalhes_empresa, name='detalhes_empresa'),
+    path('buscar_empresas/', views.buscar_empresas, name='buscar_empresas'),
 
     # setor
     path('cadastrar_setor/', views.cadastrar_setor, name='cadastrar_setor'),

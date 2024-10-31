@@ -22,6 +22,6 @@ urlpatterns = [
     
     # inspecao
     path('inspecao_computador/<int:id>/', views.inspecao_computador, name='inspecao_computador'),
-    path('download/<path:filename>/', views.download_file, name='download_file'),
+    path('baixar_coletar_informacoes/<path:filename>/', views.baixar_coletar_informacoes, name='baixar_coletar_informacoes'),
     path('editar_computador/<int:id>/', views.editar_computador, name='editar_computador'),
 ]

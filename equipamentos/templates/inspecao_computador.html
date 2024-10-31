@@ -17,7 +17,7 @@
             {% endfor %}
         </div>
     {% endif %}    
-    <h2 class="mb-4">Inspeção de Computador - <a href="{% url 'download_file' 'ferramentas/bat/coletar_informacoes.bat' %}" download>Baixar Coletor de Informações</a>
+    <h2 class="mb-4">Inspeção de Computador - <a href="{% url 'baixar_coletar_informacoes' 'ferramentas/bat/coletar_informacoes.bat' %}" download>Baixar Coletor de Informações</a>
     </h2>
 
     <form method="post" action="{% url "inspecao_computador" computador.id %}" enctype="multipart/form-data">

@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 from django.db.models import Count
 from utils.txt_to_json import txt_to_json
+from utils.download_file import download_file
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -129,7 +130,7 @@ def cadastrar_computador(request):
 
     empresas = Empresa.objects.all()
     setores = Setor.objects.filter(empresa_id=1).order_by('nome_setor')
-    operadores = Operador.objects.all().order_by('nome_operador')
+    operadores = Operador.objects.filter(status="ATV").order_by('nome_operador')
     tipo_equipamentos = TipoEquipamento.objects.all()
     marcas = Marca.objects.all()
     sistemas_operacionais = SistemaOperacional.objects.all()
@@ -411,7 +412,7 @@ def editar_computador(request, id):
     # Se não for um POST, renderize o formulário de edição
     return render(request, 'seu_template.html', {'computador': computador})
 
-def download_file(request, filename):
+def baixar_coletar_informacoes(request, filename):
     file_path = os.path.join(settings.MEDIA_ROOT, filename)
     
     if os.path.exists(file_path):
@@ -421,4 +422,3 @@ def download_file(request, filename):
             return response
     else:
         raise Http404("Arquivo não encontrado")
-    

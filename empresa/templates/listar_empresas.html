@@ -13,7 +13,7 @@
             <h2 class="mr-3">Empresas</h2>
             <a href="{% url 'cadastrar_empresa' %}" class="btn btn-outline-success">Cadastrar</a>
         </div>
-        <form class="form-inline" method="GET" action="{% url 'buscar_empresa' %}">
+        <form class="form-inline" method="GET" action="{% url 'buscar_empresas' %}">
             <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
         </form>
