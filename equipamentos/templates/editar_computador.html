@@ -137,12 +137,16 @@
 
             <div class="col-md-6 mb-3">
                 <label for="numero_nota_fiscal_computador">Número Nota Fiscal Computador:</label>
-                <input type="text" id="numero_nota_fiscal_computador" value="{{ computador.numero_nota_fiscal_computador }}" name="numero_nota_fiscal_computador" placeholder="Digite o número da Nota..." class="form-control">
+                    <input type="text" id="numero_nota_fiscal_computador" value="{{ computador.numero_nota_fiscal_computador }}" name="numero_nota_fiscal_computador" placeholder="Digite o número da Nota..." class="form-control">
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="nf_computador">Link Nota Fiscal Computador:</label>
-                <a target="_blank" class="form-control" target"_blank" href="{{ computador.nf_computador.url }}">Abrir Nota Fiscal Computador</a>        
+                {% if computador.nf_computador %}
+                    <a target="_blank" class="form-control" target"_blank" href="{{ computador.nf_computador.url }}">Abrir Nota Fiscal Computador</a>        
+                {% else %}
+                    Sem nota fiscal cadastrada
+                {% endif %}            
             </div>
 
             <div class="col-md-6 mb-3">
@@ -152,7 +156,11 @@
 
             <div class="col-md-6 mb-3">
                 <label for="nf_sistema_operacional">Nota Fiscal Sistema Operacional:</label>
-                <a target="_blank" class="form-control" target"_blank" href="{{ computador.nf_sistema_operacional.url }}">Abrir Nota Fiscal Sistema Operacional</a>        
+                {% if computador.nf_sistema_operacional %}
+                    <a target="_blank" class="form-control" target"_blank" href="{{ computador.nf_sistema_operacional.url }}">Abrir Nota Fiscal Sistema Operacional</a>        
+                {% else %}
+                    Sem nota fiscal cadastrada
+                {% endif %}            
             </div>
         </div>
         <div class="row">

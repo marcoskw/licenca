@@ -138,6 +138,10 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# Seção no
+SESSION_COOKIE_AGE = 3600  # 60 minutos * 60 segundos
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 MESSAGE_TAGS = {
     constants.DEBUG: 'alert-primary',
     constants.ERROR: 'alert-danger',
