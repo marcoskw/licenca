@@ -6,6 +6,8 @@ from empresa.models import Operador, Setor
 from parametros.models import ParametrosEmpresa
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.db.models import Q
+
 
 # Operadores
 def ocorrencias_operadores(request): 
@@ -18,7 +20,7 @@ def listar_ocorrencias_operadores(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     
-    ocorrencias = OcorrenciaOperador.objects.all()
+    ocorrencias = OcorrenciaOperador.objects.all().order_by('-id')
 
     tipo_ocorrencia_choices = dict(OcorrenciaOperador.tipo_ocorrencia_choices)
     
@@ -109,6 +111,23 @@ def atualizar_setor_operador(request):
         messages.add_message(request, constants.SUCCESS, 'Ocorrencia criada com sucesso')
         return redirect('atualizar_setor_operador')   
 
+def buscar_ocorrencias_operadores(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    termo = request.GET.get('q')
+    ocorrencias = OcorrenciaOperador.objects.all()
+
+    if termo:
+        ocorrencias = ocorrencias.filter(
+            Q(tipo_ocorrencia__icontains=termo) |
+            Q(operador__nome_operador__icontains=termo) |
+            Q(observacoes__icontains=termo)
+
+        )
+
+    return render(request, 'listar_ocorrencias_operadores.html', {'ocorrencias': ocorrencias})
+
 
 # Equipamentos
 def ocorrencias_equipamentos(request):
@@ -121,7 +140,7 @@ def listar_ocorrencias_equipamentos(request):
     if not request.user.is_authenticated:
         return redirect('/login')
             
-    ocorrencias = OcorrenciaComputador.objects.all()
+    ocorrencias = OcorrenciaComputador.objects.all().order_by('-id')
 
     tipo_ocorrencia_choices = dict(OcorrenciaComputador.tipo_ocorrencia_choices)
     
@@ -312,3 +331,19 @@ def atualizar_nome_maquina(request):
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
         return redirect('atualizar_nome_maquina')   
+    
+def buscar_ocorrencias_equipamentos(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    termo = request.GET.get('q')
+    ocorrencias = OcorrenciaComputador.objects.all()
+
+    if termo:
+        ocorrencias = ocorrencias.filter(
+            Q(tipo_ocorrencia__icontains=termo) |
+            Q(computador__nome_rede__icontains=termo) |
+            Q(observacoes__icontains=termo)
+        )
+
+    return render(request, 'listar_ocorrencias_equipamentos.html', {'ocorrencias': ocorrencias})
