@@ -9,22 +9,46 @@
     
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Parâmetros</h1>
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} mb-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Empresa Padrão</h5>
-                    <div class="form-group">
-                        <label for="empresa">Selecione a Empresa:</label>
-                        <select name="empresa" id="empresa" class="form-control" disabled>
-                            <option value="{{ empresa }}">{{ empresa }}</option>
-                        </select>
+    <form action="{% url 'parametros' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Empresa Padrão</h5>
+                        <div class="form-group">
+                            <label for="empresa">Selecione a Empresa:</label>
+                            <select name="nome_exibicao" id="empresa" class="form-control" disabled>
+                                <option value="{{ empresa }}">{{ empresa }}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Contagem de dias para inspeção de Computador</h5>
+                        <input type="number" value="{{ contagem_dias_inspecao_computador }}" class="form-control mb-3" name="contagem_dias_inspecao_computador" id="contagem_dias_inspecao_computador" placeholder="Digite o número de dias" />
+                        <button  class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </div>  
         </div>
-    </div>
+    </form>
+
+
+
 
     <div class="row">
         <div class="col-md-6 mb-4">

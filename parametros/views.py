@@ -3,6 +3,8 @@ from datetime import datetime
 from datetime import timedelta
 from equipamentos.models import Computador
 from parametros.models import ParametrosEmpresa
+from django.contrib import messages
+from django.contrib.messages import constants
 
 # Create your views here.
 def home(request):
@@ -33,7 +35,29 @@ def sobre(request):
 def parametros(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    
     empresa = ParametrosEmpresa.objects.get(id=1)
+
+    if request.method == 'GET':
+        context = {
+            'empresa': empresa,
+            'contagem_dias_inspecao_computador': empresa.contagem_dias_inspecao_computador,
+        }
+
+        return render(request, 'parametros.html', context)
+    
+
+    if request.method == 'POST':
+        empresa.contagem_dias_inspecao_computador = request.POST.get('contagem_dias_inspecao_computador')
+
+        try:
+            empresa.save()
+
+        except:
+            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
+            return redirect('/parametros') 
+        
+        messages.add_message(request, constants.SUCCESS, 'Atualizado com sucesso')
+        return redirect('/parametros')
+
 
     return render(request, 'parametros.html', {'empresa': empresa})

@@ -255,7 +255,8 @@ def adicionar_software_em_um_computador(request):
         serial = request.POST.get('serial')
         numero_nota_fiscal_software = request.POST.get('numero_nota_fiscal_software')
         nf_software = request.FILES.get('nf_software')
-        observacoes = request.POST.get('observacoes')    
+        observacoes = request.POST.get('observacoes') 
+        usuario = request.user
         tipo_ocorrencia = 3
         computador = Computador.objects.get(id=computador_id)         
         software = Software.objects.get(id=software_id)
@@ -273,8 +274,9 @@ def adicionar_software_em_um_computador(request):
         ocorrencia = OcorrenciaComputador(
             tipo_ocorrencia=tipo_ocorrencia,
             computador=computador,
+            usuario=usuario,            
             data=data,
-            observacoes=f'Adicionado ao computador {computador_id}, o software {software.nome_software}. Serial: {serial}, Nota: {numero_nota_fiscal_software}. Usuário colocou como observação: {observacoes}',
+            observacoes=f'Adicionado ao computador {computador_id}, o software {software.nome_software}. Serial: {serial}, Nota: {numero_nota_fiscal_software}. {usuario} colocou como observação: {observacoes}',
         )
 
         try:
@@ -282,11 +284,11 @@ def adicionar_software_em_um_computador(request):
             ocorrencia.save()
 
         except Exception as e:
-            messages.add_message(request, constants.ERROR, 'Erro interno do sistema')
-            return redirect('listar_ocorrencias_equipamentos')   
+            messages.add_message(request, constants.ERROR, f'Erro interno do sistema: {e}')
+            return redirect('adicionar_software_em_um_computador')   
         
         messages.add_message(request, constants.SUCCESS, 'Ocorrência criada com sucesso')
-        return redirect('listar_ocorrencias_equipamentos')   
+        return redirect('adicionar_software_em_um_computador')  
     
 def atualizar_nome_maquina(request):
     if not request.user.is_authenticated:

@@ -3,6 +3,7 @@ from datetime import timedelta
 
 from django.db import models
 from empresa.models import Setor, Operador
+from parametros.models import ParametrosEmpresa
 
 
 # Create your models here.
@@ -56,7 +57,7 @@ class Equipamento(models.Model):
     
     def save(self, *args, **kwargs):
         self.data_ultima_atualizacao = timezone.now()
-        self.proxima_verificacao = self.data_ultima_atualizacao + timedelta(days=180)
+        self.proxima_verificacao = self.data_ultima_atualizacao + timedelta(days=ParametrosEmpresa.objects.get(id=1).contagem_dias_inspecao_computador)
         print(self.proxima_verificacao)
         super().save(*args, **kwargs)
         
@@ -106,5 +107,5 @@ class InspecaoComputador(models.Model):
         return self.computador.nome_rede
 
     def save(self, *args, **kwargs):
-        Computador.data_proxima_inspecao = self.data_inspecao + timedelta(days=180)
+        Computador.data_proxima_inspecao = self.data_inspecao + timedelta(days=ParametrosEmpresa.objects.get(id=1).contagem_dias_inspecao_computador)
         super().save(*args, **kwargs)
