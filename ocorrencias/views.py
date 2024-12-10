@@ -1,13 +1,82 @@
 from datetime import datetime
 from django.shortcuts import redirect, render
 from equipamentos.models import Computador, Software, SoftwareComputador
-from ocorrencias.models import OcorrenciaOperador, OcorrenciaComputador
+from ocorrencias.models import OcorrenciaOperador, OcorrenciaComputador, SlaInterno
 from empresa.models import Operador, Setor
 from parametros.models import ParametrosEmpresa
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.db.models import Q
 
+# SLAs
+def sla_interno(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    return render(request, 'sla_interno.html')
+
+def listar_sla_interno(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if request.method == "GET":
+        sla = SlaInterno.objects.all().order_by('-id')
+
+        context = {
+            'slas': sla,
+        }
+        return render(request, 'listar_sla_interno.html', context)
+
+def cadastrar_sla_interno(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if request.method == "GET":
+        return render(request, 'cadastrar_sla_interno.html')
+    
+    if request.method == "POST":
+        data_inicial = request.POST.get('data_inicial')
+        hora_inicial = request.POST.get('hora_inicial')
+        data_final = request.POST.get('data_final')
+        hora_final = request.POST.get('hora_final')
+        ocorrido = request.POST.get('ocorrido')
+        solucao = request.POST.get('solucao')
+
+        sla = SlaInterno(
+            data_inicial=data_inicial,
+            hora_inicial=hora_inicial,
+            data_final=data_final,
+            hora_final=hora_final,
+            ocorrido=ocorrido,
+            solucao=solucao,
+        )
+                                   
+        sla.save()
+
+        messages.add_message(request, constants.SUCCESS, 'SLA cadastrado com sucesso')
+        return redirect('listar_sla_interno')
+
+def buscar_sla_interno(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    if request.method == "GET":
+        return render(request, 'buscar_sla_interno.html')
+
+    if request.method == "POST":
+        data_inicial = request.POST.get('data_inicial')
+        data_final = request.POST.get('data_final')
+
+        sla = SlaInterno.objects.filter(
+            Q(data_inicial__gte=data_inicial) &
+            Q(data_final__lte=data_final)
+        )
+
+        if not sla:
+            messages.add_message(request, constants.ERROR, 'Não existe SLA para o período informado')
+            return redirect('buscar_sla_interno')
+
+        return render(request, 'buscar_sla_interno.html', {'sla': sla})
 
 # Operadores
 def ocorrencias_operadores(request): 

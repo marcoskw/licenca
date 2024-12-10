@@ -187,7 +187,7 @@ def listar_operadores(request):
         return redirect('/login')
         
     if request.method == "GET":
-        operadores = Operador.objects.filter(status='ATV').order_by('nome_operador')
+        operadores = Operador.objects.order_by('nome_operador').filter(status='ATV')
         
     return render(request, 'listar_operadores.html', {'operadores': operadores})
 

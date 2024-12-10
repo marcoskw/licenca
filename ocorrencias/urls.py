@@ -2,6 +2,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # SLAs
+    path('sla_interno/listar_sla_interno/', views.listar_sla_interno, name="listar_sla_interno"),
+    path('sla_interno/cadastrar_sla_interno/', views.cadastrar_sla_interno, name="cadastrar_sla_interno"),
+    path('sla_interno/buscar_sla_interno/', views.buscar_sla_interno, name="buscar_sla_interno"),
+
+
     # Operadores
     path('ocorrencias_operadores/', views.ocorrencias_operadores, name="ocorrencias_operadores"),
     path('ocorrencias_operadores/listar_ocorrencias_operadores', views.listar_ocorrencias_operadores, name='listar_ocorrencias_operadores') ,

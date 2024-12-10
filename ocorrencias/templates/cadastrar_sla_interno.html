@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+{% endblock 'head' %}
+
+
+{% block 'body' %}
+
+    {% include "partials/barra_navegacao.html" %}
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Novo SLA Interno</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <section class="alert {{ message.tags }}">
+                    {{ message }}
+                </section>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <form action="{% url 'cadastrar_sla_interno' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Data e Hora de Início -->
+                    <div class="mb-4">
+                        <label for="inicio_data" class="form-label">Data de Início</label>
+                        <div class="input-group">
+                            <input type="date" id="data_inicial" name="data_inicial" class="form-control" required>
+                            <input type="time" id="hora_inicial" name="hora_inicial" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Data e Hora de Término -->
+                    <div class="mb-4">
+                        <label for="termino_data" class="form-label">Data de Término</label>
+                        <div class="input-group">
+                            <input type="date" id="data_final" name="data_final" class="form-control" required>
+                            <input type="time" id="hora_final" name="hora_final" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <!-- Observações do Ocorrido -->
+                    <div class="mb-4">
+                        <label for="ocorrido" class="form-label">Ocorrido</label>
+                        <textarea class="form-control" name="ocorrido" id="ocorrido" rows="4" placeholder="Digite as observações sobre o ocorrido..." required></textarea>
+                    </div>
+
+                    <!-- Solução -->
+                    <div class="mb-4">
+                        <label for="solucao" class="form-label">Solução</label>
+                        <textarea class="form-control" name="solucao" id="solucao" rows="4" placeholder="Descreva a solução aplicada..." required></textarea>
+                    </div>
+
+                    <!-- Botão de Submissão -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-lg btn-primary">Aplicar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

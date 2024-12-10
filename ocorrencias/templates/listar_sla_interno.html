@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+{% block 'head' %}
+
+<link rel="stylesheet" href="{% static 'empresarios/css/listar_empresas.css' %}">
+<link rel="stylesheet" href="{% static 'usuarios/css/usuarios.css' %}">
+
+{% endblock 'head' %}
+
+{% block 'body' %}
+{% include "partials/barra_navegacao.html" %}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <h2 class="mr-3">Registros de SLAs Internos</h2>
+                <a href="{% url 'cadastrar_sla_interno' %}" class="btn btn-outline-success">Cadastrar</a>
+            </div>
+            <form class="form-inline" method="GET" action="{% url 'buscar_sla_interno' %}">
+                <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar..." aria-label="Pesquisar" name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr class="cabecalho" style="background-color: transparent !important;">
+                    <th scope="col">Id</th>
+                    <th scope="col">Data Inicio</th>
+                    <th scope="col">Hora Inicio</th>
+                    <th scope="col">Data Fim</th>
+                    <th scope="col">Hora Fim</th>
+                    <th scope="col">Ocorrido</th>
+                    <th scope="col">Solução</th>                    
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for sla in slas %}
+                    <tr>
+                        <td>{{ sla.id }}</td>
+                        <td>{{ sla.data_inicial }}</td>
+                        <td>{{ sla.hora_inicial }}</td>
+                        <td>{{ sla.data_final }}</td>
+                        <td>{{ sla.hora_final }}</td>                                                
+                        <td>{{ sla.ocorrido }}</td>
+                        <td>{{ sla.solucao }}</td>                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>{% endblock 'body' %}

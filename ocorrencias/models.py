@@ -29,4 +29,13 @@ class OcorrenciaComputador(models.Model):
     tipo_ocorrencia = models.CharField(max_length=1, choices=tipo_ocorrencia_choices)
     computador =models.ForeignKey(Computador, on_delete=models.DO_NOTHING, blank=True)
     observacoes = models.TextField(blank=True)    
-    
+
+
+class SlaInterno(models.Model):
+    data_inicial = models.DateField()
+    hora_inicial = models.TimeField()
+    data_final = models.DateField()
+    hora_final = models.TimeField()
+    ocorrido = models.TextField()
+    solucao = models.TextField(blank=True)
+
